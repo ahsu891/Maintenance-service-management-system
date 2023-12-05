@@ -5,12 +5,21 @@ import useAuth from "../../hook/useAuth";
 const RequireAuth = ({ allowedRoles }) => {
   const { auth } = useAuth();
   const location = useLocation();
-
-  return auth?.roles === allowedRoles ? (
-    <Outlet />
-  ) : (
-    <Navigate to="/" state={{ from: location }} replace />
-  );
+  const storedValue = localStorage.getItem("roles");
+  if (storedValue) {
+    return storedValue === allowedRoles ? (
+      <Outlet />
+    ) : (
+      <Navigate to="/" state={{ from: location }} replace />
+    );
+  }
+  if (auth) {
+    return auth?.roles === allowedRoles ? (
+      <Outlet />
+    ) : (
+      <Navigate to="/" state={{ from: location }} replace />
+    );
+  }
 };
 
 export default RequireAuth;

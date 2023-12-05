@@ -7,22 +7,26 @@ import Unauthorized from "./components/auth/Unauthorized";
 import RequireAuth from "./components/auth/RequireAuth";
 import Home from "./components/Home";
 import About from "./components/Admin/About";
+import withAuth from "./components/auth/withAuth";
 const ROLES = {
   User: "Requester",
   Technician: "Technician",
   Admin: "Admin",
 };
-
+const Auth = withAuth(Layout);
 function App() {
+  console.log(Auth);
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Auth />}>
             <Route path="login" element={<Login />} />
             <Route path="register" element={<SignUp />} />
             <Route path="unauthorized" element={<Unauthorized />} />
             {/* Admin Requster */}
+            {/* withAuth( */}
+            {/* <Auth> */}
             <Route element={<RequireAuth allowedRoles={ROLES.User} />}>
               {/* <Route path="/" element={<Home />} /> */}
               <Route path="/requester" element={<About />} />
@@ -35,6 +39,7 @@ function App() {
             <Route element={<RequireAuth allowedRoles={ROLES.Technician} />}>
               <Route path="/technician" element={<Home />} />
             </Route>
+            {/* </Auth> */}
           </Route>
 
           {/* <Route element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}>
