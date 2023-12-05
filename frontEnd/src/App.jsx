@@ -8,9 +8,9 @@ import RequireAuth from "./components/auth/RequireAuth";
 import Home from "./components/Home";
 import About from "./components/Admin/About";
 const ROLES = {
-  User: 2001,
-  Editor: 1984,
-  Admin: 5150,
+  User: "user",
+  Editor: "1984",
+  Admin: "5150",
 };
 
 function App() {
