@@ -18,7 +18,8 @@ export const login = (req, res) => {
 
       const user = results[0];
       //   var hash = bcrypt.hashSync("1046031413", 8);
-
+      // var hash = bcrypt.hashSync("12345678", 8);
+      // console.log(hash);
       //   Compare the provided password with the hashed password in the database
       bcrypt.compare(password, user.password, (bcryptError, match) => {
         if (bcryptError || !match) {
@@ -37,6 +38,7 @@ export const login = (req, res) => {
           message: `Login successful. Redirecting...`,
           username: user.username,
           user_id: user.user_id,
+          role: user.role,
         });
       });
     }

@@ -1,12 +1,13 @@
 import { useRef, useState, useEffect } from "react";
-import {
-  faCheck,
-  faTimes,
-  faInfoCircle,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "../api/axios";
+// import {
+//   faCheck,
+//   faTimes,
+//   faInfoCircle,
+// } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import axios from "../api/axios";
 import { Link } from "react-router-dom";
+import axios from "../../api/axios";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -108,14 +109,14 @@ const SignUp = () => {
           <form onSubmit={handleSubmit}>
             <label htmlFor="username">
               Username:
-              <FontAwesomeIcon
+              {/* <FontAwesomeIcon
                 icon={faCheck}
                 className={validName ? "valid" : "hide"}
-              />
-              <FontAwesomeIcon
+              /> */}
+              {/* <FontAwesomeIcon
                 icon={faTimes}
                 className={validName || !user ? "hide" : "invalid"}
-              />
+              /> */}
             </label>
             <input
               type="text"
@@ -136,7 +137,7 @@ const SignUp = () => {
                 userFocus && user && !validName ? "instructions" : "offscreen"
               }
             >
-              <FontAwesomeIcon icon={faInfoCircle} />
+              {/* <FontAwesomeIcon icon={faInfoCircle} /> */}
               4 to 24 characters.
               <br />
               Must begin with a letter.
@@ -146,14 +147,14 @@ const SignUp = () => {
 
             <label htmlFor="password">
               Password:
-              <FontAwesomeIcon
+              {/* <FontAwesomeIcon
                 icon={faCheck}
                 className={validPwd ? "valid" : "hide"}
               />
               <FontAwesomeIcon
                 icon={faTimes}
                 className={validPwd || !pwd ? "hide" : "invalid"}
-              />
+              /> */}
             </label>
             <input
               type="password"
@@ -170,7 +171,7 @@ const SignUp = () => {
               id="pwdnote"
               className={pwdFocus && !validPwd ? "instructions" : "offscreen"}
             >
-              <FontAwesomeIcon icon={faInfoCircle} />
+              {/* <FontAwesomeIcon icon={faInfoCircle} /> */}
               8 to 24 characters.
               <br />
               Must include uppercase and lowercase letters, a number and a
@@ -186,14 +187,14 @@ const SignUp = () => {
 
             <label htmlFor="confirm_pwd">
               Confirm Password:
-              <FontAwesomeIcon
+              {/* <FontAwesomeIcon
                 icon={faCheck}
                 className={validMatch && matchPwd ? "valid" : "hide"}
-              />
-              <FontAwesomeIcon
+              /> */}
+              {/* <FontAwesomeIcon
                 icon={faTimes}
                 className={validMatch || !matchPwd ? "hide" : "invalid"}
-              />
+              /> */}
             </label>
             <input
               type="password"
@@ -212,7 +213,7 @@ const SignUp = () => {
                 matchFocus && !validMatch ? "instructions" : "offscreen"
               }
             >
-              <FontAwesomeIcon icon={faInfoCircle} />
+              {/* <FontAwesomeIcon icon={faInfoCirycle} /> */}
               Must match the first password input field.
             </p>
 

@@ -1,9 +1,11 @@
 import { useRef, useState, useEffect } from "react";
-import useAuth from "../hooks/useAuth";
+// import useAuth from "../hooks/useAuth";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-import axios from "../api/axios";
-const LOGIN_URL = "/auth";
+// import axios from "../api/axios";
+import useAuth from "../../hook/useAuth";
+import axios from "../../api/axios";
+const LOGIN_URL = "/auth/login";
 
 const Login = () => {
   const { setAuth } = useAuth();
@@ -29,11 +31,12 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log(user, pwd);
     try {
       const response = await axios.post(
         LOGIN_URL,
-        JSON.stringify({ user, pwd }),
+        // JSON.stringify({ username: user, password: pwd }),
+        { username: user, password: pwd },
         {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
@@ -41,12 +44,13 @@ const Login = () => {
       );
       console.log(JSON.stringify(response?.data));
       //console.log(JSON.stringify(response));
-      const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
-      setAuth({ user, pwd, roles, accessToken });
+      //   const accessToken = response?.data?.accessToken;
+      const roles = response?.data?.role;
+      setAuth({ user, pwd, roles });
       setUser("");
       setPwd("");
-      navigate(from, { replace: true });
+      navigate(`/${roles.toLowerCase()}`, { replace: true });
+      // navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");

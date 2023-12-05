@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout";
 import Login from "./components/auth/Login";
 import SignUp from "./components/auth/SignUp";
@@ -8,34 +8,43 @@ import RequireAuth from "./components/auth/RequireAuth";
 import Home from "./components/Home";
 import About from "./components/Admin/About";
 const ROLES = {
-  User: "user",
-  Editor: "1984",
-  Admin: "5150",
+  User: "Requester",
+  Technician: "Technician",
+  Admin: "Admin",
 };
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<SignUp />} />
-        <Route path="unauthorized" element={<Unauthorized />} />
-      </Route>
-      <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
-        <Route path="/" element={<Home />} />
-      </Route>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<SignUp />} />
+            <Route path="unauthorized" element={<Unauthorized />} />
+            {/* Admin Requster */}
+            <Route element={<RequireAuth allowedRoles={ROLES.User} />}>
+              {/* <Route path="/" element={<Home />} /> */}
+              <Route path="/requester" element={<About />} />
+            </Route>
+            {/* Admin Page */}
+            <Route element={<RequireAuth allowedRoles={ROLES.Admin} />}>
+              <Route path="/admin" element={<Home />} />
+            </Route>
+            {/* Admin Technicial */}
+            <Route element={<RequireAuth allowedRoles={ROLES.Technician} />}>
+              <Route path="/technician" element={<Home />} />
+            </Route>
+          </Route>
 
-      <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-      </Route>
-
-      {/* <Route element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}>
+          {/* <Route element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}>
           <Route path="lounge" element={<Lounge />} />
         </Route> */}
 
-      <Route path="*" element={<Missing />} />
-    </Routes>
+          <Route path="*" element={<Missing />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
