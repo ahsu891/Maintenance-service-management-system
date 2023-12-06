@@ -49,7 +49,7 @@ const Login = () => {
       alert(localStorage.getItem("roles"));
       setUser("");
       setPwd("");
-      navigate(`/${roles.toLowerCase()}/dashboard`, { replace: true });
+      navigate(`/${roles.toLowerCase()}`, { replace: true });
       // navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
