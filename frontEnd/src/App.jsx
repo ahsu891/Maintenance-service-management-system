@@ -8,6 +8,10 @@ import RequireAuth from "./components/auth/RequireAuth";
 import Home from "./components/Home";
 import About from "./components/Admin/About";
 import withAuth from "./components/auth/withAuth";
+import DefaultLayout from "./layout/DefaultLayout";
+import Calendar from "react-calendar";
+import TableThree from "./components/Admin/TableThree";
+// import MainTable from "./components/Admin/MainTable";
 const ROLES = {
   User: "Requester",
   Technician: "Technician",
@@ -33,11 +37,16 @@ function App() {
             </Route>
             {/* Admin Page */}
             <Route element={<RequireAuth allowedRoles={ROLES.Admin} />}>
-              <Route path="/admin" element={<Home />} />
+              <Route path="/admin" element={<DefaultLayout />}>
+                <Route path="/admin" index element={<About />} />
+                {/* <Route path="/admin/dashboard" index element={<DefaultLayout />} /> */}
+                <Route path="/admin/calendar" element={<Calendar />} />
+                <Route path="/admin/usermanagement" element={<TableThree />} />
+              </Route>
             </Route>
             {/* Admin Technicial */}
             <Route element={<RequireAuth allowedRoles={ROLES.Technician} />}>
-              <Route path="/technician" element={<Home />} />
+              <Route path="/technician" element={<DefaultLayout />} />
             </Route>
             {/* </Auth> */}
           </Route>
