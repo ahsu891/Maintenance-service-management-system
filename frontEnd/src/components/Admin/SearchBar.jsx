@@ -1,5 +1,16 @@
-import React from "react";
-function SearchBar({ data }) {
+import React, { useEffect, useState } from "react";
+function SearchBar({ setfiltered, technicials }) {
+  const [input, setinput] = useState("");
+  console.log(input);
+  useEffect(() => {
+    const filtered = technicials.filter((data) =>
+      `${data.first_name} ${data.last_name} ${data.phone}`
+        .toLowerCase()
+        .includes(input.toLowerCase())
+    );
+
+    setfiltered((e) => filtered);
+  }, [input]);
   return (
     <div className="py-2 flex flex-row justify-end items-center">
       <div className="hidden sm:block">
@@ -33,6 +44,13 @@ function SearchBar({ data }) {
               type="text"
               placeholder="Type to search..."
               className="max-w-[180px] p-2 bg-transparent pr-4 pl-9 focus:outline-none border  border-gray"
+              value={input}
+              onChange={(e) => {
+                setinput((b) => e.target.value);
+                if (input === "") {
+                  setfiltered((e) => technicials);
+                }
+              }}
             />
           </div>
         </form>

@@ -5,11 +5,14 @@ import axios from "../../api/axios";
 import SearchBar from "./SearchBar";
 import { Link } from "react-router-dom";
 import FormLayout from "./FormLayout";
+import { use } from "express/lib/application";
+import { log } from "console";
 // bg-danger bg-warning
 
 const URL = "/technicial/getTechnicials";
 const TableThree = () => {
   const [technicials, setTechnicials] = useState([]);
+  const [filtered, setfiltered] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,10 +28,14 @@ const TableThree = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    setfiltered(technicials);
+  }, [technicials]);
+  console.log(filtered);
   return (
     <div>
       <div className="rounded-sm border border-stroke bg-white px-5  pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-        <SearchBar />
+        <SearchBar technicials={technicials} setfiltered={setfiltered} />
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
             <thead>
@@ -51,7 +58,7 @@ const TableThree = () => {
               </tr>
             </thead>
             <tbody>
-              {technicials.map((data) => {
+              {filtered.map((data) => {
                 return (
                   <Row
                     key={data.technician_id}
