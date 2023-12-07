@@ -12,11 +12,13 @@ function Row({ name, categories, status, phone }) {
       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
         <p className="text-black dark:text-white">{categories}</p>
       </td>
-      <td className="border-b border-[#eee] flex flex-row gap-1 items-center py-5 px-4 dark:border-strokedark">
-        <button className=" hover:text-primary  ">
-          <MdPhone className="text-2xl " />
-        </button>
-        <p className="text-black dark:text-white">{phone}</p>
+      <td className="border-b border-[#eee]  ir py-5 px-4 dark:border-strokedark">
+        <div className=" flex flex-row items-center gap-1">
+          <button className=" hover:text-primary  ">
+            <MdPhone className="text-2xl " />
+          </button>
+          <p className="text-black dark:text-white">{phone}</p>
+        </div>
       </td>
       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
         <p className="inline-flex rounded-full bg-success bg-opacity-10 py-1 px-3 text-sm font-medium text-success">
