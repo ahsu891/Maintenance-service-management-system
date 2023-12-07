@@ -1,6 +1,8 @@
 import express from "express";
 import { db } from "./db.js";
 import authRoutes from "./routes/auth.js";
+import techRoutes from "./routes/technicial.js";
+
 import cookieParser from "cookie-parser";
 import cors from "cors";
 const app = express();
@@ -19,6 +21,7 @@ app.use(cookieParser());
 ///////////////////////////////////////
 
 app.use("/api/auth", authRoutes);
+app.use("/api/technicial", techRoutes);
 
 ////////////////////////////////////////////
 app.get("/", (req, res) => {
