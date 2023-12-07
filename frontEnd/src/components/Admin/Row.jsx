@@ -3,6 +3,7 @@ import { MdModeEditOutline } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import { CgUnavailable } from "react-icons/cg";
 import { MdPhone } from "react-icons/md";
+import SwitcherTwo from "./SwitcherTwo";
 function Row({ name, categories, status, phone }) {
   return (
     <tr>
@@ -27,9 +28,10 @@ function Row({ name, categories, status, phone }) {
       </td>
       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
         <div className="flex items-center space-x-3.5">
-          <button className="hover:text-primary">
+          {/* <button className="hover:text-primary">
             <CgUnavailable className="text-2xl" />
-          </button>
+          </button> */}
+          <SwitcherTwo key={name} />
           <button className="hover:text-primary">
             <MdDelete className="text-2xl" />
           </button>
