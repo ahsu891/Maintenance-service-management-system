@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 function SearchBar({ setfiltered, technicials }) {
   const [input, setinput] = useState("");
-  console.log(input);
+  //   console.log(input);
   useEffect(() => {
     const filtered = technicials.filter((data) =>
       `${data.first_name} ${data.last_name} ${data.phone}`
@@ -47,9 +47,6 @@ function SearchBar({ setfiltered, technicials }) {
               value={input}
               onChange={(e) => {
                 setinput((b) => e.target.value);
-                if (input === "") {
-                  setfiltered((e) => technicials);
-                }
               }}
             />
           </div>

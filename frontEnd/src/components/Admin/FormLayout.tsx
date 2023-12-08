@@ -103,7 +103,10 @@ const FormLayout = () => {
                 ></textarea>
               </div>
             </div>
-            <div className=" mb-5 mr-4 flex flex-row justify-end">
+            <div className=" mb-5 mr-4 flex flex-row justify-end gap-2">
+              <button className="flex w-auto justify-self-end rounded bg-primary p-3 font-medium text-gray">
+                Cancel
+              </button>
               <button className="flex w-auto justify-self-end rounded bg-primary p-3 font-medium text-gray">
                 Add Member
               </button>

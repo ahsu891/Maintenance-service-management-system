@@ -6,14 +6,14 @@ import SearchBar from "./SearchBar";
 import { Link } from "react-router-dom";
 import FormLayout from "./FormLayout";
 import { use } from "express/lib/application";
-import { log } from "console";
+
 // bg-danger bg-warning
 
 const URL = "/technicial/getTechnicials";
 const TableThree = () => {
   const [technicials, setTechnicials] = useState([]);
   const [filtered, setfiltered] = useState([]);
-
+  const [ref, setRef] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -26,12 +26,12 @@ const TableThree = () => {
     };
     // Call the fetchData function when the component mounts
     fetchData();
-  }, []);
+  }, [ref]);
 
   useEffect(() => {
     setfiltered(technicials);
   }, [technicials]);
-  console.log(filtered);
+  // console.log(filtered);
   return (
     <div>
       <div className="rounded-sm border border-stroke bg-white px-5  pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -40,6 +40,9 @@ const TableThree = () => {
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-2 text-left dark:bg-meta-4">
+                <th className="min-w-[50px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
+                  #
+                </th>
                 <th className="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">
                   Name
                 </th>
@@ -58,23 +61,24 @@ const TableThree = () => {
               </tr>
             </thead>
             <tbody>
-              {filtered.map((data) => {
+              {filtered.map((input, i) => {
                 return (
                   <Row
-                    key={data.technician_id}
-                    name={`${data.first_name} ${data.last_name}`}
-                    categories={data.specialization}
-                    status={data.available}
-                    phone={data.phone}
+                    i={i + 1}
+                    key={input.technician_id}
+                    technicial_id={input.technician_id}
+                    name={`${input.first_name} ${input.last_name}`}
+                    categories={input.specialization}
+                    status={input.available}
+                    phone={input.phone}
+                    setRef={setRef}
                   />
                 );
               })}
             </tbody>
           </table>
         </div>
-        <div className="p-4">
-          <FormLayout />
-        </div>
+        <div className="p-4">{/* <FormLayout /> */}</div>
       </div>
     </div>
   );

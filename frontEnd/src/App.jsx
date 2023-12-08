@@ -11,6 +11,7 @@ import withAuth from "./components/auth/withAuth";
 import DefaultLayout from "./layout/DefaultLayout";
 import Calendar from "react-calendar";
 import TableThree from "./components/Admin/TableThree";
+import { Toaster } from "react-hot-toast";
 // import MainTable from "./components/Admin/MainTable";
 const ROLES = {
   User: "Requester",
@@ -19,7 +20,7 @@ const ROLES = {
 };
 const Auth = withAuth(Layout);
 function App() {
-  console.log(Auth);
+  // console.log(Auth);
   return (
     <>
       <BrowserRouter>
@@ -58,6 +59,26 @@ function App() {
           <Route path="*" element={<Missing />} />
         </Routes>
       </BrowserRouter>
+      <Toaster
+        position="top-center"
+        gutter={12}
+        containerStyle={{ margin: "8px" }}
+        toastOption={{
+          success: {
+            duration: 3000,
+          },
+          error: {
+            duration: 5000,
+          },
+          style: {
+            fontSize: "16px",
+            maxWidth: "500px",
+            padding: "16px 24px",
+            backgroundColor: "var(--color-grey-0)",
+            color: "var(--color-grey-700)",
+          },
+        }}
+      />
     </>
   );
 }
