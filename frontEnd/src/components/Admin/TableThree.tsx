@@ -61,7 +61,7 @@ const TableThree = () => {
               </tr>
             </thead>
             <tbody>
-              {filtered.map((input, i) => {
+              {filtered?.map((input, i) => {
                 return (
                   <Row
                     i={i + 1}

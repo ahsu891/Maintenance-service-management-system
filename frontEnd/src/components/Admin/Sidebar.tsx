@@ -8,10 +8,10 @@ interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
 }
-
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const location = useLocation();
   const { pathname } = location;
+  // console.log(pathname);
 
   const trigger = useRef<any>(null);
   const sidebar = useRef<any>(null);
@@ -98,9 +98,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         <nav className="mt-5 py-4 px-4 lg:mt-9 lg:px-6">
           {/* <!-- Menu Group --> */}
           <div>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
+            {/* <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
               MENU
-            </h3>
+            </h3> */}
 
             <ul className="mb-6 flex flex-col gap-1.5">
               {/* <!-- Menu Item Dashboard --> */}
@@ -115,8 +115,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       <NavLink
                         to="/admin"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                          pathname.includes("dashboard") &&
-                          "bg-graydark dark:bg-meta-4"
+                          pathname === "/admin" && "bg-graydark dark:bg-meta-4"
                         }`}
                       >
                         <svg
