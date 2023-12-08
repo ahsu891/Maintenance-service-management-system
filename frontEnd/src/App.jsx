@@ -26,7 +26,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Auth />}>
-            <Route path="login" element={<Login />} />
+            <Route path="login" index element={<Login />} />
             <Route path="register" element={<SignUp />} />
             <Route path="unauthorized" element={<Unauthorized />} />
             {/* Admin Requster */}

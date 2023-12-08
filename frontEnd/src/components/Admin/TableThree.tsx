@@ -6,9 +6,9 @@ import SearchBar from "./SearchBar";
 import { Link } from "react-router-dom";
 import FormLayout from "./FormLayout";
 import { use } from "express/lib/application";
-
+import SignIn from "../auth/SignIn";
 // bg-danger bg-warning
-
+import SignUp from "../auth/SignUp";
 const URL = "/technicial/getTechnicials";
 const TableThree = () => {
   const [technicials, setTechnicials] = useState([]);
@@ -80,6 +80,7 @@ const TableThree = () => {
         </div>
         <div className="p-4">{/* <FormLayout /> */}</div>
       </div>
+      {/* < */}
     </div>
   );
 };
