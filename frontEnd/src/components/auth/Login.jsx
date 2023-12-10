@@ -44,8 +44,10 @@ const Login = () => {
       );
       console.log(JSON.stringify(response?.data));
       const roles = response?.data?.role;
+      const user_id = response?.data?.user_id;
       setAuth({ user, pwd, roles });
       localStorage.setItem("roles", roles);
+      localStorage.setItem("user_id", user_id);
       // alert(localStorage.getItem("roles"));
       setUser("");
       setPwd("");

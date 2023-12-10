@@ -5,7 +5,14 @@ import bcrypt from "bcryptjs";
 export const login = (req, res) => {
   const { username, password } = req.body;
   db.query(
-    "SELECT * FROM users WHERE username = ?",
+    `SELECT * FROM (
+      SELECT user_id AS id, role, username, password FROM users
+      UNION
+      SELECT admin_id AS id, role, username, password FROM admin
+      UNION
+      SELECT technician_id AS id, role, username, password FROM technicians
+  ) AS combined_users
+  WHERE username = ?;`,
     [username],
     (error, results) => {
       if (error) {
@@ -29,7 +36,7 @@ export const login = (req, res) => {
         }
 
         const token = jwt.sign(
-          { username: user.username, user_id: user.user_id, role: user.role },
+          { username: user.username, user_id: user.id, role: user.role },
           process.env.JWT_SECRET
         );
 
@@ -37,7 +44,7 @@ export const login = (req, res) => {
         res.status(200).json({
           message: `Login successful. Redirecting...`,
           username: user.username,
-          user_id: user.user_id,
+          user_id: user.id,
           role: user.role,
         });
       });

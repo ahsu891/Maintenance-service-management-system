@@ -2,6 +2,7 @@ import express from "express";
 import { db } from "./db.js";
 import authRoutes from "./routes/auth.js";
 import techRoutes from "./routes/technicial.js";
+import ReqRoutes from "./routes/requester.js";
 
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -22,6 +23,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/technicial", techRoutes);
+app.use("/api/requester", ReqRoutes);
 
 ////////////////////////////////////////////
 app.get("/", (req, res) => {
