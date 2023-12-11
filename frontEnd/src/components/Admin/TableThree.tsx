@@ -89,7 +89,7 @@ const TableThree = () => {
             onClick={handleOn}
             className="flex w-auto justify-self-end rounded bg-primary p-3 font-medium text-gray"
           >
-            Add Member
+            {on ? "Cancel" : "Add Member"}
           </button>
         </div>
       </div>

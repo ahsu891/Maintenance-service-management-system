@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MdModeEditOutline } from "react-icons/md";
+import { IoToggle } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import { CgUnavailable } from "react-icons/cg";
 import { MdPhone } from "react-icons/md";
@@ -7,6 +8,7 @@ import SwitcherTwo from "./SwitcherTwo";
 import toast from "react-hot-toast";
 import axios from "../../api/axios";
 const URLDEL = "/technicial/deleteTech";
+const URL_T = "/technicial/toggle";
 function Row({ name, categories, status, phone, technicial_id, setRef, i }) {
   const [isLoading, setLoading] = useState(false);
 
@@ -22,6 +24,33 @@ function Row({ name, categories, status, phone, technicial_id, setRef, i }) {
       } catch (error) {
         console.error("Error fetching technicials:", error.message);
         toast.error("Error Deleting");
+        setLoading((e) => !e);
+      }
+    };
+    // Call the fetchData function when the component mounts
+    fetchData();
+  }
+  function Toggle() {
+    setLoading((e) => !e);
+    const fetchData = async () => {
+      let toggle;
+      if (status === "active") {
+        toggle = "inActive";
+      }
+      if (status !== "active") {
+        toggle = "active";
+      }
+      try {
+        // Make a GET request to the API endpoint
+        const response = await axios.post(URL_T + `/${technicial_id}`, {
+          toggle,
+        });
+        // console.log(response.data);
+        toast.success(response.data.message);
+        setLoading((e) => !e);
+      } catch (error) {
+        console.error("Error fetching technicials:", error.message);
+        toast.error("Error Toggling");
         setLoading((e) => !e);
       }
     };
@@ -61,8 +90,18 @@ function Row({ name, categories, status, phone, technicial_id, setRef, i }) {
       </td>
       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
         <div className="flex items-center space-x-3.5">
-          <button className="hover:text-primary">
-            <CgUnavailable className="text-2xl" />
+          <button
+            onClick={() => {
+              Toggle();
+              setRef((r) => !r);
+            }}
+            className="hover:text-primary"
+          >
+            {status === "active" ? (
+              <IoToggle className="text-2xl text-success" />
+            ) : (
+              <IoToggle className="text-2xl text-danger" />
+            )}
           </button>
           {/* <SwitcherTwo key={name} /> */}
           <button

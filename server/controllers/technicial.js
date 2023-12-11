@@ -63,3 +63,22 @@ export const addTech = (req, res) => {
     }
   );
 };
+
+export const toggele = (req, res) => {
+  const techId = req.params.technician_id;
+  const { toggle } = req.body;
+  console.log(toggle);
+  const updateQuery =
+    "UPDATE technicians SET available = ? WHERE technician_id = ?";
+  const values = [toggle, techId];
+
+  db.query(updateQuery, values, (error, results) => {
+    if (error) {
+      console.error("Error toggling Course:", error.message);
+      res.status(500).json({ error: "Error Toggling Techninial" });
+    } else {
+      // console.log(`Deleted book with ID ${cousreId}`);
+      res.status(200).json({ message: `Toggling the success` });
+    }
+  });
+};
