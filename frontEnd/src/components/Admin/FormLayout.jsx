@@ -1,6 +1,56 @@
 // import Breadcrumb from '../../components/Breadcrumb';
-import React from "react";
-const FormLayout = () => {
+import React, { useState } from "react";
+import axios from "../../api/axios";
+import toast from "react-hot-toast";
+const URL_A = "/technicial/addTech";
+const FormLayout = ({ toggle }) => {
+  const [isLoading, setLoading] = useState(false);
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const { fname, lname, password, username, email, specialzation, phone } =
+      e.target;
+    // console.log(title);
+    // if (title.value && priority.value && description.value && block.value) {
+    //   return;
+    // }
+    console.log(
+      fname.value,
+      lname.value,
+      username.value,
+      password.value,
+      email.value,
+      specialzation.value,
+      phone.value
+    );
+
+    try {
+      // Make an Axios request
+      setLoading(true);
+      const response = await axios.post(URL_A, {
+        fname: fname.value,
+        lname: lname.value,
+        username: username.value,
+        password: password.value,
+        email: email.value,
+        specialzation: specialzation.value,
+        phone: phone.value,
+      });
+      // console.log("Server response:", response.data);
+      toast.success(response.data);
+
+      setLoading(false);
+      toggle();
+      // console.log(toggle);
+      // Handle success, e.g., redirect to another page
+    } catch (error) {
+      console.error("Error making Axios request:", error.message);
+      // Handle error, e.g., display an error message to the user
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="">
       <div className="flex flex-col gap-9">
@@ -11,7 +61,7 @@ const FormLayout = () => {
               Contact Form
             </h3>
           </div> */}
-          <form action="#">
+          <form onSubmit={handleSubmit} method="POST">
             <div className="p-6.5">
               <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                 <div className="w-full xl:w-1/2">
@@ -20,7 +70,9 @@ const FormLayout = () => {
                   </label>
                   <input
                     type="text"
-                    placeholder="Enter your first name"
+                    name="fname"
+                    required
+                    placeholder="First name"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   />
                 </div>
@@ -31,35 +83,75 @@ const FormLayout = () => {
                   </label>
                   <input
                     type="text"
-                    placeholder="Enter your last name"
+                    name="lname"
+                    required
+                    placeholder="Last name"
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   />
                 </div>
               </div>
-
+              <div className="mb-4.5">
+                <label className="mb-2.5 block text-black dark:text-white">
+                  Username
+                </label>
+                <input
+                  type="text"
+                  required
+                  name="username"
+                  placeholder="Username"
+                  className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                />
+              </div>
+              <div className="mb-4.5">
+                <label className="mb-2.5 block text-black dark:text-white">
+                  Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  name="password"
+                  placeholder="Password"
+                  className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                />
+              </div>
               <div className="mb-4.5">
                 <label className="mb-2.5 block text-black dark:text-white">
                   Email <span className="text-meta-1">*</span>
                 </label>
                 <input
                   type="email"
-                  placeholder="Enter your email address"
+                  required
+                  name="email"
+                  placeholder="email address"
                   className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
               </div>
 
               <div className="mb-4.5">
                 <label className="mb-2.5 block text-black dark:text-white">
-                  Subject
+                  Specialzation
                 </label>
                 <input
                   type="text"
-                  placeholder="Select subject"
+                  name="specialzation"
+                  placeholder="Specialzation"
+                  className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                />
+              </div>
+              <div className="mb-4.5">
+                <label className="mb-2.5 block text-black dark:text-white">
+                  Phone
+                </label>
+                <input
+                  type="number"
+                  required
+                  name="phone"
+                  placeholder="Phone"
                   className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
               </div>
 
-              <div className="mb-4.5">
+              {/* <div className="mb-4.5">
                 <label className="mb-2.5 block text-black dark:text-white">
                   Subject
                 </label>
@@ -90,24 +182,19 @@ const FormLayout = () => {
                     </svg>
                   </span>
                 </div>
-              </div>
-
-              <div className="mb-6">
-                <label className="mb-2.5 block text-black dark:text-white">
-                  Message
-                </label>
-                <textarea
-                  rows={6}
-                  placeholder="Type your message"
-                  className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                ></textarea>
-              </div>
+              </div> */}
             </div>
             <div className=" mb-5 mr-4 flex flex-row justify-end gap-2">
-              <button className="flex w-auto justify-self-end rounded bg-primary p-3 font-medium text-gray">
+              <button
+                type="reset"
+                className="flex w-auto justify-self-end rounded bg-primary p-3 font-medium text-gray"
+              >
                 Cancel
               </button>
-              <button className="flex w-auto justify-self-end rounded bg-primary p-3 font-medium text-gray">
+              <button
+                disabled={isLoading}
+                className="flex w-auto justify-self-end rounded bg-primary p-3 font-medium text-gray"
+              >
                 Add Member
               </button>
             </div>

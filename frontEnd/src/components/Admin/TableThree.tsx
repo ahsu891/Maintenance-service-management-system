@@ -12,8 +12,14 @@ import SignUp from "../auth/SignUp";
 const URL = "/technicial/getTechnicials";
 const TableThree = () => {
   const [technicials, setTechnicials] = useState([]);
+  const [on, setOne] = useState(false);
   const [filtered, setfiltered] = useState([]);
   const [ref, setRef] = useState(false);
+  function handleOn() {
+    setOne((e) => !e);
+  }
+  console.log(typeof handleOn);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -78,9 +84,18 @@ const TableThree = () => {
             </tbody>
           </table>
         </div>
-        <div className="p-4">{/* <FormLayout /> */}</div>
+        <div className=" flex flex-row justify-end my-4">
+          <button
+            onClick={handleOn}
+            className="flex w-auto justify-self-end rounded bg-primary p-3 font-medium text-gray"
+          >
+            Add Member
+          </button>
+        </div>
       </div>
       {/* < */}
+
+      {on && <FormLayout toggle={handleOn} />}
     </div>
   );
 };

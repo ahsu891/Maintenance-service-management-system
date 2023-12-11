@@ -13,13 +13,13 @@ const FormLayout = () => {
     // if (title.value && priority.value && description.value && block.value) {
     //   return;
     // }
-    console.log(
-      title.value,
-      priority.value,
+    // console.log(
+    //   title.value,
+    //   priority.value,
 
-      block.value,
-      description.value
-    );
+    //   block.value,
+    //   description.value
+    // );
 
     try {
       // Make an Axios request
