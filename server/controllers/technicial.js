@@ -67,7 +67,7 @@ export const addTech = (req, res) => {
 export const toggele = (req, res) => {
   const techId = req.params.technician_id;
   const { toggle } = req.body;
-  console.log(toggle);
+  // console.log(toggle);
   const updateQuery =
     "UPDATE technicians SET available = ? WHERE technician_id = ?";
   const values = [toggle, techId];

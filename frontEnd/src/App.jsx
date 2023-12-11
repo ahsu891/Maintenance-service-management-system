@@ -9,6 +9,7 @@ import Home from "./components/Home";
 import About from "./components/Admin/About";
 import withAuth from "./components/auth/withAuth";
 import DefaultLayout from "./layout/DefaultLayout";
+import DefaultLayoutReq from "./layout/DefaultLayoutReq";
 import Calendar from "react-calendar";
 import TableThree from "./components/Admin/TableThree";
 import { Toaster } from "react-hot-toast";
@@ -35,7 +36,7 @@ function App() {
             {/* <Auth> */}
             <Route element={<RequireAuth allowedRoles={ROLES.User} />}>
               {/* <Route path="/" element={<Home />} /> */}
-              <Route path="/requester" element={<About />}>
+              <Route path="/requester" element={<DefaultLayoutReq />}>
                 <Route path="/requester" index element={<FormLayout />} />
               </Route>
             </Route>
@@ -50,7 +51,7 @@ function App() {
             </Route>
             {/* Admin Technicial */}
             <Route element={<RequireAuth allowedRoles={ROLES.Technician} />}>
-              <Route path="/technician" element={<DefaultLayout />}>
+              <Route path="/technician" element={<DefaultLayoutReq />}>
                 <Route path="" />
               </Route>
             </Route>
