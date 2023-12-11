@@ -95,7 +95,7 @@ const TableThree = () => {
       </div>
       {/* < */}
 
-      {on && <FormLayout toggle={handleOn} />}
+      {on && <FormLayout toggle={() => handleOn()} />}
     </div>
   );
 };
