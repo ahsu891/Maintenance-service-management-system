@@ -70,7 +70,7 @@ const Login = () => {
   return (
     <section className="">
       <>
-        <div className="rounded-sm border h-screen border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="rounded-sm py-20 border h-screen border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="flex flex-wrap items-center">
             <div className="hidden w-full xl:block xl:w-1/2">
               <div className="py-17.5 px-26 text-center">

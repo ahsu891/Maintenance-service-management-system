@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Sidebar from "../components/Admin/Sidebar";
+import SidebarReq from "../components/Requester/SidebarReq.js";
 import Header from "../components/Admin/Header";
 import { Outlet } from "react-router-dom";
 
@@ -12,7 +12,7 @@ const DefaultLayout = () => {
       {/* <!-- ===== Page Wrapper Start ===== --> */}
       <div className="flex h-screen overflow-hidden">
         {/* <!-- ===== Sidebar Start ===== --> */}
-        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <SidebarReq sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         {/* <!-- ===== Sidebar End ===== --> */}
 
         {/* <!-- ===== Content Area Start ===== --> */}
