@@ -6,11 +6,19 @@ import { v4 as uuidv4 } from "uuid";
 // import db from "./your-database-connection-file"; // Import your database connection file
 
 export const makeRequest = (req, res) => {
-  const { title, priority, user_id, block, description, room, floor } =
-    req.body;
+  const {
+    title,
+    priority,
+    user_id,
+    block,
+    description,
+    room,
+    floor,
+    categories,
+  } = req.body;
 
   // Use placeholders in the query to prevent SQL injection
-  const insertQuery = `INSERT INTO maintenance_requests (request_id, requester_id, request_date, completion_date, status, title,room,floor, description, image, priority, block_id) VALUES (?, ?, ?,?,?, ?, ?, ?, ?, ?, ?, ?)`;
+  const insertQuery = `INSERT INTO maintenance_requests (request_id, requester_id, request_date, completion_date, status, title,room,floor, description, image, priority, block_id,category) VALUES (?, ?, ?,?,?, ?, ?, ?, ?, ?, ?, ?,?)`;
 
   // Assuming you have a connection pool named 'db'
   db.query(
@@ -28,10 +36,11 @@ export const makeRequest = (req, res) => {
       null, // Assuming technician_id starts as null
       priority,
       block,
+      categories,
     ],
     (err, results) => {
       if (err) {
-        // console.error("Error inserting data:", err);
+        console.error("Error inserting data:", err);
         res.status(500).send("Error inserting data into the database");
         return;
       }
