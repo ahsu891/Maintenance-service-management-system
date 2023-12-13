@@ -14,6 +14,7 @@ import Calendar from "react-calendar";
 import TableThree from "./components/Admin/TableThree";
 import { Toaster } from "react-hot-toast";
 import FormLayout from "./components/Requester/FormLayout";
+import Requests from "./components/Admin/Requests";
 // import MainTable from "./components/Admin/MainTable";
 const ROLES = {
   User: "Requester",
@@ -46,6 +47,7 @@ function App() {
                 <Route path="/admin" index element={<About />} />
                 {/* <Route path="/admin/dashboard" index element={<DefaultLayout />} /> */}
                 <Route path="/admin/calendar" element={<Calendar />} />
+                <Route path="/admin/requests" element={<Requests />} />
                 <Route path="/admin/usermanagement" element={<TableThree />} />
               </Route>
             </Route>

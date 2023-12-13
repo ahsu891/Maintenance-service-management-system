@@ -8,7 +8,8 @@ const FormLayout = () => {
   const [isLoading, setLoading] = useState(false);
   async function handleSubmit(e) {
     e.preventDefault();
-    const { title, priority, description, image, block } = e.target;
+    const { title, priority, description, image, block, floor, room } =
+      e.target;
     // console.log(title);
     // if (title.value && priority.value && description.value && block.value) {
     //   return;
@@ -30,6 +31,8 @@ const FormLayout = () => {
         user_id: localStorage.getItem("user_id"),
         block: block.value,
         description: description.value,
+        floor: floor.value,
+        room: room.value,
       });
       console.log("Server response:", response.data);
       toast.success(response.data);
@@ -73,6 +76,40 @@ const FormLayout = () => {
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   />
                 </div>
+                <div className="min-w-[60px] ">
+                  <label
+                    htmlFor="floor"
+                    className="mb-2.5 block text-black dark:text-white"
+                  >
+                    Floor
+                  </label>
+                  <input
+                    type="text"
+                    id="floor"
+                    name="floor"
+                    required
+                    defaultValue={0}
+                    placeholder=""
+                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  />
+                </div>
+                <div className="min-w-[100px] ">
+                  <label
+                    htmlFor="room"
+                    className="mb-2.5 block text-black dark:text-white"
+                  >
+                    Room no
+                  </label>
+                  <input
+                    type="text"
+                    id="room"
+                    name="room"
+                    defaultValue={0}
+                    required
+                    placeholder=""
+                    className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                  />
+                </div>
                 <div>
                   <label
                     htmlFor="proirty"
@@ -85,7 +122,7 @@ const FormLayout = () => {
                   <div className="relative z-20 bg-transparent dark:bg-form-input">
                     <select
                       name="priority"
-                      className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="relative z-20 xl:w-[100px] w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     >
                       <option value="low">Low</option>
                       <option value="meduim">Meduim</option>
@@ -123,7 +160,7 @@ const FormLayout = () => {
                   <div className="relative z-20 bg-transparent dark:bg-form-input">
                     <select
                       name="block"
-                      className="relative z-20 w-full  appearance-none rounded border border-stroke bg-transparent  py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      className="relative z-20 xl:w-[100px] w-full appearance-none rounded border border-stroke bg-transparent  py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     >
                       <option value="1">Block 1</option>
                       <option value="2">Block 2</option>

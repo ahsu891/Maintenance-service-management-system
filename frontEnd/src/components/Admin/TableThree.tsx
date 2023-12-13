@@ -32,7 +32,7 @@ const TableThree = () => {
     };
     // Call the fetchData function when the component mounts
     fetchData();
-  }, [ref]);
+  }, [ref, on]);
 
   useEffect(() => {
     setfiltered(technicials);

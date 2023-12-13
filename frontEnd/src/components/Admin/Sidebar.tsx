@@ -3,7 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 
 // import Logo from "../../images/icon/"
 import SidebarLinkGroup from "../Admin/SidebarLinkGroup";
-
+import { GoInbox } from "react-icons/go";
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -196,6 +196,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Dashboard --> */}
 
               {/* <!-- Menu Item Calendar --> */}
+
+              <li>
+                <NavLink
+                  to="/admin/requests"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("requests") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <GoInbox />
+                  Requests
+                </NavLink>
+              </li>
               <li>
                 <NavLink
                   to="/admin/calendar"
