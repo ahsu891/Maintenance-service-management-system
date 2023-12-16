@@ -1,5 +1,11 @@
+import RequestTable from "./RequestTable";
+import React from "react";
 function Requests() {
-  return <div>Hnello request</div>;
+  return (
+    <div>
+      <RequestTable />
+    </div>
+  );
 }
 
 export default Requests;

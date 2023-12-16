@@ -3,6 +3,7 @@ import { db } from "./db.js";
 import authRoutes from "./routes/auth.js";
 import techRoutes from "./routes/technicial.js";
 import ReqRoutes from "./routes/requester.js";
+import ReqDataRoutes from "./routes/request.js";
 
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -24,6 +25,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/technicial", techRoutes);
 app.use("/api/requester", ReqRoutes);
+app.use("/api/request", ReqDataRoutes);
 
 ////////////////////////////////////////////
 app.get("/", (req, res) => {
