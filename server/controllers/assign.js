@@ -16,10 +16,20 @@ export const AssignTech = (req, res) => {
           if (error) {
             console.error("Error executing the query:", error);
             res.status(500).send("Internal Server Error");
-            return;
+            return new Error("Internal Server Error");
           }
         }
       );
+    });
+
+    const mysql = `UPDATE maintenance_requests SET status = 'Assigned' WHERE request_id = "${request_id}"`;
+
+    db.query(mysql, (error, results) => {
+      if (error) {
+        console.error("Error executing the query:", error);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
     });
 
     res.status(200).send("successfully assign ");

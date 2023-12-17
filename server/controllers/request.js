@@ -5,14 +5,16 @@ import { db } from "../db.js";
 export const getReq = (req, res) => {
   // Execute the SQL query
   const sqlQuery = `
-    SELECT
-      maintenance_requests.*,
-      users.phone,
-      CONCAT(users.first_name, ' ', users.last_name) AS requester_name
-    FROM
-      maintenance_requests
-    LEFT JOIN
-      users ON maintenance_requests.requester_id = users.user_id;
+  SELECT
+  maintenance_requests.*,
+  users.phone,
+  CONCAT(users.first_name, ' ', users.last_name) AS requester_name
+FROM
+  maintenance_requests
+LEFT JOIN
+  users ON maintenance_requests.requester_id = users.user_id
+  WHERE 
+  maintenance_requests.status='Pending';
   `;
 
   db.query(sqlQuery, (error, results) => {

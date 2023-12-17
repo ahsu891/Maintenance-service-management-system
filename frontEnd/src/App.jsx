@@ -28,43 +28,49 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Auth />}>
-            <Route path="login" index element={<Login />} />
+          <Route>
             <Route path="register" element={<SignUp />} />
+            <Route path="login" index element={<Login />} />
             <Route path="unauthorized" element={<Unauthorized />} />
-            {/* Admin Requster */}
-            {/* withAuth( */}
-            {/* <Auth> */}
-            <Route element={<RequireAuth allowedRoles={ROLES.User} />}>
-              {/* <Route path="/" element={<Home />} /> */}
-              <Route path="/requester" element={<DefaultLayoutReq />}>
-                <Route path="/requester" index element={<FormLayout />} />
-              </Route>
-            </Route>
-            {/* Admin Page */}
-            <Route element={<RequireAuth allowedRoles={ROLES.Admin} />}>
-              <Route path="/admin" element={<DefaultLayout />}>
-                <Route path="/admin" index element={<About />} />
-                {/* <Route path="/admin/dashboard" index element={<DefaultLayout />} /> */}
-                <Route path="/admin/calendar" element={<Calendar />} />
-                <Route path="/admin/requests" element={<Requests />} />
-                <Route path="/admin/usermanagement" element={<TableThree />} />
-              </Route>
-            </Route>
-            {/* Admin Technicial */}
-            <Route element={<RequireAuth allowedRoles={ROLES.Technician} />}>
-              <Route path="/technician" element={<DefaultLayoutReq />}>
-                <Route path="" />
-              </Route>
-            </Route>
-            {/* </Auth> */}
-          </Route>
 
-          {/* <Route element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}>
+            <Route element={<Auth />}>
+              {/* Admin Requster */}
+              {/* withAuth( */}
+              {/* <Auth> */}
+              <Route element={<RequireAuth allowedRoles={ROLES.User} />}>
+                {/* <Route path="/" element={<Home />} /> */}
+                <Route path="/requester" element={<DefaultLayoutReq />}>
+                  <Route path="/requester" index element={<FormLayout />} />
+                </Route>
+              </Route>
+              {/* Admin Page */}
+              <Route element={<RequireAuth allowedRoles={ROLES.Admin} />}>
+                <Route path="/admin" element={<DefaultLayout />}>
+                  <Route path="/admin" index element={<About />} />
+                  {/* <Route path="/admin/dashboard" index element={<DefaultLayout />} /> */}
+                  <Route path="/admin/calendar" element={<Calendar />} />
+                  <Route path="/admin/requests" element={<Requests />} />
+                  <Route
+                    path="/admin/usermanagement"
+                    element={<TableThree />}
+                  />
+                </Route>
+              </Route>
+              {/* Admin Technicial */}
+              <Route element={<RequireAuth allowedRoles={ROLES.Technician} />}>
+                <Route path="/technician" element={<DefaultLayoutReq />}>
+                  <Route path="" />
+                </Route>
+              </Route>
+              {/* </Auth> */}
+            </Route>
+
+            {/* <Route element={<RequireAuth allowedRoles={[ROLES.Editor, ROLES.Admin]} />}>
           <Route path="lounge" element={<Lounge />} />
         </Route> */}
 
-          <Route path="*" element={<Missing />} />
+            <Route path="*" element={<Missing />} />
+          </Route>
         </Routes>
       </BrowserRouter>
       <Toaster

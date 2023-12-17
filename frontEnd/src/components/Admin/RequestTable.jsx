@@ -7,6 +7,7 @@ const URL_R = "/technicial/getTechnicials";
 const RequestTable = () => {
   const [requests, setRequest] = useState([]);
   const [tech, setTech] = useState([]);
+  const [refresh, setRefresh] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -20,7 +21,7 @@ const RequestTable = () => {
     };
     // Call the fetchData function when the component mounts
     fetchData();
-  }, []);
+  }, [refresh]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -97,6 +98,7 @@ const RequestTable = () => {
             name={data.requester_name}
             priority={data.priority}
             tech={tech}
+            setRefresh={setRefresh}
           />
         ))}
       </div>

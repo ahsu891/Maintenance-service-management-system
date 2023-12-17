@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import { db } from "../db.js";
 // import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
+import jwt from "jsonwebtoken";
 // import { v4 as uuidv4 } from "uuid";
 // import db from "./your-database-connection-file"; // Import your database connection file
 
@@ -51,22 +52,23 @@ export const makeRequest = (req, res) => {
   );
 };
 export const register = (req, res) => {
-  const { fname, lname, password, email, phone, username } = req.body;
-
+  const { fname, lname, password, phone, username, job, position } = req.body;
+  const id = uuidv4();
   // Use placeholders in the query to prevent SQL injection
-  const insertQuery = `INSERT INTO users (user_id, role, username, password, first_name, last_name, email, phone) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+  const insertQuery = `INSERT INTO users (user_id, role, username, password, first_name, last_name, job,position, phone) VALUES (?, ?, ?, ?,?,?, ?, ?, ?)`;
   const hash = bcrypt.hashSync(password, 8);
   // Assuming you have a connection pool named 'db'
   db.query(
     insertQuery,
     [
-      uuidv4(), // Generate a new UUID for the request_id
+      id, // Generate a new UUID for the request_id
       "Requester",
       username,
       hash,
       fname, // Assuming 'Pending' is a valid status value
       lname,
-      email,
+      job,
+      position,
       phone, // Assuming technician_id starts as null
     ],
     (err, results) => {
@@ -75,9 +77,17 @@ export const register = (req, res) => {
         res.status(500).send("Error creating account ");
         return;
       }
+      const token = jwt.sign(
+        { username: username, user_id: id, role: "requester" },
+        process.env.JWT_SECRET
+      );
 
+      res.cookie("token", token, { httpOnly: true });
       //   console.log("Data inserted successfully");
-      res.status(200).send("Your successfully registered");
+      res.status(200).send({
+        message: "Your successfully registered",
+        user_id: id,
+      });
     }
   );
 };

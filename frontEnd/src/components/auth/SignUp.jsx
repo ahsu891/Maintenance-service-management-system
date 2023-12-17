@@ -1,17 +1,56 @@
 import { Link, useNavigate } from "react-router-dom";
 // import LogoDark from '../../images/logo/logo-dark.svg';
 // import Lo?go from '../../images/logo/logo.svg';
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "../../api/axios";
 const URL_R = "/requester/register";
+
+const infrom = [
+  {
+    position: "Department",
+    data: ["Software Engineering", "Geomatices", "COTM", "Civil Engineering"],
+  },
+  {
+    position: "Din",
+    data: [
+      "Engineering College",
+      "Natural Science College",
+      "Information and Technolegy College",
+    ],
+  },
+];
 const SignUp = () => {
   const [isLoading, setLoading] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  const errRef = useRef();
+
+  // errRef.current.focus();
+  const [pos, setPos] = useState(
+    () => infrom.filter((data) => data.position === "Department")[0].data
+  );
   const navigate = useNavigate();
+  function handlepos(e) {
+    setPos(infrom.filter((data) => data.position === e.target.value)[0].data);
+  }
   async function handleSubmit(e) {
     e.preventDefault();
-    const { fname, lname, password, email, phone, username } = e.target;
+    const {
+      fname,
+      lname,
+      password,
 
+      phone,
+      username,
+      repassword,
+      typep,
+      typej,
+    } = e.target;
+
+    if (repassword.value !== password.value) {
+      setErrMsg("The PassWord and Re-password is not similar");
+      return errRef.current.focus();
+    }
     try {
       // Make an Axios request
       setLoading(true);
@@ -19,15 +58,18 @@ const SignUp = () => {
         fname: fname.value,
         lname: lname.value,
         password: password.value,
-        email: email.value,
+        position: typep.value,
+        job: typej.value,
         phone: phone.value,
         username: username.value,
       });
       console.log("Server response:", response.data);
-      toast.success(response.data);
-      navigate("/requester");
+      toast.success(response.data.message);
+
       setLoading(false);
-      localStorage.setItem("role", "requester");
+      localStorage.setItem("roles", "requester");
+      localStorage.setItem("user_id", response.data.user_id);
+      navigate("/requester");
       // Handle success, e.g., redirect to another page
     } catch (error) {
       console.error("Error making Axios request:", error.message);
@@ -241,16 +283,55 @@ const SignUp = () => {
                 </div>
                 <div className="mb-4.5">
                   <label className="mb-2.5 block text-black dark:text-white">
+                    Job
+                  </label>
+                  <div className="relative z-20 bg-transparent dark:bg-form-input">
+                    <select
+                      name="typej"
+                      onChange={handlepos}
+                      className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                    >
+                      {infrom.map((data, i) => (
+                        <option key={i} value={data.position}>
+                          {data.position}
+                        </option>
+                      ))}
+                    </select>
+                    <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
+                      <svg
+                        className="fill-current"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g opacity="0.8">
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M5.29289 8.29289C5.68342 7.90237 6.31658 7.90237 6.70711 8.29289L12 13.5858L17.2929 8.29289C17.6834 7.90237 18.3166 7.90237 18.7071 8.29289C19.0976 8.68342 19.0976 9.31658 18.7071 9.70711L12.7071 15.7071C12.3166 16.0976 11.6834 16.0976 11.2929 15.7071L5.29289 9.70711C4.90237 9.31658 4.90237 8.68342 5.29289 8.29289Z"
+                            fill=""
+                          ></path>
+                        </g>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+                <div className="mb-4.5">
+                  <label className="mb-2.5 block text-black dark:text-white">
                     Posiition
                   </label>
                   <div className="relative z-20 bg-transparent dark:bg-form-input">
                     <select
-                      name="type"
+                      name="typep"
                       className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     >
-                      <option value="Water">Deparment Head</option>
-                      <option value="General">Din</option>
-                      <option value="Electrical">Team Leader</option>
+                      {pos.map((data, i) => (
+                        <option key={i} value={data}>
+                          {data}
+                        </option>
+                      ))}
                     </select>
                     <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                       <svg
@@ -275,20 +356,6 @@ const SignUp = () => {
                 </div>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
-                    what's
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="text"
-                      required
-                      name="username"
-                      placeholder="Role"
-                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                    />
-                  </div>
-                </div>
-                <div className="mb-4">
-                  <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Password
                   </label>
                   <div className="relative">
@@ -296,6 +363,8 @@ const SignUp = () => {
                       type="password"
                       required
                       name="password"
+                      min={8}
+                      max={15}
                       placeholder="Enter your password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     />
@@ -330,6 +399,9 @@ const SignUp = () => {
                   <div className="relative">
                     <input
                       type="password"
+                      name="repassword"
+                      min={8}
+                      max={15}
                       placeholder="Re-enter your password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     />
@@ -366,7 +438,15 @@ const SignUp = () => {
                     className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
                   />
                 </div>
-
+                <div>
+                  <p
+                    ref={errRef}
+                    className={errMsg ? "text-danger text-sm" : "hidden"}
+                    aria-live="assertive"
+                  >
+                    {errMsg}
+                  </p>
+                </div>
                 <div className="mt-6 text-center">
                   <p>
                     Already have an account?{" "}

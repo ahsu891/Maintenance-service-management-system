@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TechList from "./TechList";
 import axios from "../../api/axios";
+import toast from "react-hot-toast";
 const URL_A = "/assign/assingTech";
 function DescriptionList({
   block,
@@ -18,6 +19,8 @@ function DescriptionList({
   name,
   priority,
   tech,
+  setRefresh,
+  setVisible,
 }) {
   const [allchecked, setAllChecked] = useState([]);
   const [list, setList] = useState(() =>
@@ -30,14 +33,19 @@ function DescriptionList({
     // console.log(e.target.checked);
     console.log(allchecked);
 
+    if (!allchecked.length) {
+      return toast.error("Choose the Technician !");
+    }
     try {
       // Make a GET request to the API endpoint
       const response = await axios.post(URL_A, {
         data: allchecked,
         request_id,
       });
-
+      setRefresh((e) => !e);
+      setVisible((e) => !e);
       console.log(response.data);
+      toast.success(response.data);
     } catch (error) {
       console.error("Error fetching technicials:", error.message);
     }
