@@ -15,6 +15,7 @@ function RowRequest({
   categories,
   name,
   priority,
+  tech,
 }) {
   const [visible, setVisible] = useState(false);
 
@@ -60,6 +61,7 @@ function RowRequest({
           categories={categories}
           name={name}
           priority={priority}
+          tech={tech}
         />
       )}
     </>

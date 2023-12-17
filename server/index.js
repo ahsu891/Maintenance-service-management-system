@@ -4,6 +4,7 @@ import authRoutes from "./routes/auth.js";
 import techRoutes from "./routes/technicial.js";
 import ReqRoutes from "./routes/requester.js";
 import ReqDataRoutes from "./routes/request.js";
+import AssRoutes from "./routes/assign.js";
 
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -26,6 +27,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/technicial", techRoutes);
 app.use("/api/requester", ReqRoutes);
 app.use("/api/request", ReqDataRoutes);
+app.use("/api/assign", AssRoutes);
 
 ////////////////////////////////////////////
 app.get("/", (req, res) => {

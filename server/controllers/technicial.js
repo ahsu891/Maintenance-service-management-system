@@ -9,7 +9,11 @@ export const getTechnicials = (req, res) => {
     if (err) {
       res.json(err);
     } else {
-      res.json(data);
+      const Tetch = data.map((data) => {
+        delete data.password;
+        return data;
+      });
+      res.json(Tetch);
     }
   });
 };
@@ -41,7 +45,7 @@ export const addTech = (req, res) => {
     insertQuery,
     [
       uuidv4(), // Generate a new UUID for the request_id
-      "Technicain",
+      "Technician",
       username,
       hash,
       fname, // Assuming 'Pending' is a valid status value

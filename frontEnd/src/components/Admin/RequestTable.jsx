@@ -3,15 +3,31 @@ import axios from "../../api/axios";
 import RowRequest from "./RowRequest";
 
 const URL = "/request/getRequests";
+const URL_R = "/technicial/getTechnicials";
 const RequestTable = () => {
   const [requests, setRequest] = useState([]);
-
+  const [tech, setTech] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Make a GET request to the API endpoint
         const response = await axios.get(URL);
         setRequest([...response.data]);
+        // console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching technicials:", error.message);
+      }
+    };
+    // Call the fetchData function when the component mounts
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Make a GET request to the API endpoint
+        const response = await axios.get(URL_R);
+        setTech([...response.data]);
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching technicials:", error.message);
@@ -80,6 +96,7 @@ const RequestTable = () => {
             categories={data.category}
             name={data.requester_name}
             priority={data.priority}
+            tech={tech}
           />
         ))}
       </div>
