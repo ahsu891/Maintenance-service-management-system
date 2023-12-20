@@ -10,11 +10,13 @@ import About from "./components/Admin/About";
 import withAuth from "./components/auth/withAuth";
 import DefaultLayout from "./layout/DefaultLayout";
 import DefaultLayoutReq from "./layout/DefaultLayoutReq";
+import DefaultLayoutTech from "./layout/DefaultLayoutTech";
 import Calendar from "react-calendar";
 import TableThree from "./components/Admin/TableThree";
 import { Toaster } from "react-hot-toast";
 import FormLayout from "./components/Requester/FormLayout";
 import Requests from "./components/Admin/Requests";
+import WorkOrder from "./components/Technician/WorkOrder";
 // import MainTable from "./components/Admin/MainTable";
 const ROLES = {
   User: "Requester",
@@ -58,8 +60,8 @@ function App() {
               </Route>
               {/* Admin Technicial */}
               <Route element={<RequireAuth allowedRoles={ROLES.Technician} />}>
-                <Route path="/technician" element={<DefaultLayoutReq />}>
-                  <Route path="" />
+                <Route path="/technician" element={<DefaultLayoutTech />}>
+                  <Route path="/technician/workorder" element={<WorkOrder />} />
                 </Route>
               </Route>
               {/* </Auth> */}
