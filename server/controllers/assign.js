@@ -37,3 +37,37 @@ export const AssignTech = (req, res) => {
     res.status(500).send("something went wrong ");
   }
 };
+
+export const getAssign = (req, res) => {
+  // Execute the SQL query
+  const { user_id } = req.body;
+  // console.log(user_id);
+  const sqlQuery = `
+  SELECT
+  technicians_assigned.*,
+  maintenance_requests.*,
+  users.phone,
+  CONCAT(users.first_name, ' ', users.last_name) AS requester_name
+  
+FROM
+  technicians_assigned
+LEFT JOIN
+  maintenance_requests ON technicians_assigned.request_id = maintenance_requests.request_id
+LEFT JOIN
+  users ON maintenance_requests.requester_id = users.user_id
+  WHERE 
+  technicians_assigned.technician_id=?;
+ 
+  `;
+
+  db.query(sqlQuery, [user_id], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).json(results);
+  });
+};

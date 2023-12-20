@@ -16,7 +16,9 @@ import TableThree from "./components/Admin/TableThree";
 import { Toaster } from "react-hot-toast";
 import FormLayout from "./components/Requester/FormLayout";
 import Requests from "./components/Admin/Requests";
+import RequestTech from "./components/Technician/RequestsTech";
 import WorkOrder from "./components/Technician/WorkOrder";
+import RequestList from "./components/Technician/RequestList";
 // import MainTable from "./components/Admin/MainTable";
 const ROLES = {
   User: "Requester",
@@ -61,7 +63,9 @@ function App() {
               {/* Admin Technicial */}
               <Route element={<RequireAuth allowedRoles={ROLES.Technician} />}>
                 <Route path="/technician" element={<DefaultLayoutTech />}>
-                  <Route path="/technician/workorder" element={<WorkOrder />} />
+                  <Route path="/technician/workorder" element={<WorkOrder />}>
+                    <Route index element={<RequestList />} />
+                  </Route>
                 </Route>
               </Route>
               {/* </Auth> */}

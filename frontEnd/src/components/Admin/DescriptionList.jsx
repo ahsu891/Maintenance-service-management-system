@@ -24,7 +24,9 @@ function DescriptionList({
 }) {
   const [allchecked, setAllChecked] = useState([]);
   const [list, setList] = useState(() =>
-    tech.filter((data) => data.specialization === "Water")
+    tech.filter(
+      (data) => data.specialization === "Water" && data.status === "active"
+    )
   );
   async function handleAssign(e) {
     e.preventDefault();
@@ -52,7 +54,12 @@ function DescriptionList({
   }
   function handleSel(e) {
     console.log(e.target.value);
-    setList(tech.filter((data) => data.specialization === e.target.value));
+    setList(
+      tech.filter(
+        (data) =>
+          data.specialization === e.target.value && data.status === "active"
+      )
+    );
   }
   // console.log(list, "sssssssss");
   // console.log(tech, "sssssssss");
