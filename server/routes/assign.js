@@ -1,11 +1,18 @@
 import express from "express";
-import { AssignTech, getAssign } from "../controllers/assign.js";
+import {
+  AssignTech,
+  finishAss,
+  getAssGroup,
+  getAssign,
+} from "../controllers/assign.js";
 // import { AssignTech } from "../controllers/assign.js";
 
 const router = express.Router();
 
 router.post("/assingTech", AssignTech);
 router.post("/getAssign", getAssign);
+router.post("/getAssignGroup", getAssGroup);
+router.post("/finishAss", finishAss);
 
 // router.delete("/deleteTech/:technician_id", deleteTech);
 

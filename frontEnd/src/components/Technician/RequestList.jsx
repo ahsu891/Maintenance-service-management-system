@@ -27,6 +27,12 @@ function RequestList() {
       {assignReq.map((data, i) => (
         <RequestTech
           i={i + 1}
+          request_id={data.request_id}
+          date={data.assignment_date}
+          room={data.room}
+          floor={data.floor}
+          phone={data.phone}
+          description={data.description}
           key={data.assignment_id}
           block_id={data.block_id}
           title={data.title}

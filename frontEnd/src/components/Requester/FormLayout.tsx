@@ -168,9 +168,9 @@ const FormLayout = () => {
                       name="priority"
                       className="relative z-20 xl:w-[100px] w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     >
-                      <option value="low">Low</option>
-                      <option value="meduim">Meduim</option>
-                      <option value="high">High</option>
+                      <option value="Low">Low</option>
+                      <option value="Medium">Medium</option>
+                      <option value="High">High</option>
                     </select>
                     <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                       <svg
