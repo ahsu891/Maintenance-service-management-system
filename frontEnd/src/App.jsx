@@ -19,6 +19,7 @@ import Requests from "./components/Admin/Requests";
 import RequestTech from "./components/Technician/RequestsTech";
 import WorkOrder from "./components/Technician/WorkOrder";
 import RequestList from "./components/Technician/RequestList";
+import RequestManagement from "./components/Admin/RequestManagement";
 // import MainTable from "./components/Admin/MainTable";
 const ROLES = {
   User: "Requester",
@@ -57,6 +58,10 @@ function App() {
                   <Route
                     path="/admin/usermanagement"
                     element={<TableThree />}
+                  />
+                  <Route
+                    path="/admin/requestmanagement"
+                    element={<RequestManagement />}
                   />
                 </Route>
               </Route>
