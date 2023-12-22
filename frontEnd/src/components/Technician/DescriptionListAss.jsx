@@ -88,28 +88,28 @@ function DescriptionListAss({
   }, [request_id]);
 
   return (
-    <div Name="w-full ">
-      <div Name=" mx-[auto]  max-w-[800px]  px-4 py-5 card border my-5 border-gray ">
-        <div Name="px-4  sm:px-0 ">
-          <h2 Name="text-base text-primary font-semibold leading-7">
+    <div className="w-full ">
+      <div className=" mx-[auto]  max-w-[800px]  px-4 py-5 card border my-5 border-gray ">
+        <div className="px-4  sm:px-0 ">
+          <h2 className="text-base text-primary font-semibold leading-7">
             Request Information
           </h2>
         </div>
-        <div Name="mt-6 border-t border-gray">
-          <dl Name="divide-y divide-gray">
-            <div Name="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt Name="text-sm  font-semibold leading-6  text-graydark">
+        <div className="mt-6 border-t border-gray">
+          <dl className="divide-y divide-gray">
+            <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm  font-semibold leading-6  text-graydark">
                 Full Name
               </dt>
-              <dd Name="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
+              <dd className="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
                 {name}
               </dd>
             </div>
-            <div Name="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt Name="text-sm font-semibold leading-6  text-graydark">
+            <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-semibold leading-6  text-graydark">
                 Title
               </dt>
-              <dd Name="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
+              <dd className="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
                 {title}
               </dd>
             </div>
@@ -121,58 +121,60 @@ function DescriptionListAss({
                 {categories}
               </dd>
             </div> */}
-            <div Name="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt Name="text-sm font-semibold leading-6  text-graydark">
+            <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-semibold leading-6  text-graydark">
                 Date
               </dt>
-              <dd Name="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
+              <dd className="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
                 {date}
               </dd>
             </div>
-            <div Name="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt Name="text-sm font-semibold leading-6  text-graydark">
+            <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-semibold leading-6  text-graydark">
                 Phone
               </dt>
-              <dd Name="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
+              <dd className="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
                 {phone}
               </dd>
             </div>
 
-            <div Name="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt Name="text-sm font-semibold leading-6  text-graydark">
+            <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-semibold leading-6  text-graydark">
                 Block No
               </dt>
-              <dd Name="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
+              <dd className="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
                 {block}
               </dd>
             </div>
-            <div Name="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt Name="text-sm font-semibold leading-6  text-graydark">
+            <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-semibold leading-6  text-graydark">
                 Floor No
               </dt>
-              <dd Name="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                 {floor}
               </dd>
             </div>
-            <div Name="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt Name="text-sm font-semibold leading-6  text-graydark">
+            <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-semibold leading-6  text-graydark">
                 Room No
               </dt>
-              <dd Name="mt-1 text-sm leading-6 text-graydark sm:col-span-2 sm:mt-0">
+              <dd className="mt-1 text-sm leading-6 text-graydark sm:col-span-2 sm:mt-0">
                 {room}
               </dd>
             </div>
-            <div Name="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt Name="text-sm font-semibold leading-6  text-graydark">
+            <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-semibold leading-6  text-graydark">
                 Description
               </dt>
-              <dd Name="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
+              <dd className="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
                 {description}
               </dd>
             </div>
             {/*  */}
-            <div Name="px-4 pt-8 sm:px-0 pb-2 ">
-              <h2 Name="   text-md  font-semibold text-primary ">Work Order</h2>
+            <div className="px-4 pt-8 sm:px-0 pb-2 ">
+              <h2 className="   text-md  font-semibold text-primary ">
+                Work Order
+              </h2>
             </div>
             <form onSubmit={handleForm}>
               {/* <div Name="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -224,13 +226,13 @@ function DescriptionListAss({
                 <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                   <div className="flex flex-row items-center">
                     <div className="p-1">
-                      <label for="input-group-search" className="sr-only">
+                      <label htmlFor="input-group-search" className="sr-only">
                         Search
                       </label>
                       <div className="relative">
                         <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                           <svg
-                            class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                            className="w-4 h-4 text-gray-500 dark:text-gray-400"
                             aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -238,9 +240,9 @@ function DescriptionListAss({
                           >
                             <path
                               stroke="currentColor"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
                               d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
                             />
                           </svg>
