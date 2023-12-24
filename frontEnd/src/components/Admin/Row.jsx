@@ -35,7 +35,7 @@ function Row({ name, categories, status, phone, technicial_id, setRef, i }) {
     const fetchData = async () => {
       let toggle;
       if (status === "active") {
-        toggle = "inActive";
+        toggle = "inactive";
       }
       if (status !== "active") {
         toggle = "active";

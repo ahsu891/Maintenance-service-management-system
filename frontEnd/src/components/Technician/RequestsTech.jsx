@@ -37,8 +37,14 @@ function Requests({
                 </span>
               </div>
             </div>
-            <div>
-              <div className="text-primary">{priority}</div>
+            <div className="flex flex-row gap-2 ">
+              {/* <div className="text-primary">{priority}</div> */}
+              <button className="outline outline-1 outline-primary px-3 py-1 rounded-md text-primary">
+                Reject
+              </button>
+              <button className="bg-primary px-3 py-1 rounded-md text-white">
+                Accept
+              </button>
             </div>
           </div>
         </div>

@@ -178,7 +178,69 @@ WHERE request_id=?;
       // console.log(results);
       // Return the query results as JSON
       // res.status(200).json(results);
+      res.status(200).json("Sucessfully work the Task");
     });
+    // db.query(sqld, [request_id], (error, results) => {
+    //   if (error) {
+    //     console.error("Error executing the query:", error);
+    //     throw new Error("Something went wrong");
+    //     // res.status(500).send("Internal Server Error");
+    //     // return;
+    //   }
+
+    //   // console.log(results);
+    //   // Return the query results as JSON
+    //   res.status(200).json("Sucessfully work the Task");
+    // });
+  } catch (error) {
+    console.error("Caught an error:", error.message);
+    res.status(500).send("Internal Server Error");
+  }
+  // db.query(sqlQuery, [request_id], (error, results) => {
+  //   if (error) {
+  //     console.error("Error executing the query:", error);
+  //     res.status(500).send("Internal Server Error");
+  //     return;
+  //   }
+
+  //   // console.log(results);
+  //   // Return the query results as JSON
+  //   res.status(200).json(results);
+  // });
+};
+export const conform = (req, res) => {
+  // Execute the SQL query
+  const { request_id } = req.body;
+  // console.log(request_id);
+  const sqld = `
+  
+DELETE FROM technicians_assigned
+WHERE request_id=?;
+
+  `;
+  const sqlu = `
+  
+  UPDATE maintenance_requests
+  SET 
+    status = 'Closed',
+    completion_date = NOW()
+  WHERE request_id = ?;
+
+  `;
+  try {
+    db.query(sqlu, [request_id], (error, results) => {
+      if (error) {
+        console.error("Error executing the query:", error);
+        throw new Error("Something went wrong");
+        // res.status(500).send("Internal Server Error");
+        // return;
+      }
+
+      // console.log(results);
+      // Return the query results as JSON
+      // res.status(200).json(results);
+    });
+
     db.query(sqld, [request_id], (error, results) => {
       if (error) {
         console.error("Error executing the query:", error);
@@ -195,15 +257,4 @@ WHERE request_id=?;
     console.error("Caught an error:", error.message);
     res.status(500).send("Internal Server Error");
   }
-  // db.query(sqlQuery, [request_id], (error, results) => {
-  //   if (error) {
-  //     console.error("Error executing the query:", error);
-  //     res.status(500).send("Internal Server Error");
-  //     return;
-  //   }
-
-  //   // console.log(results);
-  //   // Return the query results as JSON
-  //   res.status(200).json(results);
-  // });
 };

@@ -1,6 +1,7 @@
 import express from "express";
 import {
   AssignTech,
+  conform,
   finishAss,
   getAssGroup,
   getAssign,
@@ -13,6 +14,7 @@ router.post("/assingTech", AssignTech);
 router.post("/getAssign", getAssign);
 router.post("/getAssignGroup", getAssGroup);
 router.post("/finishAss", finishAss);
+router.post("/conform", conform);
 
 // router.delete("/deleteTech/:technician_id", deleteTech);
 

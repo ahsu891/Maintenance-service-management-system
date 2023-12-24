@@ -12,21 +12,21 @@ const formatTime = (timeInSeconds) => {
 function WorkOrder() {
   const [seconds, setSeconds] = useState(0);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setSeconds((prevSeconds) => prevSeconds + 1);
-    }, 1000);
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     setSeconds((prevSeconds) => prevSeconds + 1);
+  //   }, 1000);
 
-    return () => clearInterval(intervalId);
-  }, []);
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   return (
     <div>
-      <div className="text-center mt-8">
+      {/* <div className="text-center mt-8">
         <h1 className="text-4xl font-bold mb-4">Timer</h1>
         <p className="text-2xl">{seconds} seconds</p>
         <p className="text-2xl">{formatTime(seconds)}</p>
-      </div>
+      </div> */}
       <Outlet />
     </div>
   );

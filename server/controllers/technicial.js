@@ -53,7 +53,7 @@ export const addTech = (req, res) => {
       email,
       phone, // Assuming technician_id starts as null
       specialzation,
-      "inActive",
+      "inactive",
     ],
     (err, results) => {
       if (err) {

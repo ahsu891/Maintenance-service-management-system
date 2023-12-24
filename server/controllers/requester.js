@@ -91,3 +91,22 @@ export const register = (req, res) => {
     }
   );
 };
+
+export const getSingleRequester = (req, res) => {
+  // Execute the SQL query
+  const { requester_id } = req.body;
+  const sqld = `SELECT * FROM maintenance_requests WHERE requester_id=? AND maintenance_requests.status!="Closed"`;
+
+  db.query(sqld, [requester_id], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      throw new Error("Something went wrong");
+      // res.status(500).send("Internal Server Error");
+      // return;
+    }
+
+    // console.log(results);
+    // Return the query results as JSON
+    res.status(200).json(results);
+  });
+};
