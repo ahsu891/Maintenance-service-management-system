@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import DescriptionList from "./DescriptionList";
+import { formatDateRelativeToToday } from "../../api/helper";
 function RowRequest({
   block_id,
   floor,
@@ -37,7 +38,9 @@ function RowRequest({
           <p className="text-black dark:text-white">{categories}</p>
         </div>
         <div className="border-b border-[#eee] py-5 px-4 dark:border-strokedark flex flex-row items-center">
-          <p className="text-black dark:text-white">{name}</p>
+          <p className="text-black dark:text-white">
+            {formatDateRelativeToToday(date)}
+          </p>
         </div>
         <div className="border-b border-[#eee]  ir py-5 px-4 dark:border-strokedark flex flex-row items-center">
           <div className=" flex flex-row items-center gap-1">

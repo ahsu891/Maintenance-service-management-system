@@ -1,6 +1,5 @@
 import bcrypt from "bcryptjs";
 import { db } from "../db.js";
-// import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 
 export const AssignTech = (req, res) => {
@@ -21,7 +20,19 @@ export const AssignTech = (req, res) => {
         }
       );
     });
+    /////////////////////////////////////////////////////////////////
 
+    data.forEach((element) => {
+      const sql = `UPDATE technicians SET available = 'engaged' WHERE technician_id = ?;`;
+      db.query(sql, [element], (error, results) => {
+        if (error) {
+          console.error("Error executing the query:", error);
+          res.status(500).send("Internal Server Error");
+          return new Error("Internal Server Error");
+        }
+      });
+    });
+    //////////////////////////
     const mysql = `UPDATE maintenance_requests SET status = 'Assigned' WHERE request_id = "${request_id}"`;
 
     db.query(mysql, (error, results) => {
@@ -137,6 +148,11 @@ WHERE request_id=?;
   WHERE request_id = ?;
 
   `;
+  const sqlac = `
+  
+  UPDATE technicians SET available = 'active' WHERE technician_id = ?;
+
+  `;
   try {
     worker?.forEach((element) => {
       db.query(sqlQuery, [id, request_id, element, time], (error, results) => {
@@ -147,13 +163,28 @@ WHERE request_id=?;
           // return;
         }
 
+        material.forEach((element) => {
+          db.query(sqlm, [uuidv4(), id, element.data], (error, results) => {
+            if (error) {
+              console.error("Error executing the query:", error);
+              throw new Error("Something went wrong");
+              // res.status(500).send("Internal Server Error");
+              // return;
+            }
+
+            // console.log(results);
+            // Return the query results as JSON
+            // res.status(200).json(results);
+          });
+        });
+
         // console.log(results);
         // Return the query results as JSON
         // res.status(200).json(results);
       });
     });
-    material.forEach((element) => {
-      db.query(sqlm, [uuidv4(), id, element.data], (error, results) => {
+    worker?.forEach((element) => {
+      db.query(sqlac, [element], (error, results) => {
         if (error) {
           console.error("Error executing the query:", error);
           throw new Error("Something went wrong");

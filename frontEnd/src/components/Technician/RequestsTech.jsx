@@ -14,6 +14,8 @@ function Requests({
   priority,
   i,
   date,
+  status,
+  setReff,
 }) {
   const [on, setOn] = useState(false);
   return (
@@ -38,13 +40,18 @@ function Requests({
               </div>
             </div>
             <div className="flex flex-row gap-2 ">
+              {status === "Completed" && (
+                <p className=" rounded-full  bg-meta-3 bg-opacity-10 py-1 px-3 text-sm font-medium  text-meta-3">
+                  {status}
+                </p>
+              )}
               {/* <div className="text-primary">{priority}</div> */}
-              <button className="outline outline-1 outline-primary px-3 py-1 rounded-md text-primary">
+              {/* <button className="outline outline-1 outline-primary px-3 py-1 rounded-md text-primary">
                 Reject
               </button>
               <button className="bg-primary px-3 py-1 rounded-md text-white">
                 Accept
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
@@ -63,6 +70,8 @@ function Requests({
             priority={priority}
             block={block_id}
             request_id={request_id}
+            setOn={setOn}
+            setReff={setReff}
           />
         </div>
       )}

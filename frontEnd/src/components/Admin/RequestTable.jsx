@@ -68,7 +68,7 @@ const RequestTable = () => {
             <p className="text-black dark:text-white">Categories</p>
           </div>
           <div className=" py-5 px-4 dark:border-strokedark">
-            <p className="text-black dark:text-white">Requested By</p>
+            <p className="text-black dark:text-white">Date</p>
           </div>
           <div className="  ir py-5 px-4 dark:border-strokedark">
             <div className=" flex flex-row items-center gap-1">

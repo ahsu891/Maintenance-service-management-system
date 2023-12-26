@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TechList from "./TechList";
 import axios from "../../api/axios";
 import toast from "react-hot-toast";
+import { dateFormating, formatDateRelativeToToday } from "../../api/helper";
 const URL_A = "/assign/assingTech";
 function DescriptionList({
   block,
@@ -31,7 +32,7 @@ function DescriptionList({
   async function handleAssign(e) {
     e.preventDefault();
 
-    console.log(e.target.type.value);
+    // console.log(e.target.type.value);
     // console.log(e.target.checked);
     console.log(allchecked);
 
@@ -102,7 +103,7 @@ function DescriptionList({
                 Date
               </dt>
               <dd className="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
-                {date}
+                {formatDateRelativeToToday(date)}
               </dd>
             </div>
             <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

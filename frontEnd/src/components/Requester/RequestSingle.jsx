@@ -53,7 +53,7 @@ function RequestSingle({
                 <span>
                   {" "}
                   {status === "Assigned" && (
-                    <p className=" rounded-full   w-auto block-inline  bg-meta-3 bg-opacity-10 py-1 px-3 text-sm font-medium   text-meta-3">
+                    <p className=" rounded-full   w-auto block-inline  bg-primary bg-opacity-10 py-1 px-3 text-sm font-medium   text-primary">
                       {status}
                     </p>
                   )}
@@ -62,14 +62,26 @@ function RequestSingle({
                       {status}
                     </p>
                   )}
+                  {status === "Completed" && (
+                    <p className=" rounded-full   w-auto block-inline bg-meta-3 bg-opacity-10 py-1 px-3 text-sm font-medium  text-meta-3">
+                      {status}
+                    </p>
+                  )}
+                  {status === "Cancelled" && (
+                    <p className=" rounded-full   w-auto block-inline  bg-danger bg-opacity-10 py-1 px-3 text-sm font-medium  text-danger">
+                      {status}
+                    </p>
+                  )}
                 </span>
               </div>
               <div className="py-1">
                 <div className="flex flex-row items-center gap-2">
-                  <span className="text-primary text-lg">
+                  {/* <span className="text-primary text-lg">
                     <AiOutlineMessage />
-                  </span>
-                  <span className="text-sm">Complain</span>
+                  </span> */}
+                  {/* <span className="text-sm">Assign to:</span>
+                  <span className="text-sm">Ahmed</span>
+                  <span className="text-sm ml-3">0970752122</span> */}
                 </div>
               </div>
             </div>
@@ -84,7 +96,7 @@ function RequestSingle({
             <div className="flex flex-row  gap-6 items-center">
               <div className="flex flex-row gap-1  items-center">
                 <p className=" text-boxdark">
-                  If the request is done Please conform
+                  If the request is done Please confirm
                 </p>
                 <span className="text-primary animate-fade-right animate-duration-1000 duration-10 hover:translate-x-2 ">
                   <FaArrowRightLong />
@@ -93,7 +105,7 @@ function RequestSingle({
               <div>
                 <button
                   onClick={handleConform}
-                  disabled={status === "Pending" ? true : false}
+                  disabled={status === "Completed" ? false : true}
                   className="bg-primary px-3 py-1 rounded-md text-white"
                 >
                   Conform

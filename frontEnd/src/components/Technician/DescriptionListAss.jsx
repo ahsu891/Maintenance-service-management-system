@@ -4,6 +4,7 @@ import axios from "../../api/axios";
 import toast from "react-hot-toast";
 import TechListTech from "./TechListTech";
 import TechListPart from "./TechListPart";
+import { formatDateRelativeToToday } from "../../api/helper";
 
 const URL_G = "/assign/getAssignGroup";
 const URL_F = "/assign/finishAss";
@@ -25,6 +26,8 @@ function DescriptionListAss({
   tech,
   setRefresh,
   setVisible,
+  setOn,
+  setReff,
 }) {
   // console.log(list, "sssssssss");
   // console.log(tech, "sssssssss");
@@ -46,7 +49,9 @@ function DescriptionListAss({
     console.log(h.value, m.value);
     console.log(allchecked);
     console.log(addvalue);
-
+    if (allchecked.length === 0) {
+      return;
+    }
     const fetchData = async () => {
       try {
         // Make a GET request to the API endpoint
@@ -60,6 +65,8 @@ function DescriptionListAss({
         // console.log(localStorage.getItem("user_id"));
         // console.log(response.data);
         toast.success(response.data);
+        setReff((e) => !e);
+        setOn((e) => !e);
       } catch (error) {
         console.error("Error fetching technicials:", error.message);
       }
@@ -85,7 +92,7 @@ function DescriptionListAss({
     };
     // Call the fetchData function when the component mounts
     fetchData();
-  }, [request_id]);
+  }, [request_id, list]);
 
   return (
     <div className="w-full ">
@@ -126,7 +133,7 @@ function DescriptionListAss({
                 Date
               </dt>
               <dd className="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
-                {date}
+                {formatDateRelativeToToday(date)}
               </dd>
             </div>
             <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">

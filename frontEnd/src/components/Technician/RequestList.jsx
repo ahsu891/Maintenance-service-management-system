@@ -4,6 +4,7 @@ import axios from "../../api/axios";
 const URL_A = "/assign/getAssign";
 function RequestList() {
   const [assignReq, setAssignReq] = useState([]);
+  const [reff, setReff] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -21,7 +22,7 @@ function RequestList() {
     };
     // Call the fetchData function when the component mounts
     fetchData();
-  }, []);
+  }, [reff]);
   return (
     <div>
       {assignReq.map((data, i) => (
@@ -38,6 +39,8 @@ function RequestList() {
           title={data.title}
           requester_name={data.requester_name}
           priority={data.priority}
+          status={data.status}
+          setReff={setReff}
         />
       ))}
       {/* <RequestTech /> */}

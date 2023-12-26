@@ -61,10 +61,7 @@ function App() {
                     path="/admin/usermanagement"
                     element={<TableThree />}
                   />
-                  <Route
-                    path="/admin/requestmanagement"
-                    element={<RequestManagement />}
-                  />
+                  <Route path="/admin/status" element={<RequestManagement />} />
                 </Route>
               </Route>
               {/* Admin Technicial */}
