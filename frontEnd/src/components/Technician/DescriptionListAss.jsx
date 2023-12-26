@@ -50,7 +50,7 @@ function DescriptionListAss({
     console.log(allchecked);
     console.log(addvalue);
     if (allchecked.length === 0) {
-      return;
+      return toast.error("Please Assign your Team");
     }
     const fetchData = async () => {
       try {
