@@ -20,6 +20,7 @@ import RequestTech from "./components/Technician/RequestsTech";
 import WorkOrder from "./components/Technician/WorkOrder";
 import RequestList from "./components/Technician/RequestList";
 import RequestManagement from "./components/Admin/RequestManagement";
+import Dashboard from "./components/Requester/Dashboard";
 // import MainTable from "./components/Admin/MainTable";
 const ROLES = {
   User: "Requester",
@@ -45,7 +46,8 @@ function App() {
               <Route element={<RequireAuth allowedRoles={ROLES.User} />}>
                 {/* <Route path="/" element={<Home />} /> */}
                 <Route path="/requester" element={<DefaultLayoutReq />}>
-                  <Route path="/requester" index element={<FormLayout />} />
+                  <Route index element={<Dashboard />} />
+                  <Route path="/requester/request" element={<FormLayout />} />
                 </Route>
               </Route>
               {/* Admin Page */}

@@ -17,6 +17,7 @@ function RequestSingle({
   priority,
   status,
   i,
+  setReff,
   date,
 }) {
   function handleConform() {
@@ -28,8 +29,10 @@ function RequestSingle({
         });
         // console.log(request_id);
         // console.log(localStorage.getItem("user_id"));
-        console.log(response.data);
+        // console.log(response.data);
         toast.success(response.data);
+        setReff((e) => !e);
+
         //   setList([...response.data]);
       } catch (error) {
         console.error("Error fetching technicials:", error.message);
@@ -90,6 +93,7 @@ function RequestSingle({
               <div>
                 <button
                   onClick={handleConform}
+                  disabled={status === "Pending" ? true : false}
                   className="bg-primary px-3 py-1 rounded-md text-white"
                 >
                   Conform

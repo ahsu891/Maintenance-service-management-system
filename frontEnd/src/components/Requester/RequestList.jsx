@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "../../api/axios";
 import RequestSingle from "./RequestSingle";
 const URL_R = "/requester/getSingleInfo";
-function RequestList() {
+function RequestList({ reff, setReff }) {
   const [request, setRequest] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -21,7 +21,7 @@ function RequestList() {
     };
     // Call the fetchData function when the component mounts
     fetchData();
-  }, []);
+  }, [reff]);
   return (
     <div>
       {request?.map((data) => {
@@ -31,6 +31,7 @@ function RequestList() {
             title={data.title}
             key={data.request_id}
             request_id={data.request_id}
+            setReff={setReff}
           />
         );
       })}
