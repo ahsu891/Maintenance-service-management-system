@@ -1,3 +1,5 @@
+import React from "react";
+import { MdRestore } from "react-icons/md";
 function RowAssign({
   i,
   title,
@@ -37,12 +39,30 @@ function RowAssign({
       </td>
 
       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-        <p className=" rounded-full  bg-warning bg-opacity-10 py-1 px-3 text-sm font-medium  text-warning">
-          {status}
-        </p>
+        {status === "Assigned" && (
+          <p className=" rounded-full  bg-warning bg-opacity-10 py-1 px-3 text-sm font-medium  text-warning">
+            {status}
+          </p>
+        )}
+
+        {status === "Completed" && (
+          <p className=" rounded-full  bg-meta-3 bg-opacity-10 py-1 px-3 text-sm font-medium  text-meta-3">
+            {status}
+          </p>
+        )}
+
+        {status === "Reject" && (
+          <p className=" rounded-full  bg-danger bg-opacity-10 py-1 px-3 text-sm font-medium  text-danger">
+            {status}
+          </p>
+        )}
       </td>
       <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-        <h5 className="font-medium text-black dark:text-white">{""}</h5>
+        <h5 className="font-medium text-black dark:text-white">
+          <span className="text-2xl">
+            <MdRestore />
+          </span>
+        </h5>
       </td>
     </tr>
   );

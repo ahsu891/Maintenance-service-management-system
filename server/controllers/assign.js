@@ -122,7 +122,7 @@ export const finishAss = (req, res) => {
   // Execute the SQL query
   const { time, material, worker, request_id } = req.body;
   const id = uuidv4();
-  console.log(time, material, worker);
+  // console.log(time, material, worker);
   // console.log(user_id);
   const sqlQuery = `
   INSERT INTO finished_requests (finished_id, request_id, technician_id, time_took) VALUES (?,?, ?, ?);
