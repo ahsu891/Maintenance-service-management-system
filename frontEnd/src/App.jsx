@@ -11,7 +11,7 @@ import withAuth from "./components/auth/withAuth";
 import DefaultLayout from "./layout/DefaultLayout";
 import DefaultLayoutReq from "./layout/DefaultLayoutReq";
 import DefaultLayoutTech from "./layout/DefaultLayoutTech";
-import Calendar from "react-calendar";
+
 import TableThree from "./components/Admin/TableThree";
 import { Toaster } from "react-hot-toast";
 import FormLayout from "./components/Requester/FormLayout";
@@ -21,6 +21,8 @@ import WorkOrder from "./components/Technician/WorkOrder";
 import RequestList from "./components/Technician/RequestList";
 import RequestManagement from "./components/Admin/RequestManagement";
 import Dashboard from "./components/Requester/Dashboard";
+import Complain from "./components/Requester/Complain";
+import Calendar from "./components/Admin/Calendar";
 // import MainTable from "./components/Admin/MainTable";
 const ROLES = {
   User: "Requester",
@@ -48,6 +50,7 @@ function App() {
                 <Route path="/requester" element={<DefaultLayoutReq />}>
                   <Route index element={<Dashboard />} />
                   <Route path="/requester/request" element={<FormLayout />} />
+                  <Route path="/requester/complain" element={<Complain />} />
                 </Route>
               </Route>
               {/* Admin Page */}

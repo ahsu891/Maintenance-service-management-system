@@ -21,6 +21,7 @@
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.2",
     "mysql": "^2.18.1",
+    "node-cron": "^3.0.3",
     "uuid": "^9.0.1"
   }
 }

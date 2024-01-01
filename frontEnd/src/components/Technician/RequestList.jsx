@@ -27,7 +27,7 @@ function RequestList() {
     <div>
       {assignReq.length === 0 ? (
         <div className="flex flex-row justify-center items-center rounded-md border border-stroke bg-white px-4   pb-4.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-          <span className="py-5">No Work Order Yet</span>
+          <span className="py-5">No new work order yet</span>
         </div>
       ) : (
         ""

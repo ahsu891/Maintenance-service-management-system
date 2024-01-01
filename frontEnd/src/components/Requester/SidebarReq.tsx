@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { FiHardDrive } from "react-icons/fi";
-
+import { AiOutlineMessage } from "react-icons/ai";
 // import Logo from "../../images/icon/"
 import SidebarLinkGroupReq from "../Requester/SidebarLinkGroupReq.js";
 
@@ -341,8 +341,24 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                  <FiHardDrive />
+                  <span className="text-xl">
+                    <FiHardDrive />
+                  </span>
                   Request
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/requester/complain"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("requester/complain") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <span className="text-xl">
+                    <AiOutlineMessage />
+                  </span>
+                  Complain
                 </NavLink>
               </li>
               <li>
