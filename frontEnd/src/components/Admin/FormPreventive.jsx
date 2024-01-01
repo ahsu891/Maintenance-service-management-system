@@ -20,19 +20,6 @@ function FormPreventive() {
       description,
     } = e.target;
 
-    console.log(
-      title.value,
-      date.value,
-      floor.value,
-      rep.value,
-      intv.value,
-      sin.value,
-      room.value,
-      categories.value,
-      priority.value,
-      block.value,
-      description.value
-    );
     console.log(floor.value);
 
     try {
@@ -46,8 +33,8 @@ function FormPreventive() {
         floor: floor.value,
         room: room.value,
         block_no: block.value,
-        schedule_interval: intv.value,
-        interval_unit: sin.value,
+        schedule_interval: sin.value,
+        interval_unit: intv.value,
       });
       // console.log("Server response:", response.data);
       toast.success(response.data);

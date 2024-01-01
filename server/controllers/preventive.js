@@ -82,6 +82,8 @@ export const prevent = async (req, res) => {
       schedule_interval,
       interval_unit,
     } = req.body;
+    console.log(interval_unit);
+    console.log(schedule_interval);
     const idd =
       "INSERT INTO preventive_maintenance (id,title, description, start_date, repetition, floor, room, block_no, schedule_interval, interval_unit) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?)";
     // Perform the INSERT operation
@@ -118,3 +120,93 @@ export const prevent = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+export const checkPrevent = async (req, res) => {
+  try {
+    // Extract data from the request body
+
+    const idd = "SELECT * FROM preventive_maintenance WHERE repetition > 0";
+
+    db.query(idd, (error, results) => {
+      if (error) {
+        console.error("Error executing the query:", error);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      console.log(results);
+      results?.forEach((data) => {
+        if (
+          data.start_date.toISOString().split("T")[0] ===
+          new Date().toISOString().split("T")[0]
+        ) {
+          const insertQuery = `INSERT INTO maintenance_requests (request_id, requester_id, request_date, completion_date, status, title,room,floor, description, image, priority, block_id,category) VALUES (?, ?, ?,?,?, ?, ?, ?, ?, ?, ?, ?,?)`;
+
+          // Assuming you have a connection pool named 'db'
+          db.query(
+            insertQuery,
+            [
+              uuidv4(), // Generate a new UUID for the request_id
+              null,
+              new Date(),
+              null,
+              "Pending", // Assuming 'Pending' is a valid status value
+              data.title,
+              data.room,
+              data.floor,
+              data.description,
+              null, // Assuming technician_id starts as null
+              "Low",
+              data.block_no,
+              "Water",
+            ],
+            (err, results) => {
+              if (err) {
+                console.error("Error inserting data:", err);
+                res.status(500).send("Error inserting data into the database");
+                return;
+              }
+
+              //   console.log("Data inserted successfully");
+            }
+          );
+          // console.log(data.interval_unit);
+          // console.log(data.schedule_interval);
+          const nextScheduledDate = calculateNextScheduledDate(
+            data.start_date,
+            data.repetition,
+            data.schedule_interval,
+            data.interval_unit
+          );
+          // console.log(data.start_date.toISOString().split("T")[0], "hhhhhhh");
+          // console.log(nextScheduledDate);
+          // console.log(
+          //   new Date().toISOString().split("T")[0] ===
+          //     data.start_date.toISOString().split("T")[0]
+          // );
+          // console.log(data.id, "dfghjkggggg");
+          const fff = `UPDATE preventive_maintenance SET start_date = ? WHERE id = ?;`;
+          db.query(fff, [nextScheduledDate, data.id], (err, results) => {
+            if (err) {
+              console.error("Error inserting data:", err);
+              res.status(500).send("Error inserting data into the database");
+              return;
+            }
+
+            // console.log("Data inserted successfully");
+            // console.log(results);
+          });
+        }
+      });
+
+      // Return the query results as JSON
+      console.log("Hello aaaaaas");
+      // res.status(200).json(" Successfully secheduled");
+    });
+
+    // Respond with the ID of the inserted record
+  } catch (error) {
+    console.error("Error inserting into database:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+// (new Date()).toISOString().split("T")[0];
