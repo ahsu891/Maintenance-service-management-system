@@ -14,7 +14,7 @@ function RequestList() {
         });
 
         // console.log(localStorage.getItem("user_id"));
-        // console.log(response.data);
+        // console.log("mmmmmmm");
         setAssignReq([...response.data]);
       } catch (error) {
         console.error("Error fetching technicials:", error.message);
@@ -23,6 +23,7 @@ function RequestList() {
     // Call the fetchData function when the component mounts
     fetchData();
   }, [reff]);
+  console.log(assignReq);
   return (
     <div>
       {assignReq.length === 0 ? (

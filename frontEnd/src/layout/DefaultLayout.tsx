@@ -1,11 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Sidebar from "../components/Admin/Sidebar";
 import Header from "../components/Admin/Header";
 import { Outlet } from "react-router-dom";
+import axios from "../api/axios";
+import toast from "react-hot-toast";
+const URL_R = "/prevent/checkPrevent";
 
 const DefaultLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Make a GET request to the API endpoint
+        const response = await axios.post(URL_R);
+        // setRequest([...response.data]);
+        // toast.success(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching technicials:", error.message);
+      }
+    };
+    // Call the fetchData function when the component mounts
+    fetchData();
+  }, []);
 
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">

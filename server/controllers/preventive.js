@@ -78,14 +78,16 @@ export const prevent = async (req, res) => {
       repetition,
       floor,
       room,
+      categories,
+      priority,
       block_no,
       schedule_interval,
       interval_unit,
     } = req.body;
-    console.log(interval_unit);
-    console.log(schedule_interval);
+    // console.log(interval_unit);
+    // console.log(schedule_interval);
     const idd =
-      "INSERT INTO preventive_maintenance (id,title, description, start_date, repetition, floor, room, block_no, schedule_interval, interval_unit) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO preventive_maintenance (id,title, description, start_date, repetition, floor, room,categories,priority, block_no, schedule_interval, interval_unit) VALUES (?,?, ?, ?, ?, ?,?,?, ?, ?, ?, ?)";
     // Perform the INSERT operation
 
     db.query(
@@ -98,6 +100,8 @@ export const prevent = async (req, res) => {
         repetition,
         floor,
         room,
+        categories,
+        priority,
         block_no,
         schedule_interval,
         interval_unit,
@@ -120,6 +124,7 @@ export const prevent = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 export const checkPrevent = async (req, res) => {
   try {
     // Extract data from the request body
@@ -132,10 +137,16 @@ export const checkPrevent = async (req, res) => {
         res.status(500).send("Internal Server Error");
         return;
       }
-      console.log(results);
+      // console.log(results);
+
       results?.forEach((data) => {
+        // console.log(data.start_date.toISOString().split("T")[0]);
+        // console.log(new Date().toISOString().split("T")[0]);
+        const startDate = data.start_date;
+        const nextDays = new Date(startDate);
+        nextDays.setDate(startDate.getDate() + 1);
         if (
-          data.start_date.toISOString().split("T")[0] ===
+          nextDays.toISOString().split("T")[0] ===
           new Date().toISOString().split("T")[0]
         ) {
           const insertQuery = `INSERT INTO maintenance_requests (request_id, requester_id, request_date, completion_date, status, title,room,floor, description, image, priority, block_id,category) VALUES (?, ?, ?,?,?, ?, ?, ?, ?, ?, ?, ?,?)`;
@@ -177,7 +188,7 @@ export const checkPrevent = async (req, res) => {
             data.interval_unit
           );
           // console.log(data.start_date.toISOString().split("T")[0], "hhhhhhh");
-          // console.log(nextScheduledDate);
+          console.log(nextScheduledDate);
           // console.log(
           //   new Date().toISOString().split("T")[0] ===
           //     data.start_date.toISOString().split("T")[0]
@@ -192,14 +203,14 @@ export const checkPrevent = async (req, res) => {
             }
 
             // console.log("Data inserted successfully");
-            // console.log(results);
+            // console.log(nextScheduledDate);
           });
         }
       });
 
       // Return the query results as JSON
-      console.log("Hello aaaaaas");
-      // res.status(200).json(" Successfully secheduled");
+      // console.log("Hello aaaaaas");
+      res.status(200).send(" Successfully assign the secheduled maintance");
     });
 
     // Respond with the ID of the inserted record
@@ -210,3 +221,25 @@ export const checkPrevent = async (req, res) => {
 };
 
 // (new Date()).toISOString().split("T")[0];
+
+export const getPrevent = async (req, res) => {
+  try {
+    // Perform the SELECT operation
+    const h = "SELECT * FROM preventive_maintenance";
+
+    // Respond with the fetched records
+    db.query(h, (err, results) => {
+      if (err) {
+        console.error("Error inserting data:", err);
+        res.status(500).send("Error inserting data into the database");
+        return;
+      }
+
+      // console.log(results);
+      res.status(200).send(results);
+    });
+  } catch (error) {
+    console.error("Error fetching from database:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};

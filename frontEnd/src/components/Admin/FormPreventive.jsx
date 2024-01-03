@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "../../api/axios";
 import toast from "react-hot-toast";
 const URL_P = "/prevent/maintenance";
-function FormPreventive() {
+function FormPreventive({ setRefreshing, setAdd }) {
   const [isLoading, setLoading] = useState(false);
   async function handleSumit(e) {
     e.preventDefault();
@@ -32,6 +32,8 @@ function FormPreventive() {
         repetition: rep.value,
         floor: floor.value,
         room: room.value,
+        categories: categories.value,
+        priority: priority.value,
         block_no: block.value,
         schedule_interval: sin.value,
         interval_unit: intv.value,
@@ -41,7 +43,8 @@ function FormPreventive() {
       // toast.success("response.data");
 
       setLoading(false);
-
+      setRefreshing((e) => !e);
+      setAdd((e) => !e);
       // Handle success, e.g., redirect to another page
     } catch (error) {
       console.error("Error making Axios request:", error.message);

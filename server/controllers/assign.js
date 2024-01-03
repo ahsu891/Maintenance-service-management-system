@@ -79,7 +79,7 @@ LEFT JOIN
     }
 
     // Return the query results as JSON
-    res.status(200).json("Successfully Schdeule");
+    res.status(200).json(results);
   });
 };
 

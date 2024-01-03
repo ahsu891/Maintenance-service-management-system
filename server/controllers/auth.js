@@ -1,12 +1,11 @@
 import { db } from "../db.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { checkPrevent, scheduleMaintenanceTasks } from "./preventive.js";
 
 export const login = (req, res) => {
   const { username, password } = req.body;
   // scheduleMaintenanceTasks();
-  checkPrevent();
+  // checkPrevent();
   db.query(
     `SELECT * FROM (
       SELECT user_id AS id, role, username, password FROM users
