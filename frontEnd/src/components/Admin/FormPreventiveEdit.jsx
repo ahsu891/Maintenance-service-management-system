@@ -17,6 +17,7 @@ function FormPreventive({
   description,
   id,
   setRefreshing,
+  setOn,
 }) {
   const [isLoading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -62,6 +63,7 @@ function FormPreventive({
 
       setLoading(false);
       setRefreshing((e) => !e);
+      setOn((e) => !e);
       // Handle success, e.g., redirect to another page
     } catch (error) {
       console.error("Error making Axios request:", error.message);
@@ -96,6 +98,7 @@ function FormPreventive({
                   id="title"
                   name="title"
                   required
+                  disabled={!edit}
                   defaultValue={title}
                   placeholder="Enter your title of maintain"
                   className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -112,6 +115,7 @@ function FormPreventive({
                   <input
                     type="date"
                     name="date"
+                    disabled={!edit}
                     value={new Date(dd).toISOString().split("T")[0]}
                     onChange={(e) => setDd(() => e.target.value)}
                     required
@@ -130,6 +134,7 @@ function FormPreventive({
                 <input
                   type="number"
                   id="floor"
+                  disabled={!edit}
                   name="floor"
                   required
                   defaultValue={floor}
@@ -147,6 +152,7 @@ function FormPreventive({
                 <input
                   type="number"
                   id="ssdd"
+                  disabled={!edit}
                   name="rep"
                   required
                   defaultValue={rep}
@@ -165,6 +171,7 @@ function FormPreventive({
                   type="number"
                   id="sin"
                   name="sin"
+                  disabled={!edit}
                   required
                   defaultValue={sin}
                   placeholder=""
@@ -178,6 +185,7 @@ function FormPreventive({
                 <div className="relative z-20 bg-transparent dark:bg-form-input">
                   <select
                     name="intv"
+                    disabled={!edit}
                     defaultValue={inv}
                     className="relative z-20 xl:w-[110px] w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   >
@@ -215,6 +223,7 @@ function FormPreventive({
                 </label>
                 <input
                   type="number"
+                  disabled={!edit}
                   id="room"
                   name="room"
                   defaultValue={room}
@@ -230,6 +239,7 @@ function FormPreventive({
                 <div className="relative z-20 bg-transparent dark:bg-form-input">
                   <select
                     name="categories"
+                    disabled={!edit}
                     defaultValue={categories}
                     className="relative z-20 xl:w-[130px] w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   >
@@ -271,6 +281,7 @@ function FormPreventive({
                 <div className="relative z-20 bg-transparent dark:bg-form-input">
                   <select
                     name="priority"
+                    disabled={!edit}
                     defaultValue={priority}
                     className="relative z-20 xl:w-[100px] w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   >
@@ -310,6 +321,7 @@ function FormPreventive({
                 <div className="relative z-20 bg-transparent dark:bg-form-input">
                   <select
                     name="block"
+                    disabled={!edit}
                     defaultValue={block}
                     className="relative z-20 xl:w-[100px] w-full appearance-none rounded border border-stroke bg-transparent  py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   >
@@ -350,6 +362,7 @@ function FormPreventive({
               <textarea
                 name="description"
                 rows={6}
+                disabled={!edit}
                 defaultValue={description}
                 id="description"
                 placeholder="Type your Description"
@@ -373,7 +386,9 @@ function FormPreventive({
             {!edit && (
               <button
                 disabled={isLoading}
-                onClick={() => setEdit((e) => !e)}
+                onClick={() => {
+                  setEdit((e) => !e);
+                }}
                 type="button"
                 className="flex w-auto justify-self-end rounded bg-primary p-3 font-medium text-gray"
               >
@@ -384,9 +399,9 @@ function FormPreventive({
             {edit && (
               <>
                 <button
-                  // onClick={()=>setEdit(e=>!e)}
+                  onClick={() => setEdit((e) => !e)}
                   type="reset"
-                  className="flex w-auto justify-self-end rounded bg-primary p-3 font-medium text-gray"
+                  className="flex w-auto px-2 justify-self-end rounded bg-primary p-3 font-medium text-gray"
                 >
                   Cancel
                 </button>

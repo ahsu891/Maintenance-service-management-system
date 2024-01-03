@@ -311,3 +311,20 @@ export const getSingleUpdatePrevent = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+// app.delete('/preventive_maintenance/:id',
+
+export const deletePrevent = (req, res) => {
+  const id = req.params.id;
+
+  const deleteQuery =
+    "DELETE FROM preventive_maintenance WHERE `preventive_maintenance`.`id` = ?";
+
+  db.query(deleteQuery, [id], (error, results, fields) => {
+    if (error) {
+      console.error("Error executing DELETE query:", error);
+      res.status(500).send("Internal Server Error");
+    } else {
+      res.status(200).send("Record deleted successfully");
+    }
+  });
+};

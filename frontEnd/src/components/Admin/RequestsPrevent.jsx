@@ -36,7 +36,7 @@ function RequestsPrevent() {
 
       {/* < */}
       <div className="max-w-full overflow-x-auto">
-        <div className=" grid grid-cols-[30px,1.5fr,1fr,1fr,0.7fr]  border-b border-[#eee]  items-center   gap-8 bg-gray-2 text-left dark:bg-meta-4  font-medium text-black dark:text-white ">
+        <div className=" grid grid-cols-[30px,1.5fr,1fr,1fr,0.7fr,0.7fr]  border-b border-[#eee]  items-center   gap-8 bg-gray-2 text-left dark:bg-meta-4  font-medium text-black dark:text-white ">
           <div className=" py-5 px-2 pl-9 dark:border-strokedark xl:pl-11">
             <h5 className="font-medium text-black dark:text-white">#</h5>
           </div>
@@ -57,6 +57,9 @@ function RequestsPrevent() {
             </div>
 
             {/* Additional grid items can be added here */}
+          </div>
+          <div className=" py-5 px-4 dark:border-strokedark">
+            <p className="text-black dark:text-white">Action</p>
           </div>
         </div>
         {data?.map((data, i) => (

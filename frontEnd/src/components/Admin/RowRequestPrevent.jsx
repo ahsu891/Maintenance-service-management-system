@@ -1,6 +1,11 @@
 import { formatDateRelativeToToday } from "../../api/helper";
-import React from "react";
+import React, { useState } from "react";
+import { MdDelete } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 import FormPreventiveEdit from "./FormPreventiveEdit";
+import axios from "../../api/axios";
+import toast from "react-hot-toast";
+const URL_D = "/prevent/deletePrevent";
 function RowRequestPrevent({
   block_id,
   floor,
@@ -23,11 +28,27 @@ function RowRequestPrevent({
   inv,
   setRefreshing,
 }) {
+  function handleDelet() {
+    const fetchData = async () => {
+      try {
+        // Make a GET request to the API endpoint
+        const response = await axios.delete(URL_D + `/${id}`);
+        toast.success(response.data);
+      } catch (error) {
+        console.error("Error fetching technicials:", error.message);
+        toast.error(error.message);
+      }
+    };
+    // Call the fetchData function when the component mounts
+    fetchData();
+  }
+
+  const [on, setOn] = useState(false);
   return (
     <div className="mb-4">
       <div
         // onClick={() => setVisible((c) => !c)}
-        className="grid grid-cols-[30px,1.5fr,1fr,1fr,0.7fr]    gap-8"
+        className="grid grid-cols-[30px,1.5fr,1fr,1fr,0.7fr,0.7fr]    gap-8"
       >
         <div className="border-b border-[#eee] py-5 px-2 pl-9 dark:border-strokedark xl:pl-11 flex flex-row items-center">
           <h5 className="font-medium text-black dark:text-white">{i}</h5>
@@ -51,23 +72,45 @@ function RowRequestPrevent({
             </p>
           </div>
         </div>
+        <div className="border-b border-[#eee] py-5 px-4 dark:border-strokedark flex flex-row items-center">
+          <div className="flex flex-row gap-2 text-2xl">
+            <span
+              onClick={() => setOn((e) => !e)}
+              className="hover:text-primary"
+            >
+              <MdEdit />{" "}
+            </span>
+            <span
+              onClick={() => {
+                setRefreshing((e) => !e);
+                handleDelet();
+              }}
+              className="hover:text-primary"
+            >
+              <MdDelete />
+            </span>
+          </div>
+        </div>
       </div>
       <div className=" my-3">
-        <FormPreventiveEdit
-          title={title}
-          date={date}
-          floor={floor}
-          rep={rep}
-          sin={sin}
-          inv={inv}
-          room={room}
-          categories={categories}
-          priority={priority}
-          block={block_id}
-          description={description}
-          id={id}
-          setRefreshing={setRefreshing}
-        />
+        {on && (
+          <FormPreventiveEdit
+            title={title}
+            date={date}
+            floor={floor}
+            rep={rep}
+            sin={sin}
+            inv={inv}
+            room={room}
+            categories={categories}
+            priority={priority}
+            block={block_id}
+            description={description}
+            id={id}
+            setRefreshing={setRefreshing}
+            setOn={setOn}
+          />
+        )}
       </div>
     </div>
   );
