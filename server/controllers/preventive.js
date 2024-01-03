@@ -144,7 +144,7 @@ export const checkPrevent = async (req, res) => {
         // console.log(new Date().toISOString().split("T")[0]);
         const startDate = data.start_date;
         const nextDays = new Date(startDate);
-        nextDays.setDate(startDate.getDate() + 1);
+        nextDays.setDate(startDate?.getDate() + 1);
         if (
           nextDays.toISOString().split("T")[0] ===
           new Date().toISOString().split("T")[0]
@@ -238,6 +238,74 @@ export const getPrevent = async (req, res) => {
       // console.log(results);
       res.status(200).send(results);
     });
+  } catch (error) {
+    console.error("Error fetching from database:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+export const getSingleUpdatePrevent = async (req, res) => {
+  const {
+    id,
+    title,
+    description,
+    start_date,
+    repetition,
+    floor,
+    categories,
+    priority,
+    room,
+    block_no,
+    schedule_interval,
+    interval_unit,
+  } = req.body;
+
+  const updateQuery = `
+    UPDATE preventive_maintenance
+    SET
+      title = ?,
+      description = ?,
+      start_date = ?,
+      repetition = ?,
+      floor = ?,
+      categories = ?,
+      priority = ?,
+      room = ?,
+      block_no = ?,
+      schedule_interval = ?,
+      interval_unit = ?
+    WHERE id = ?;
+  `;
+  try {
+    // Perform the SELECT operation
+
+    // Respond with the fetched records
+    db.query(
+      updateQuery,
+      [
+        title,
+        description,
+        start_date,
+        repetition,
+        floor,
+        categories,
+        priority,
+        room,
+        block_no,
+        schedule_interval,
+        interval_unit,
+        id,
+      ],
+      (err, results) => {
+        if (err) {
+          console.error("Error inserting data:", err);
+          res.status(500).send("Error inserting data into the database");
+          return;
+        }
+
+        // console.log(results);
+        res.status(200).send("Successfully Edit");
+      }
+    );
   } catch (error) {
     console.error("Error fetching from database:", error);
     res.status(500).json({ error: "Internal Server Error" });

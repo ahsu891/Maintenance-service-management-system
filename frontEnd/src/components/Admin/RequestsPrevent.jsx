@@ -62,6 +62,7 @@ function RequestsPrevent() {
         {data?.map((data, i) => (
           <RowRequestPrevent
             i={i + 1}
+            id={data.id}
             block_id={data.block_no}
             floor={data.floor}
             date={data.start_date}
@@ -69,6 +70,9 @@ function RequestsPrevent() {
             // requester_id={data.requester_id}
             room={data.room}
             // status={data.status}
+            inv={data.interval_unit}
+            rep={data.repetition}
+            sin={data.schedule_interval}
             description={data.description}
             key={data.id}
             title={data.title}
