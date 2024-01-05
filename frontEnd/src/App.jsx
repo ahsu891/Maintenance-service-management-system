@@ -23,6 +23,7 @@ import RequestManagement from "./components/Admin/RequestManagement";
 import Dashboard from "./components/Requester/Dashboard";
 import Complain from "./components/Requester/Complain";
 import Calendar from "./components/Admin/Calendar";
+import Report from "./components/Admin/Report";
 // import MainTable from "./components/Admin/MainTable";
 const ROLES = {
   User: "Requester",
@@ -60,6 +61,7 @@ function App() {
                   {/* <Route path="/admin/dashboard" index element={<DefaultLayout />} /> */}
                   <Route path="/admin/calendar" element={<Calendar />} />
                   <Route path="/admin/requests" element={<Requests />} />
+                  <Route path="/admin/report" element={<Report />} />
                   <Route
                     path="/admin/usermanagement"
                     element={<TableThree />}

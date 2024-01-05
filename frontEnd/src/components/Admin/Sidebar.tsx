@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-
+import { IoNewspaperOutline } from "react-icons/io5";
 // import Logo from "../../images/icon/"
 import SidebarLinkGroup from "../Admin/SidebarLinkGroup";
 import { GoInbox } from "react-icons/go";
@@ -245,6 +245,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     />
                   </svg>
                   Preventive
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/admin/report"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("report") && "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <span className="text-xl">
+                    <IoNewspaperOutline />
+                  </span>
+                  Report
                 </NavLink>
               </li>
               {/* <!-- Menu Item Calendar --> */}
