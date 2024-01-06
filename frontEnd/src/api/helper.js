@@ -57,3 +57,17 @@ export function formatDateRelativeToToday(inputDateString) {
   const options = { year: "numeric", month: "long", day: "numeric" };
   return inputDate.toLocaleDateString("en-US", options);
 }
+
+export function secondsToHMS(seconds) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+
+  const formattedHours = hours > 0 ? `${hours} ` : "";
+  const formattedMinutes = minutes > 0 ? `${minutes} ` : "";
+  const formattedSeconds = `${remainingSeconds}s`;
+
+  return `${formattedHours || 0}h: ${
+    formattedMinutes || 0
+  }m :${formattedSeconds}`;
+}

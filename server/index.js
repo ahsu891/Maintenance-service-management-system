@@ -6,6 +6,7 @@ import ReqRoutes from "./routes/requester.js";
 import ReqDataRoutes from "./routes/request.js";
 import AssRoutes from "./routes/assign.js";
 import PrevRoutes from "./routes/preventive.js";
+import ReportRoutes from "./routes/report.js";
 
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -31,6 +32,7 @@ app.use("/api/requester", ReqRoutes);
 app.use("/api/request", ReqDataRoutes);
 app.use("/api/assign", AssRoutes);
 app.use("/api/prevent", PrevRoutes);
+app.use("/api/report", ReportRoutes);
 
 ////////////////////////////////////////////
 app.get("/", (req, res) => {

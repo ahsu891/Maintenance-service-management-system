@@ -24,6 +24,7 @@ import Dashboard from "./components/Requester/Dashboard";
 import Complain from "./components/Requester/Complain";
 import Calendar from "./components/Admin/Calendar";
 import Report from "./components/Admin/Report";
+import ReportPrint from "./components/Admin/ReportPrint";
 // import MainTable from "./components/Admin/MainTable";
 const ROLES = {
   User: "Requester",
@@ -67,6 +68,7 @@ function App() {
                     element={<TableThree />}
                   />
                   <Route path="/admin/status" element={<RequestManagement />} />
+                  <Route path="/admin/report/:id" element={<ReportPrint />} />
                 </Route>
               </Route>
               {/* Admin Technicial */}

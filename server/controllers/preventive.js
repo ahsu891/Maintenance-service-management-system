@@ -328,3 +328,35 @@ export const deletePrevent = (req, res) => {
     }
   });
 };
+
+export const getPreventiveConf = async (req, res) => {
+  try {
+    // Perform the SELECT operation
+    const h = `SELECT
+    maintenance_requests.request_id,
+    maintenance_requests.status,
+     maintenance_requests.request_date,
+     maintenance_requests.title,
+    maintenance_requests.priority
+  FROM
+    maintenance_requests
+  
+    WHERE 
+    maintenance_requests.requester_id IS null and maintenance_requests.status !='Closed' ;`;
+
+    // Respond with the fetched records
+    db.query(h, (err, results) => {
+      if (err) {
+        console.error("Error inserting data:", err);
+        res.status(500).send("Error inserting data into the database");
+        return;
+      }
+
+      // console.log(results);
+      res.status(200).send(results);
+    });
+  } catch (error) {
+    console.error("Error fetching from database:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
