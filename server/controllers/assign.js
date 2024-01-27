@@ -54,11 +54,14 @@ export const getAssign = (req, res) => {
   const { user_id } = req.body;
   // console.log(user_id);
   const sqlQuery = `
+ 
   SELECT
   technicians_assigned.*,
   maintenance_requests.*,
   users.phone,
-  CONCAT(users.first_name, ' ', users.last_name) AS requester_name
+  CONCAT(users.first_name, ' ', users.last_name) AS requester_name,
+  blocks.lat,
+    blocks.log
   
 FROM
   technicians_assigned
@@ -66,9 +69,11 @@ LEFT JOIN
   maintenance_requests ON technicians_assigned.request_id = maintenance_requests.request_id
 LEFT JOIN
   users ON maintenance_requests.requester_id = users.user_id
+LEFT JOIN
+  blocks ON maintenance_requests.block_id = blocks.blocks_id
   WHERE 
   technicians_assigned.technician_id=?;
- 
+
   `;
 
   db.query(sqlQuery, [user_id], (error, results) => {

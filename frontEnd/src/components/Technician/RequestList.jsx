@@ -49,6 +49,8 @@ function RequestList() {
           priority={data.priority}
           status={data.status}
           setReff={setReff}
+          lat={data.lat}
+          log={data.log}
         />
       ))}
       {/* <RequestTech /> */}

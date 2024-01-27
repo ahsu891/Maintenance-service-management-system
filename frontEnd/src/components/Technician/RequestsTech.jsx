@@ -16,6 +16,8 @@ function Requests({
   date,
   status,
   setReff,
+  lat,
+  log,
 }) {
   const [on, setOn] = useState(false);
   return (
@@ -36,6 +38,9 @@ function Requests({
                 </div>
                 <span className="text-boxdark">
                   Block-<span className="text-primary">{block_id}</span>
+                  {/* <span>
+                    <BiCurrentLocation />
+                  </span> */}
                 </span>
               </div>
             </div>
@@ -72,6 +77,8 @@ function Requests({
             request_id={request_id}
             setOn={setOn}
             setReff={setReff}
+            lat={lat}
+            log={log}
           />
         </div>
       )}
