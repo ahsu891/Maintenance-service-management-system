@@ -13,6 +13,8 @@ export const login = (req, res) => {
       SELECT admin_id AS id, role, username, password FROM admin
       UNION
       SELECT technician_id AS id, role, username, password FROM technicians
+      UNION
+      SELECT inventory_admin_id AS id, role, username, password FROM inventory_admin
   ) AS combined_users
   WHERE username = ?;`,
     [username],

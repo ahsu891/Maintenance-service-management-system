@@ -11,6 +11,7 @@ import withAuth from "./components/auth/withAuth";
 import DefaultLayout from "./layout/DefaultLayout";
 import DefaultLayoutReq from "./layout/DefaultLayoutReq";
 import DefaultLayoutTech from "./layout/DefaultLayoutTech";
+import DefaultLayoutInv from "./layout/DefaultLayoutInv";
 
 import TableThree from "./components/Admin/TableThree";
 import { Toaster } from "react-hot-toast";
@@ -21,6 +22,7 @@ import WorkOrder from "./components/Technician/WorkOrder";
 import RequestList from "./components/Technician/RequestList";
 import RequestManagement from "./components/Admin/RequestManagement";
 import Dashboard from "./components/Requester/Dashboard";
+import DashboardInv from "./components/Inventory/DashboardInv";
 import Complain from "./components/Requester/Complain";
 import Calendar from "./components/Admin/Calendar";
 import Report from "./components/Admin/Report";
@@ -30,6 +32,7 @@ const ROLES = {
   User: "Requester",
   Technician: "Technician",
   Admin: "Admin",
+  Inventory: "Inventory",
 };
 const Auth = withAuth(Layout);
 function App() {
@@ -77,6 +80,15 @@ function App() {
                   <Route path="/technician/workorder" element={<WorkOrder />}>
                     <Route index element={<RequestList />} />
                   </Route>
+                </Route>
+              </Route>
+
+              <Route element={<RequireAuth allowedRoles={ROLES.Inventory} />}>
+                <Route path="/inventory" element={<DefaultLayoutInv />}>
+                  <Route path="/inventory" index element={<DashboardInv />} />
+                  {/* <Route path="/inventory/workorder" element={<WorkOrder />}>
+                    <Route index element={<RequestList />} />
+                  </Route> */}
                 </Route>
               </Route>
               {/* </Auth> */}
