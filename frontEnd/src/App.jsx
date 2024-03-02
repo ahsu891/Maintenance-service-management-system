@@ -23,6 +23,7 @@ import RequestList from "./components/Technician/RequestList";
 import RequestManagement from "./components/Admin/RequestManagement";
 import Dashboard from "./components/Requester/Dashboard";
 import DashboardInv from "./components/Inventory/DashboardInv";
+import Table from "./components/Inventory/TableTwo";
 import Complain from "./components/Requester/Complain";
 import Calendar from "./components/Admin/Calendar";
 import Report from "./components/Admin/Report";
@@ -85,7 +86,7 @@ function App() {
 
               <Route element={<RequireAuth allowedRoles={ROLES.Inventory} />}>
                 <Route path="/inventory" element={<DefaultLayoutInv />}>
-                  <Route path="/inventory" index element={<DashboardInv />} />
+                  <Route path="/inventory" index element={<Table />} />
                   {/* <Route path="/inventory/workorder" element={<WorkOrder />}>
                     <Route index element={<RequestList />} />
                   </Route> */}
