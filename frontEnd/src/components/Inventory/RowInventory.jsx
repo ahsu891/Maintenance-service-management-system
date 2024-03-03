@@ -1,5 +1,7 @@
 import { formatDateRelativeToToday } from "../../api/helper";
 import { Link } from "react-router-dom";
+import { MdEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 function RowInventory({ image, name, category, quantity, update }) {
   return (
     <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
@@ -25,7 +27,10 @@ function RowInventory({ image, name, category, quantity, update }) {
         <p className="text-sm text-black dark:text-white">{quantity}</p>
       </div>
       <div className="col-span-1 flex items-center">
-        <p className="text-sm text-meta-3">$125</p>
+        <div className="flex flex-row items-center gap-2 text-2xl">
+          <MdEdit className="hover:text-primary" />
+          <MdDelete className="hover:text-primary" />
+        </div>
       </div>
     </div>
   );

@@ -94,20 +94,23 @@ export const getInvetory = (req, res) => {
 
   // Create the SQL insert query
   try {
-    db.query("SELECT * FROM inventory", (err, results) => {
-      if (err) {
-        console.error("Error executing SQL query:", err);
-        res.status(500).send(err.message);
-        return;
+    db.query(
+      "SELECT * FROM inventory ORDER BY last_update DESC;",
+      (err, results) => {
+        if (err) {
+          console.error("Error executing SQL query:", err);
+          res.status(500).send(err.message);
+          return;
+        }
+        // console.log("Query results:", results);
+        const data = results.map((data) => {
+          const singleData = data;
+          singleData.image = fullUrl + singleData.image;
+          return singleData;
+        });
+        res.json(data); // Send the query results as JSON response
       }
-      // console.log("Query results:", results);
-      const data = results.map((data) => {
-        const singleData = data;
-        singleData.image = fullUrl + singleData.image;
-        return singleData;
-      });
-      res.json(data); // Send the query results as JSON response
-    });
+    );
   } catch (r) {
     res.status(500).send(r.message);
   }

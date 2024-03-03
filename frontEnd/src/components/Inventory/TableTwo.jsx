@@ -76,7 +76,7 @@ const TableTwo = () => {
         </div>
         {on && (
           <div className="my-8">
-            <FormInventory setFresh={setFresh} />
+            <FormInventory setFresh={setFresh} setOn={setOn} />
           </div>
         )}
       </div>

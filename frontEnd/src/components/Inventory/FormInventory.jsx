@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "../../api/axios";
 import toast from "react-hot-toast";
 const URL_U = "/inventory/upload";
-function FormPreventive({ setFresh }) {
+function FormPreventive({ setFresh, setOn }) {
   const [isLoading, setLoading] = useState(false);
   const [file, setFile] = useState(null);
   const handleFileChange = (event) => {
@@ -31,6 +31,7 @@ function FormPreventive({ setFresh }) {
         },
       });
       setFresh((r) => !r);
+      setOn((r) => !r);
       toast.success(response.data);
       // setUploadMessage(response.data.message);
     } catch (error) {
