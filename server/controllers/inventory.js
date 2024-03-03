@@ -20,6 +20,18 @@ export const addInventory = (req, res) => {
 
   // Construct the new file path
   const newFilePath = `image/${item_thumbnail.filename}`;
+  const protocol = req.protocol;
+
+  // Get the hostname (localhost in this case)
+  const hostname = req.hostname;
+
+  // Get the port number (3000 in this case)
+  const port = req.get("host").split(":")[1] || "80"; // Extract port from host header or default to 80
+
+  // Construct the full URL
+  const fullUrl = `${protocol}://${hostname}:${port}/`;
+
+  console.log("Full URL:", fullUrl);
 
   // Create the SQL insert query
 
@@ -36,8 +48,11 @@ export const addInventory = (req, res) => {
       [iname, categories, newFilePath, last_update, quantity],
       (err, result) => {
         if (err) {
-          console.error("Error inserting data into the database:", err.message);
-          res.status(500).send(err.message);
+          console.error(
+            "Error inserting data into the database:",
+            err.sqlMessage
+          );
+          res.status(500).send(err.sqlMessage);
           return;
         }
         console.log("Data inserted successfully");
@@ -46,7 +61,7 @@ export const addInventory = (req, res) => {
     );
   } catch (e) {
     console.err("something went  wrong", e.message);
-    res.status(500).send(e.message);
+    res.status(500).send(e.sqlMessage);
   }
   // Insert course details into the database
 
@@ -67,5 +82,34 @@ export const addInventory = (req, res) => {
 
   //   res.json({ message: "Course added successfully" });
   // });
+  // });
+};
+export const getInvetory = (req, res) => {
+  const protocol = req.protocol;
+  const hostname = req.hostname;
+  const port = req.get("host").split(":")[1] || "80"; // Extract port from host header or default to 80
+  // Construct the full URL
+  const fullUrl = `${protocol}://${hostname}:${port}/`;
+  // console.log("Full URL:", fullUrl);
+
+  // Create the SQL insert query
+  try {
+    db.query("SELECT * FROM inventory", (err, results) => {
+      if (err) {
+        console.error("Error executing SQL query:", err);
+        res.status(500).send(err.message);
+        return;
+      }
+      // console.log("Query results:", results);
+      const data = results.map((data) => {
+        const singleData = data;
+        singleData.image = fullUrl + singleData.image;
+        return singleData;
+      });
+      res.json(data); // Send the query results as JSON response
+    });
+  } catch (r) {
+    res.status(500).send(r.message);
+  }
   // });
 };

@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "../../api/axios";
 import toast from "react-hot-toast";
 const URL_U = "/inventory/upload";
-function FormPreventive({ setRefreshing, setAdd }) {
+function FormPreventive({ setFresh }) {
   const [isLoading, setLoading] = useState(false);
   const [file, setFile] = useState(null);
   const handleFileChange = (event) => {
@@ -30,9 +30,12 @@ function FormPreventive({ setRefreshing, setAdd }) {
           "Content-Type": "multipart/form-data",
         },
       });
+      setFresh((r) => !r);
+      toast.success(response.data);
       // setUploadMessage(response.data.message);
     } catch (error) {
-      console.error("Error uploading file:", error);
+      console.log("Error uploading file:", error);
+      toast.error(error.response.data);
       // setUploadMessage('An error occurred while uploading the file.');
     }
     // try {

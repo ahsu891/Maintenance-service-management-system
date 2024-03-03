@@ -8,12 +8,14 @@ import AssRoutes from "./routes/assign.js";
 import PrevRoutes from "./routes/preventive.js";
 import ReportRoutes from "./routes/report.js";
 import InventRoutes from "./routes/inventory.js";
-
+import path from "path";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { scheduleMaintenanceTasks } from "./controllers/preventive.js";
 const app = express();
 
+const currentDir = process.cwd();
+app.use("/image", express.static(path.join(currentDir, "image")));
 const allowedOrigins = ["http://localhost:5173", "http://localhost:3001"];
 app.use(
   cors({
