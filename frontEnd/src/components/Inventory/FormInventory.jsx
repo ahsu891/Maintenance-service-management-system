@@ -20,7 +20,7 @@ function FormPreventive({ setRefreshing, setAdd }) {
     const formData = new FormData();
     formData.append("image", file);
     formData.append("quantity", qauntity.value);
-    formData.append("categories", qauntity.value);
+    formData.append("categories", categories.value);
     formData.append("iname", iname.value);
     // console.log(formData);
 

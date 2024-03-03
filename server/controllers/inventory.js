@@ -7,7 +7,7 @@ import fs from "fs";
 export const addInventory = (req, res) => {
   const { iname, quantity, categories } = req.body;
   // const imageFilePath = req.file.path;
-
+  console.log(categories);
   const course_id = uuidv4();
   // const values = Object.values(req.body);
   // values.unshift(course_id);
@@ -36,17 +36,17 @@ export const addInventory = (req, res) => {
       [iname, categories, newFilePath, last_update, quantity],
       (err, result) => {
         if (err) {
-          console.error("Error inserting data into the database:", err);
-          res.status(500).send("Error inserting data into the database");
+          console.error("Error inserting data into the database:", err.message);
+          res.status(500).send(err.message);
           return;
         }
         console.log("Data inserted successfully");
-        res.send("Data inserted successfully");
+        res.send("Data item inserted successfully");
       }
     );
   } catch (e) {
     console.err("something went  wrong", e.message);
-    res.status(500).send("Error inserting data into the database");
+    res.status(500).send(e.message);
   }
   // Insert course details into the database
 
