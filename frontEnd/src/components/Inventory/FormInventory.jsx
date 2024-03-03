@@ -1,18 +1,40 @@
 import { useState } from "react";
 import axios from "../../api/axios";
 import toast from "react-hot-toast";
-const URL_P = "/prevent/maintenance";
+const URL_U = "/inventory/upload";
 function FormPreventive({ setRefreshing, setAdd }) {
   const [isLoading, setLoading] = useState(false);
+  const [file, setFile] = useState(null);
+  const handleFileChange = (event) => {
+    setFile((e) => event.target.files[0]);
+  };
   async function handleSumit(e) {
     e.preventDefault();
     const { iname, qauntity, photo, categories } = e.target;
 
-    console.log(iname.value);
-    console.log(qauntity.value);
-    console.log(photo.value);
-    console.log(categories.value);
+    // console.log(iname.value);
+    // console.log(qauntity.value);
+    // console.log(photo.value);
+    // console.log(categories.value);
 
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("quantity", qauntity.value);
+    formData.append("categories", qauntity.value);
+    formData.append("iname", iname.value);
+    // console.log(formData);
+
+    try {
+      const response = await axios.post(URL_U, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      // setUploadMessage(response.data.message);
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      // setUploadMessage('An error occurred while uploading the file.');
+    }
     // try {
     //   // Make an Axios request
     //   setLoading(true);
@@ -96,6 +118,7 @@ function FormPreventive({ setRefreshing, setAdd }) {
                   Attach file
                 </label>
                 <input
+                  onChange={handleFileChange}
                   type="file"
                   name="photo"
                   className="w-full rounded-md border border-stroke p-3 outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-[#EEEEEE] file:py-1 file:px-2.5 file:text-sm file:font-medium focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-strokedark dark:file:bg-white/30 dark:file:text-white"
