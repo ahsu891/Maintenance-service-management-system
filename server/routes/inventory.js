@@ -5,6 +5,8 @@ import {
   addInventory,
   deleteSingleInventory,
   getInvetory,
+  updateInventory,
+  updatesingleImage,
 } from "../controllers/inventory.js";
 // const upload = multer({ dest: "image/" });
 const storage = multer.diskStorage({
@@ -26,4 +28,6 @@ const router = express.Router();
 router.post("/upload", upload.single("image"), addInventory);
 router.get("/getInventory", getInvetory);
 router.delete("/deleteSingle/:id", deleteSingleInventory);
+router.put("/update/:id", updateInventory);
+router.put("/update-image/:id", upload.single("image"), updatesingleImage);
 export default router;

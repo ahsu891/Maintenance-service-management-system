@@ -86,10 +86,8 @@ function App() {
 
               <Route element={<RequireAuth allowedRoles={ROLES.Inventory} />}>
                 <Route path="/inventory" element={<DefaultLayoutInv />}>
-                  <Route path="/inventory" index element={<Table />} />
-                  {/* <Route path="/inventory/workorder" element={<WorkOrder />}>
-                    <Route index element={<RequestList />} />
-                  </Route> */}
+                  <Route path="/inventory" index element={<DashboardInv />} />
+                  <Route path="/inventory/management" element={<Table />} />
                 </Route>
               </Route>
               {/* </Auth> */}

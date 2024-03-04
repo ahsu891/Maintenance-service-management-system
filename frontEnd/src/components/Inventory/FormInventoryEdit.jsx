@@ -1,88 +1,85 @@
 import { useState } from "react";
 import axios from "../../api/axios";
 import toast from "react-hot-toast";
-const URL_U = "/inventory/upload";
-function FormPreventive({ setFresh, setOn }) {
-  const [isLoading, setLoading] = useState(false);
-  const [file, setFile] = useState(null);
-  const handleFileChange = (event) => {
-    setFile((e) => event.target.files[0]);
-  };
-  async function handleSumit(e) {
+function images(image) {
+  const parts = image.split("image/");
+  const fileExtension = parts[parts.length - 1];
+  return fileExtension;
+}
+const Url = "/inventory/update";
+function FormInventoryEdit({
+  image,
+  name,
+  category,
+  quantity,
+  update,
+  setFresh,
+  id,
+  setEdit,
+}) {
+  const [imgDefault, setDefault] = useState();
+  const [loading, setLoading] = useState();
+  function handleSumit(e) {
     e.preventDefault();
-    setLoading(true);
     const { iname, qauntity, photo, categories } = e.target;
-
-    // console.log(iname.value);
-    // console.log(qauntity.value);
-    // console.log(photo.value);
-    // console.log(categories.value);
-
-    const formData = new FormData();
-    formData.append("image", file);
-    formData.append("quantity", qauntity.value);
-    formData.append("categories", categories.value);
-    formData.append("iname", iname.value);
-    // console.log(formData);
-
-    try {
-      const response = await axios.post(URL_U, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      setFresh((r) => !r);
-      setOn((r) => !r);
-      toast.success(response.data);
-      // setUploadMessage(response.data.message);
-    } catch (error) {
-      console.log("Error uploading file:", error);
-      toast.error(error.response.data);
-      // setUploadMessage('An error occurred while uploading the file.');
-    } finally {
-      setLoading(false);
+    // console.log("1111111", imgDefault);
+    // console.log("222222222", images(image));
+    setLoading(true);
+    async function data() {
+      try {
+        const response = await axios.put(`${Url}/${id}`, {
+          iname: iname.value,
+          quantity: qauntity.value,
+          category: categories.value,
+          image: imgDefault || images(image),
+        });
+        console.log(response.data);
+        toast.success(response.data);
+        setFresh((e) => !e);
+      } catch (error) {
+        console.error("Error updating inventory item: ", error.message);
+        // toast.error(error.response.data);
+      } finally {
+        setLoading(false);
+      }
     }
-    // try {
-    //   // Make an Axios request
-    //   setLoading(true);
-    //   const response = await axios.post(URL_P, {
-    //     title: title.value,
-    //     description: description.value,
-    //     start_date: date.value,
-    //     repetition: rep.value,
-    //     floor: floor.value,
-    //     room: room.value,
-    //     categories: categories.value,
-    //     priority: priority.value,
-    //     block_no: block.value,
-    //     schedule_interval: sin.value,
-    //     interval_unit: intv.value,
-    //   });
-    //   // console.log("Server response:", response.data);
-    //   toast.success(response.data);
-    //   // toast.success("response.data");
+    data();
+    console.log(imgDefault);
+    if (imgDefault) {
+      async function dodo() {
+        const formData = new FormData();
+        formData.append("image", photo.files[0]);
 
-    //   setLoading(false);
-    //   setRefreshing((e) => !e);
-    //   setAdd((e) => !e);
-    //   // Handle success, e.g., redirect to another page
-    // } catch (error) {
-    //   console.error("Error making Axios request:", error.message);
-    //   // Handle error, e.g., display an error message to the user
-    //   toast.error(error.message);
-    // } finally {
-    //   setLoading(false);
-    // }
+        try {
+          await axios.put(`/inventory/update-image/${id}`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          setFresh((e) => !e);
+          console.log("Image updated successfully");
+        } catch (error) {
+          console.error("Error updating image:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+      dodo();
+    }
+    setFresh((e) => !e);
+    // Get the last part of the URL which should be the file extension
+    // const fileExtension = parts[parts.length - 1];
+    setEdit((e) => !e);
   }
   return (
-    <div className="flex flex-col gap-9">
+    <div className="flex flex-col gap-9 my-2 border border-gray">
       {/* <!-- Contact Form --> */}
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
+        {/* <div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
           <h3 className="font-medium text-black dark:text-white">
             Preventive Maintenace Form
           </h3>
-        </div>
+        </div> */}
         <form onSubmit={handleSumit} method="POST">
           <div className="p-6.5">
             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row  flex-wrap">
@@ -98,6 +95,7 @@ function FormPreventive({ setFresh, setOn }) {
                   id="name"
                   name="iname"
                   required
+                  defaultValue={name}
                   placeholder="Enter the name"
                   className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
@@ -115,7 +113,7 @@ function FormPreventive({ setFresh, setOn }) {
                   id="qauntity"
                   name="quantity"
                   required
-                  defaultValue={0}
+                  defaultValue={quantity}
                   placeholder=""
                   className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />
@@ -125,9 +123,10 @@ function FormPreventive({ setFresh, setOn }) {
                   Attach file
                 </label>
                 <input
-                  onChange={handleFileChange}
+                  // onChange={handleFileChange}
                   type="file"
                   name="photo"
+                  onChange={(e) => setDefault(e.target.files[0]?.name)}
                   className="w-full rounded-md border border-stroke p-3 outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-[#EEEEEE] file:py-1 file:px-2.5 file:text-sm file:font-medium focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-strokedark dark:file:bg-white/30 dark:file:text-white"
                 />
               </div>
@@ -139,6 +138,7 @@ function FormPreventive({ setFresh, setOn }) {
                 <div className="relative z-20 bg-transparent dark:bg-form-input">
                   <select
                     name="categories"
+                    defaultValue={category}
                     className="relative z-20 xl:w-[130px] w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   >
                     <option value="General">General</option>
@@ -178,7 +178,7 @@ function FormPreventive({ setFresh, setOn }) {
               Cancel
             </button>
             <button
-              disabled={isLoading}
+              disabled={loading}
               className="flex w-auto justify-self-end rounded bg-primary p-3 font-medium text-gray"
             >
               Save
@@ -190,36 +190,4 @@ function FormPreventive({ setFresh, setOn }) {
   );
 }
 
-export default FormPreventive;
-
-{
-  /* <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-<div className="border-b border-stroke py-4 px-6.5 dark:border-strokedark">
-  <h3 className="font-medium text-black dark:text-white">
-    File upload
-  </h3>
-</div>
-<div className="flex flex-col gap-5.5 p-6.5">
-  <div>
-    <label className="mb-3 block text-black dark:text-white">
-      Attach file
-    </label>
-    <input
-      type="file"
-      className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent font-medium outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke file:bg-whiter file:py-3 file:px-5 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-form-strokedark dark:file:bg-white/30 dark:file:text-white dark:focus:border-primary"
-    />
-  </div>
-
-  <div>
-    <label className="mb-3 block text-black dark:text-white">
-      Attach file
-    </label>
-    <input
-      type="file"
-      className="w-full rounded-md border border-stroke p-3 outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-[#EEEEEE] file:py-1 file:px-2.5 file:text-sm file:font-medium focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-strokedark dark:file:bg-white/30 dark:file:text-white"
-    />
-  </div>
-</div>
-</div>
-</div> */
-}
+export default FormInventoryEdit;

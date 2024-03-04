@@ -131,3 +131,49 @@ export const deleteSingleInventory = (req, res) => {
     }
   });
 };
+
+export const updateInventory = (req, res) => {
+  const Id = req.params.id;
+  const { iname, category, image, quantity } = req.body;
+  console.log(iname, category, image, quantity, Id);
+
+  const updateQuery =
+    "UPDATE inventory SET item_name = ?,item_category=?, image=?,last_update=?,quantity=? WHERE id = ?;";
+  const values = [iname, category, `image/${image}`, new Date(), quantity, Id];
+
+  db.query(updateQuery, values, (error, results) => {
+    if (error) {
+      console.error("Error toggling Course:", error.message);
+      res.status(500).send(error.message);
+    } else {
+      // console.log(`Deleted book with ID ${cousreId}`);
+      res.status(200).send(`Updated the successfully`);
+    }
+  });
+};
+
+export const updatesingleImage = (req, res) => {
+  const Id = req.params.id;
+
+  const item_thumbnail = req.file; // File object
+  console.log(item_thumbnail.filename);
+  // Generate a new file name
+  // const originalFileName = course_thumbnail.originalname;
+  // const fileExtension = originalFileName.split(".").pop();
+  // const newFileName = `${course_id}.${fileExtension}`;
+
+  // Construct the new file path
+  const newFilePath = `image/${item_thumbnail.filename}`;
+
+  const updateQuery = "UPDATE inventory SET image = ? WHERE id = ?;";
+
+  db.query(updateQuery, [newFilePath, Id], (error, results) => {
+    if (error) {
+      console.error("Error toggling Course:", error.message);
+      res.status(500).send(error.message);
+    } else {
+      console.log(`Upadted Successfully`);
+      res.status(200).send(`Updated the successfully`);
+    }
+  });
+};
