@@ -116,3 +116,18 @@ export const getInvetory = (req, res) => {
   }
   // });
 };
+
+export const deleteSingleInventory = (req, res) => {
+  const id = req.params.id;
+
+  const deleteQuery = "DELETE FROM inventory WHERE id = ?";
+
+  db.query(deleteQuery, [id], (error, results, fields) => {
+    if (error) {
+      console.error("Error executing DELETE query:", error);
+      res.status(500).send("Some thing went wrong !");
+    } else {
+      res.status(200).send("Deleted successfully");
+    }
+  });
+};

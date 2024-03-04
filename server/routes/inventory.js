@@ -1,7 +1,11 @@
 import express from "express";
 import multer from "multer";
 import { v4 as uuidv4 } from "uuid";
-import { addInventory, getInvetory } from "../controllers/inventory.js";
+import {
+  addInventory,
+  deleteSingleInventory,
+  getInvetory,
+} from "../controllers/inventory.js";
 // const upload = multer({ dest: "image/" });
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -21,4 +25,5 @@ const router = express.Router();
 
 router.post("/upload", upload.single("image"), addInventory);
 router.get("/getInventory", getInvetory);
+router.delete("/deleteSingle/:id", deleteSingleInventory);
 export default router;

@@ -56,6 +56,8 @@ const TableTwo = () => {
         {data.map((data) => (
           <RowInventory
             key={data.id}
+            id={data.id}
+            setFresh={setFresh}
             image={data.image}
             category={data.item_category}
             quantity={data.quantity}

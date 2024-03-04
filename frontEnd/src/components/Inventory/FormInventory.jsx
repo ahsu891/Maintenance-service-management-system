@@ -10,6 +10,7 @@ function FormPreventive({ setFresh, setOn }) {
   };
   async function handleSumit(e) {
     e.preventDefault();
+    setLoading((e) => !e);
     const { iname, qauntity, photo, categories } = e.target;
 
     // console.log(iname.value);
@@ -38,6 +39,8 @@ function FormPreventive({ setFresh, setOn }) {
       console.log("Error uploading file:", error);
       toast.error(error.response.data);
       // setUploadMessage('An error occurred while uploading the file.');
+    } finally {
+      setLoading(false);
     }
     // try {
     //   // Make an Axios request
