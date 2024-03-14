@@ -28,6 +28,7 @@ import Complain from "./components/Requester/Complain";
 import Calendar from "./components/Admin/Calendar";
 import Report from "./components/Admin/Report";
 import ReportPrint from "./components/Admin/ReportPrint";
+import InventoryRequest from "./components/Inventory/InventoryRequest";
 // import MainTable from "./components/Admin/MainTable";
 const ROLES = {
   User: "Requester",
@@ -88,6 +89,10 @@ function App() {
                 <Route path="/inventory" element={<DefaultLayoutInv />}>
                   <Route path="/inventory" index element={<DashboardInv />} />
                   <Route path="/inventory/management" element={<Table />} />
+                  <Route
+                    path="/inventory/request"
+                    element={<InventoryRequest />}
+                  />
                 </Route>
               </Route>
               {/* </Auth> */}
