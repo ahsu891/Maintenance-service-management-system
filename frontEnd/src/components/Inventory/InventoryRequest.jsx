@@ -1,5 +1,10 @@
+import FormLayout from "../Inventory/FormLayout";
 function InventoryRequest() {
-  return <div>holoow</div>;
+  return (
+    <div>
+      <FormLayout />
+    </div>
+  );
 }
 
 export default InventoryRequest;
