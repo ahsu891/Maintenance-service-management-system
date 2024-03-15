@@ -70,7 +70,7 @@ function FormLayout() {
                 </div>
                 <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                   <dt className="mb-2.5 block text-black dark:text-white ">
-                    Available Techicains
+                    Maintenance Request
                   </dt>
                   <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     {/* <TechListPart /> */}
@@ -106,7 +106,7 @@ function FormLayout() {
 
                 <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 ">
                   <dt className="mb-2.5 block text-black dark:text-white ">
-                    Requests
+                    Matrial List
                   </dt>
                   <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     <div className="flex flex-row items-center">
@@ -155,7 +155,7 @@ function FormLayout() {
                 </div>
 
                 <button className="flex w-full justify-center rounded bg-primary p-3 font-medium text-gray">
-                  Send Message
+                  Request
                 </button>
               </div>
             </form>
