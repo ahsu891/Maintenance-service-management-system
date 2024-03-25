@@ -1,9 +1,74 @@
 // import Breadcrumb from '../../components/Breadcrumb';
-
-import TechList from "../Admin/TechList";
+import axios from "../../api/axios";
+import { useEffect, useState } from "react";
 import ListItem from "./ListItem";
-
+import ListItemMat from "./ListItemMat";
+const URL_gT = "/technicial/getTechnicials";
+const URL_gY = "/inventory/getListReq";
+const URL_gL = "/inventory/getInventory";
 function FormLayout() {
+  const [data, setData] = useState([]);
+  const [Mat, setMa] = useState([]);
+  const [allcheckedTH, setAllCheckedTH] = useState([]);
+  const [allcheckedMa, setAllCheckedMa] = useState([]);
+  const [listTech, setListTech] = useState([]);
+  console.log(allcheckedTH);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(URL_gT);
+        setData(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+
+    // Clean up function to cancel the request if the component unmounts or the effect re-runs
+    return () => {
+      // Cancel the request (if using axios cancellation)
+    };
+  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(URL_gL);
+        setMa(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+
+    // Clean up function to cancel the request if the component unmounts or the effect re-runs
+    return () => {
+      // Cancel the request (if using axios cancellation)
+    };
+  }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(URL_gY, {
+          technician_id: "9195f07b-3d29-449a-8d31-4736f0cebee6",
+        });
+        setListTech(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+
+    // Clean up function to cancel the request if the component unmounts or the effect re-runs
+    return () => {
+      // Cancel the request (if using axios cancellation)
+    };
+  }, []);
   return (
     <>
       {/* <Breadcrumb pageName="FormLayout" /> */}
@@ -65,7 +130,11 @@ function FormLayout() {
                         Add
                       </button> */}
                     </div>
-                    <ListItem list={[]} setAllChecked={[]} allchecked={[]} />
+                    <ListItem
+                      list={data}
+                      setAllChecked={setAllCheckedTH}
+                      allchecked={allcheckedTH}
+                    />
                   </dd>
                 </div>
                 <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -76,10 +145,16 @@ function FormLayout() {
                     {/* <TechListPart /> */}
                     <div className="relative z-20 bg-transparent dark:bg-form-input">
                       <select className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
-                        <option value="">Type your subject</option>
+                        {listTech?.map((data) => (
+                          <option value={data.assignment_id}>
+                            {data.title}
+                          </option>
+                        ))}
+
+                        {/* <option value="">Type your subject</option>
                         <option value="">USA</option>
                         <option value="">UK</option>
-                        <option value="">Canada</option>
+                        <option value="">Canada</option> */}
                       </select>
                       <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                         <svg
@@ -150,7 +225,11 @@ function FormLayout() {
                         Add
                       </button> */}
                     </div>
-                    <ListItem list={[]} setAllChecked={[]} allchecked={[]} />
+                    <ListItemMat
+                      list={Mat}
+                      setAllChecked={allcheckedMa}
+                      allchecked={setAllCheckedMa}
+                    />
                   </dd>
                 </div>
 

@@ -177,3 +177,31 @@ export const updatesingleImage = (req, res) => {
     }
   });
 };
+export const getReq = (req, res) => {
+  // Execute the SQL query
+  const { technician_id } = req.body;
+  // console.log(technician_id);
+  const sqlQuery = `
+    SELECT
+      maintenance_requests.request_id,
+      maintenance_requests.title,
+      technicians_assigned.assignment_id
+    FROM
+      maintenance_requests
+    LEFT JOIN
+      technicians_assigned ON technicians_assigned.request_id = maintenance_requests.request_id
+    WHERE
+      technicians_assigned.technician_id = ?
+  `;
+
+  db.query(sqlQuery, [technician_id], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).json(results);
+  });
+};
