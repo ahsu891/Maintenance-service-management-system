@@ -50,7 +50,7 @@ function ListItem({ allchecked, setAllChecked, list }) {
           <li key={data.technician_id}>
             <div className="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
               <input
-                id="checkbox-item-11"
+                id="checkbox-item-1"
                 type="checkbox"
                 value={data.technician_id}
                 onChange={handleChange}

@@ -9,10 +9,11 @@ const URL_gL = "/inventory/getInventory";
 function FormLayout() {
   const [data, setData] = useState([]);
   const [Mat, setMa] = useState([]);
+  const [allData, setAllData] = useState([]);
   const [allcheckedTH, setAllCheckedTH] = useState([]);
   const [allcheckedMa, setAllCheckedMa] = useState([]);
   const [listTech, setListTech] = useState([]);
-  console.log(allcheckedTH);
+  // console.log(allcheckedTH);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -69,6 +70,9 @@ function FormLayout() {
       // Cancel the request (if using axios cancellation)
     };
   }, []);
+
+  // console.log(allData);
+  console.log(allcheckedMa);
   return (
     <>
       {/* <Breadcrumb pageName="FormLayout" /> */}
@@ -132,6 +136,7 @@ function FormLayout() {
                     </div>
                     <ListItem
                       list={data}
+                      key={2}
                       setAllChecked={setAllCheckedTH}
                       allchecked={allcheckedTH}
                     />
@@ -226,9 +231,11 @@ function FormLayout() {
                       </button> */}
                     </div>
                     <ListItemMat
+                      key={"6;ou"}
                       list={Mat}
-                      setAllChecked={allcheckedMa}
-                      allchecked={setAllCheckedMa}
+                      setAllChecked={setAllCheckedMa}
+                      allchecked={allcheckedMa}
+                      setAllData={setAllData}
                     />
                   </dd>
                 </div>

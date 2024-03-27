@@ -1,12 +1,20 @@
-import React from "react";
-function ListItem({ allchecked, setAllChecked, list }) {
+import React, { useState } from "react";
+import { IoMdArrowDropleft } from "react-icons/io";
+import { IoMdArrowDropright } from "react-icons/io";
+import ItemBe from "./ItemBe";
+function ListItem({ allchecked, setAllChecked, list, setAllData }) {
+  const [count, setCount] = useState(0);
+
   function handleChange(e) {
-    if (e.target.checked) {
+    if (!e.target.checked) {
       setAllChecked([...allchecked, e.target.value]);
     } else {
       setAllChecked(allchecked.filter((item) => item !== e.target.value));
     }
+    // console.log("sss", allchecked);
+    // setAllData((e) => [allchecked, count]);
   }
+
   return (
     <div
       id="dropdownSearch"
@@ -49,19 +57,46 @@ function ListItem({ allchecked, setAllChecked, list }) {
         {list?.map((data) => (
           <li key={data.id}>
             <div className="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-              <input
-                id="checkbox-item-11"
-                type="checkbox"
-                value={data.id}
-                onChange={handleChange}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+              <ItemBe
+                name={data.item_name}
+                id={data.id}
+                allchecked={allchecked}
+                setAllChecked={setAllChecked}
               />
-              <label
-                htmlFor="checkbox-item-11"
-                className="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-              >
-                {data.item_name}
-              </label>
+
+              {/* <div className="flex flex-row items-center w-full justify-between ">
+                <div className=" flex flex-row items-center">
+                  <input
+                    id="checkbox-item-11"
+                    type="checkbox"
+                    value={data.id}
+                    onChange={handleChange}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                  />
+
+                  <label
+                    htmlFor="checkbox-item-11"
+                    className="w-full ms-2 text-sm font-medium text-gray-900 rounded   dark:text-gray-300"
+                  >
+                    {data.item_name}
+                  </label>
+                </div>
+                <span className="flex flex-row items-center ">
+                  <IoMdArrowDropleft
+                    onClick={() => {
+                      setCount((e) => e - 1);
+                    }}
+                    className="text-3xl text-primary"
+                  />{" "}
+                  <span>{count}</span>{" "}
+                  <IoMdArrowDropright
+                    onClick={() => {
+                      setCount((e) => e + 1);
+                    }}
+                    className="text-3xl text-primary"
+                  />
+                </span>
+              </div> */}
             </div>
           </li>
         ))}
