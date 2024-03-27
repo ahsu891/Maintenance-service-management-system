@@ -13,6 +13,19 @@ function FormLayout() {
   const [allcheckedTH, setAllCheckedTH] = useState([]);
   const [allcheckedMa, setAllCheckedMa] = useState([]);
   const [listTech, setListTech] = useState([]);
+  const [inputOne, setInputOne] = useState("");
+
+  // console.log(allcheckedTH);
+  const [inputTwo, setInputTwo] = useState("");
+
+  const filtered = data?.filter((data) =>
+    `${data.first_name} ${data.last_name} `
+      ?.toLowerCase()
+      .includes(inputOne.toLowerCase())
+  );
+  const filteredSec = Mat?.filter((data) =>
+    `${data.item_name} `.toLowerCase().includes(inputTwo.toLowerCase())
+  );
   // console.log(allcheckedTH);
   useEffect(() => {
     const fetchData = async () => {
@@ -71,8 +84,12 @@ function FormLayout() {
     };
   }, []);
 
-  // console.log(allData);
-  console.log(allcheckedMa);
+  function handleSumbit(e) {
+    e.preventDefault();
+
+    alert(e.target.request.value);
+  }
+
   return (
     <>
       {/* <Breadcrumb pageName="FormLayout" /> */}
@@ -86,7 +103,7 @@ function FormLayout() {
                 Request Form
               </h3>
             </div>
-            <form action="#">
+            <form onSubmit={handleSumbit}>
               <div className="p-6.5">
                 <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 ">
                   <dt className="mb-2.5 block text-black dark:text-white ">
@@ -119,8 +136,8 @@ function FormLayout() {
                           <input
                             type="text"
                             id="input-group-search"
-                            // value={input}
-                            // onChange={(e) => setInput(e.target.value)}
+                            value={inputOne}
+                            onChange={(e) => setInputOne(e.target.value)}
                             className="bg-gray-50 border  border-gray text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Add Matrial"
                           />
@@ -135,7 +152,7 @@ function FormLayout() {
                       </button> */}
                     </div>
                     <ListItem
-                      list={data}
+                      list={filtered}
                       key={2}
                       setAllChecked={setAllCheckedTH}
                       allchecked={allcheckedTH}
@@ -149,9 +166,15 @@ function FormLayout() {
                   <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     {/* <TechListPart /> */}
                     <div className="relative z-20 bg-transparent dark:bg-form-input">
-                      <select className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary">
+                      <select
+                        name="request"
+                        className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                      >
                         {listTech?.map((data) => (
-                          <option value={data.assignment_id}>
+                          <option
+                            key={data.assignment_id}
+                            value={data.assignment_id}
+                          >
                             {data.title}
                           </option>
                         ))}
@@ -214,9 +237,9 @@ function FormLayout() {
                           </div>
                           <input
                             type="text"
-                            id="input-group-search"
-                            // value={input}
-                            // onChange={(e) => setInput(e.target.value)}
+                            id="input-group-searchf"
+                            value={inputTwo}
+                            onChange={(e) => setInputTwo(e.target.value)}
                             className="bg-gray-50 border  border-gray text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Add Matrial"
                           />
@@ -232,7 +255,7 @@ function FormLayout() {
                     </div>
                     <ListItemMat
                       key={"6;ou"}
-                      list={Mat}
+                      list={filteredSec}
                       setAllChecked={setAllCheckedMa}
                       allchecked={allcheckedMa}
                       setAllData={setAllData}
