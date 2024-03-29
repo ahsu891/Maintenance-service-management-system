@@ -88,7 +88,7 @@ function FormLayout() {
           request_id: e.target.request?.value,
           materiald_id: allcheckedMa,
         });
-        setMa(response.data);
+
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -185,7 +185,7 @@ function FormLayout() {
                           {listTech?.map((data) => (
                             <option
                               key={data.assignment_id}
-                              value={data.assignment_id}
+                              value={data.request_id}
                             >
                               {data.title}
                             </option>

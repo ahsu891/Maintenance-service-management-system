@@ -207,18 +207,46 @@ export const getReq = (req, res) => {
 };
 export const makeReq = (req, res) => {
   const { materiald_id, request_id } = req.body;
-  console.log(materiald_id, request_id);
-  // console.log(technician_id);
-  const sqlQuery = null;
+  // console.log(materiald_id, request_id);
 
-  // db.query(sqlQuery, [technician_id], (error, results) => {
-  //   if (error) {
-  //     console.error("Error executing the query:", error);
-  //     res.status(500).send("Internal Server Error");
-  //     return;
-  //   }
+  // Check if the request_id exists in the maintenance_requests table
+  const checkQuery = "SELECT * FROM maintenance_requests WHERE request_id = ?";
+  db.query(checkQuery, [request_id], (checkError, checkResults) => {
+    if (checkError) {
+      console.error("Error checking request_id:", checkError);
+      res.status(500).send("Error checking maintenance request.");
+      return;
+    }
 
-  //   // Return the query results as JSON
-  //   res.status(200).json(results);
-  // });
+    // If the request_id does not exist, send an error response
+    if (checkResults.length === 0) {
+      res
+        .status(400)
+        .send("Invalid request_id. Maintenance request does not exist.");
+      return;
+    }
+
+    // Iterate through materiald_id array and insert into maintenance_request_materials
+    materiald_id.forEach((element) => {
+      const sqlQuery = `INSERT INTO maintenance_request_materials (material_id,request_id, quantity_used, status) 
+      VALUES (?, ?, ?, 'Pending');`;
+      db.query(
+        sqlQuery,
+        [uuidv4(), request_id, element.count],
+        (error, results) => {
+          if (error) {
+            console.error("Error executing the query:", error);
+            // Send an error response to the client
+            res.status(500).send("Error creating maintenance requests.");
+            return;
+          }
+          // Log success message
+          // console.log("Maintenance request created successfully.");
+        }
+      );
+    });
+
+    // Send success response to the client
+    res.status(200).send("Maintenance requests created successfully.");
+  });
 };
