@@ -1,12 +1,10 @@
 import React from "react";
-function ListItem({ allchecked, setAllChecked, list }) {
-  function handleChange(e) {
-    if (e.target.checked) {
-      setAllChecked([...allchecked, e.target.value]);
-    } else {
-      setAllChecked(allchecked.filter((item) => item !== e.target.value));
-    }
-  }
+function ListItem({ selectedOption, setSelectedOption, list, fetchData }) {
+  const handleOptionChange = (option) => {
+    setSelectedOption(option);
+    fetchData(option);
+  };
+
   return (
     <div
       id="dropdownSearch"
@@ -46,25 +44,26 @@ function ListItem({ allchecked, setAllChecked, list }) {
         className="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
         aria-labelledby="dropdownSearchButton"
       >
-        {list?.map((data) => (
-          <li key={data.technician_id}>
-            <div className="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
-              <input
-                id="checkbox-item-1"
-                type="checkbox"
-                value={data.technician_id}
-                onChange={handleChange}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
-              />
-              <label
-                htmlFor="checkbox-item-11"
-                className="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
-              >
-                {data.first_name} {data.last_name}
-              </label>
-            </div>
-          </li>
-        ))}
+        {list.length ? (
+          list?.map((data) => (
+            <li key={data.technician_id}>
+              <div className="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+                <input
+                  type="radio"
+                  value={data.technician_id}
+                  checked={selectedOption === data.technician_id}
+                  onChange={() => handleOptionChange(data.technician_id)}
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                />
+                <label className="w-full ms-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300">
+                  {data.first_name} {data.last_name}
+                </label>
+              </div>
+            </li>
+          ))
+        ) : (
+          <li>no select the Technicain</li>
+        )}
       </ul>
     </div>
   );

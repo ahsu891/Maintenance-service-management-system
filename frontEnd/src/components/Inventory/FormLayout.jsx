@@ -7,15 +7,13 @@ const URL_gT = "/technicial/getTechnicials";
 const URL_gY = "/inventory/getListReq";
 const URL_gL = "/inventory/getInventory";
 function FormLayout() {
-  const [data, setData] = useState([]);
-  const [Mat, setMa] = useState([]);
-  const [allData, setAllData] = useState([]);
-  const [allcheckedTH, setAllCheckedTH] = useState([]);
+  const [data, setData] = useState([]); // fetchin from api
+  const [Mat, setMa] = useState([]); // fetchin from api
+  const [selectedOption, setSelectedOption] = useState(null); //selected from the selectinon bur optinal
   const [allcheckedMa, setAllCheckedMa] = useState([]);
   const [listTech, setListTech] = useState([]);
   const [inputOne, setInputOne] = useState("");
 
-  // console.log(allcheckedTH);
   const [inputTwo, setInputTwo] = useState("");
 
   const filtered = data?.filter((data) =>
@@ -63,31 +61,23 @@ function FormLayout() {
       // Cancel the request (if using axios cancellation)
     };
   }, []);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post(URL_gY, {
-          technician_id: "9195f07b-3d29-449a-8d31-4736f0cebee6",
-        });
-        setListTech(response.data);
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-
-    // Clean up function to cancel the request if the component unmounts or the effect re-runs
-    return () => {
-      // Cancel the request (if using axios cancellation)
-    };
-  }, []);
+  const fetchData = async (id) => {
+    try {
+      const response = await axios.post(URL_gY, {
+        technician_id: id,
+      });
+      setListTech(response.data);
+      console.log("ahello", response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   function handleSumbit(e) {
     e.preventDefault();
 
-    alert(e.target.request.value);
+    console.log(e.target.request.value);
+    console.log(allcheckedMa);
   }
 
   return (
@@ -154,8 +144,9 @@ function FormLayout() {
                     <ListItem
                       list={filtered}
                       key={2}
-                      setAllChecked={setAllCheckedTH}
-                      allchecked={allcheckedTH}
+                      fetchData={fetchData}
+                      selectedOption={selectedOption}
+                      setSelectedOption={setSelectedOption}
                     />
                   </dd>
                 </div>
@@ -166,24 +157,29 @@ function FormLayout() {
                   <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     {/* <TechListPart /> */}
                     <div className="relative z-20 bg-transparent dark:bg-form-input">
-                      <select
-                        name="request"
-                        className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
-                      >
-                        {listTech?.map((data) => (
-                          <option
-                            key={data.assignment_id}
-                            value={data.assignment_id}
-                          >
-                            {data.title}
-                          </option>
-                        ))}
+                      {!listTech.length ? (
+                        <p>please select Techicain</p>
+                      ) : (
+                        <select
+                          name="request"
+                          className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                        >
+                          {listTech?.map((data) => (
+                            <option
+                              key={data.assignment_id}
+                              value={data.assignment_id}
+                            >
+                              {data.title}
+                            </option>
+                          ))}
 
-                        {/* <option value="">Type your subject</option>
+                          {/* <option value="">Type your subject</option>
                         <option value="">USA</option>
                         <option value="">UK</option>
                         <option value="">Canada</option> */}
-                      </select>
+                        </select>
+                      )}
+
                       <span className="absolute top-1/2 right-4 z-30 -translate-y-1/2">
                         <svg
                           className="fill-current"
@@ -258,7 +254,6 @@ function FormLayout() {
                       list={filteredSec}
                       setAllChecked={setAllCheckedMa}
                       allchecked={allcheckedMa}
-                      setAllData={setAllData}
                     />
                   </dd>
                 </div>
