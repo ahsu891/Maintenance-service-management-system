@@ -6,6 +6,7 @@ import {
   deleteSingleInventory,
   getInvetory,
   getReq,
+  makeReq,
   updateInventory,
   updatesingleImage,
 } from "../controllers/inventory.js";
@@ -28,6 +29,7 @@ const router = express.Router();
 
 router.post("/upload", upload.single("image"), addInventory);
 router.post("/getListReq", getReq);
+router.post("/makeReqMat", makeReq);
 router.get("/getInventory", getInvetory);
 router.delete("/deleteSingle/:id", deleteSingleInventory);
 router.put("/update/:id", updateInventory);

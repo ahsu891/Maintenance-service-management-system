@@ -205,3 +205,20 @@ export const getReq = (req, res) => {
     res.status(200).json(results);
   });
 };
+export const makeReq = (req, res) => {
+  const { materiald_id, request_id } = req.body;
+  console.log(materiald_id, request_id);
+  // console.log(technician_id);
+  const sqlQuery = null;
+
+  // db.query(sqlQuery, [technician_id], (error, results) => {
+  //   if (error) {
+  //     console.error("Error executing the query:", error);
+  //     res.status(500).send("Internal Server Error");
+  //     return;
+  //   }
+
+  //   // Return the query results as JSON
+  //   res.status(200).json(results);
+  // });
+};

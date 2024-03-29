@@ -6,6 +6,7 @@ import ListItemMat from "./ListItemMat";
 const URL_gT = "/technicial/getTechnicials";
 const URL_gY = "/inventory/getListReq";
 const URL_gL = "/inventory/getInventory";
+const URL_RM = "/inventory/makeReqMat";
 function FormLayout() {
   const [data, setData] = useState([]); // fetchin from api
   const [Mat, setMa] = useState([]); // fetchin from api
@@ -76,8 +77,25 @@ function FormLayout() {
   function handleSumbit(e) {
     e.preventDefault();
 
-    console.log(e.target.request.value);
+    console.log(e.target.request?.value);
+    if (!e.target.request?.value || allcheckedMa.length === 0) {
+      return alert("film the form please");
+    }
     console.log(allcheckedMa);
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(URL_RM, {
+          request_id: e.target.request?.value,
+          materiald_id: allcheckedMa,
+        });
+        setMa(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
   }
 
   return (
