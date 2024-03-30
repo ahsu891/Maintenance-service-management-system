@@ -42,8 +42,8 @@ function ItemBe({ allchecked, setAllChecked, id, name }) {
             setCount((e) => e - 1);
             setAllChecked(
               allchecked.map((item) => {
-                console.log(item.material, id);
-                if (+item.material === id) {
+                // console.log(item.material, id);
+                if (+item.material === +id) {
                   return { material: item.material, count: item.count - 1 };
                 }
                 return item;
@@ -58,8 +58,8 @@ function ItemBe({ allchecked, setAllChecked, id, name }) {
             setCount((e) => e + 1);
             setAllChecked(
               allchecked.map((item) => {
-                console.log(item.material, id);
-                if (+item.material === id) {
+                // console.log(typeof +item.material, typeof +id);
+                if (+item.material === +id) {
                   return { material: item.material, count: item.count + 1 };
                 }
                 return item;

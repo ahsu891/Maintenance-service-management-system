@@ -1,5 +1,11 @@
+import InventoryRequestList from "./InventoryRequestList";
+
 function InventoryRequest() {
-  return <div>hellow ahmed</div>;
+  return (
+    <div>
+      <InventoryRequestList />
+    </div>
+  );
 }
 
 export default InventoryRequest;

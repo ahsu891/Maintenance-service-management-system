@@ -81,7 +81,7 @@ function FormLayout() {
     if (!e.target.request?.value || allcheckedMa.length === 0) {
       return alert("film the form please");
     }
-    console.log(allcheckedMa);
+    // console.log(allcheckedMa, selectedOption);
     const fetchData = async () => {
       try {
         const response = await axios.post(URL_RM, {

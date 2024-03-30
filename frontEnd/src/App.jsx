@@ -29,7 +29,7 @@ import Calendar from "./components/Admin/Calendar";
 import Report from "./components/Admin/Report";
 import ReportPrint from "./components/Admin/ReportPrint";
 import InventoryRequestAdmin from "./components/Admin/InventoryRequestAdmin";
-import InventoryRequest from "./components/Admin/InventoryRequestAdmin";
+import InventoryRequest from "./components/Inventory/InventoryRequest";
 // import MainTable from "./components/Admin/MainTable";
 const ROLES = {
   User: "Requester",

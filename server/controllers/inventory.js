@@ -225,14 +225,14 @@ export const makeReq = (req, res) => {
         .send("Invalid request_id. Maintenance request does not exist.");
       return;
     }
-
+    // console.log(materiald_id);
     // Iterate through materiald_id array and insert into maintenance_request_materials
     materiald_id.forEach((element) => {
-      const sqlQuery = `INSERT INTO maintenance_request_materials (material_id,request_id, quantity_used, status) 
-      VALUES (?, ?, ?, 'Pending');`;
+      const sqlQuery = `INSERT INTO maintenance_request_materials (id,material_id,request_id, quantity_used, status) 
+      VALUES (?, ?,?, ?, 'Pending');`;
       db.query(
         sqlQuery,
-        [uuidv4(), request_id, element.count],
+        [uuidv4(), element.material, request_id, element.count],
         (error, results) => {
           if (error) {
             console.error("Error executing the query:", error);
@@ -248,5 +248,30 @@ export const makeReq = (req, res) => {
 
     // Send success response to the client
     res.status(200).send("Maintenance requests created successfully.");
+  });
+};
+
+export const getReqList = (req, res) => {
+  // Execute the SQL query
+  // const { technician_id } = req.body;
+  // console.log(technician_id);
+  const sqlQuery = `
+  SELECT maintenance_request_materials.*,
+  maintenance_requests.title, 
+  GROUP_CONCAT(quantity_used) as total_matriall
+  FROM maintenance_request_materials
+  LEFT JOIN maintenance_requests on maintenance_requests.request_id=maintenance_request_materials.request_id
+  GROUP BY maintenance_request_materials.request_id;
+  `;
+
+  db.query(sqlQuery, (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).send(results);
   });
 };
