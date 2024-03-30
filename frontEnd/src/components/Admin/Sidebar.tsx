@@ -5,6 +5,7 @@ import { IoNewspaperOutline } from "react-icons/io5";
 import SidebarLinkGroup from "../Admin/SidebarLinkGroup";
 import { GoInbox } from "react-icons/go";
 import { GoFileDirectory } from "react-icons/go";
+import { MdOutlineInventory2 } from "react-icons/md";
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -221,6 +222,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <GoFileDirectory />
                   </span>
                   Request Status
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/admin/inventoryrequest"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("inventoryrequest") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <span className="text-xl">
+                    <MdOutlineInventory2 />
+                  </span>
+                  Inventory Request
                 </NavLink>
               </li>
               <li>
