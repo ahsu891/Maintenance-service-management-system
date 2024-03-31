@@ -275,3 +275,31 @@ export const getReqList = (req, res) => {
     res.status(200).send(results);
   });
 };
+export const getsingleInventory = (req, res) => {
+  // Execute the SQL query
+  // const { technician_id } = req.body;
+  // console.log(technician_id);
+  const { request_id } = req.body;
+  const sqlQuery = `SELECT 
+  a.*,
+  b.title,
+  c.item_name
+FROM 
+  maintenance_request_materials AS a
+ LEFT JOIN  inventory as c ON c.id=a.material_id 
+LEFT JOIN 
+  maintenance_requests AS b ON a.request_id = b.request_id
+WHERE a.request_id=?;
+`;
+
+  db.query(sqlQuery, [request_id], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).send(results);
+  });
+};

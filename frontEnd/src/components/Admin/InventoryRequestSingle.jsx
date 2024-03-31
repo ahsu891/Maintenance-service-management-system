@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { AiOutlineMessage } from "react-icons/ai";
 import { handle } from "express/lib/router";
 import axios from "../../api/axios";
 import toast from "react-hot-toast";
+import DescriptionInventory from "./DescriptionInventory";
 const URL_R = "/assign/conform";
 function InventoryRequestSingle({
   block_id,
@@ -20,6 +21,7 @@ function InventoryRequestSingle({
   setReff,
   date,
 }) {
+  const [on, setOn] = useState(false);
   function handleConform() {
     const fetchData = async () => {
       try {
@@ -44,7 +46,10 @@ function InventoryRequestSingle({
 
   return (
     <div className="">
-      <div className="my-5 relative border-l-4 rounded-md border-primary   transition-all  2s ">
+      <div
+        onClick={() => setOn((e) => !e)}
+        className="my-5 relative border-l-4 rounded-md border-primary   transition-all  2s "
+      >
         <div className=" rounded-md border  border-stroke bg-white px-6   pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="flex md:flex-row flex-col justify-between py-4 items-center px-4 pr-7">
             <div>
@@ -116,6 +121,7 @@ function InventoryRequestSingle({
           </div>
         </div>
       </div>
+      <div>{on && <DescriptionInventory id={request_id} title={title} />}</div>
     </div>
   );
 }

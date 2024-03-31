@@ -23,6 +23,7 @@ function InventoryRequestList() {
       {data.map((data) => (
         <InventoryRequestSingle
           key={data.id}
+          request_id={data.request_id}
           title={data.title}
           status={data.status}
         />
