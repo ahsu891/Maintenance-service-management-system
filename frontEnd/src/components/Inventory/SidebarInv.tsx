@@ -342,9 +342,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }`}
                 >
                   <span className="text-xl">
-                    <MdOutlineContentPaste />
+                    <HiOutlineWrenchScrewdriver />
                   </span>
-                  Add Product
+                  Add Material
                 </NavLink>
               </li>
               <li>
@@ -354,8 +354,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     pathname.includes("request") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                  <span className="text-2xl">
-                    <HiOutlineWrenchScrewdriver />
+                  <span className="text-xl">
+                    <MdOutlineContentPaste />
                   </span>
                   Request
                 </NavLink>
