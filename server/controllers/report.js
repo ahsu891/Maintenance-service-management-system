@@ -79,13 +79,18 @@ export const getSingleRep = (req, res) => {
     WHERE  maintenance_requests.request_id=?
   `;
 
-  const materialQuery = `
-    SELECT material_used.detail
-    FROM finished_requests
-    JOIN material_used ON material_used.work_id = finished_requests.finished_id
-    JOIN maintenance_requests ON maintenance_requests.request_id = finished_requests.request_id
-    WHERE maintenance_requests.request_id = ?;
-  `;
+  const materialQuery = ` SELECT maintenance_request_materials.*,
+  inventory.item_name FROM finished_requests
+  JOIN maintenance_request_materials ON maintenance_request_materials.request_id = finished_requests.request_id 
+  JOIN maintenance_requests ON maintenance_requests.request_id = finished_requests.request_id 
+  LEFT JOIN inventory ON inventory.id=maintenance_request_materials.material_id 
+  WHERE maintenance_requests.request_id =?;`;
+  //   SELECT material_used.detail
+  //   FROM finished_requests
+  //   JOIN material_used ON material_used.work_id = finished_requests.finished_id
+  //   JOIN maintenance_requests ON maintenance_requests.request_id = finished_requests.request_id
+  //   WHERE maintenance_requests.request_id = ?;
+  // `;
 
   // Execute the queries in parallel
   db.query(sqlQuery, [requestId], (error, results) => {

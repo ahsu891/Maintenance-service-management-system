@@ -110,7 +110,7 @@ function ReportPrint() {
                   >
                     {data?.materialDetails?.map((dat, i) => (
                       <span key={i * 1 + 288 * 22}>
-                        {i + 1}.{dat.detail},
+                        {i + 1}.{dat.item_name} {`(${dat.quantity_used})`},
                       </span>
                     ))}
                   </div>

@@ -303,3 +303,50 @@ WHERE a.request_id=?;
     res.status(200).send(results);
   });
 };
+export const makeUpdateRu = (req, res) => {
+  // Execute the SQL query
+  // const { technician_id } = req.body;
+  // console.log(technician_id);
+  const { message, id } = req.body;
+  console.log(message);
+  const sqlQuery = `UPDATE maintenance_request_materials
+  SET status = ?
+  WHERE maintenance_request_materials.request_id = ?;
+`;
+
+  db.query(sqlQuery, [message, id], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).send("Successfully Updated");
+  });
+};
+
+export const getReqListNotClosed = (req, res) => {
+  // Execute the SQL query
+  // const { technician_id } = req.body;
+  // console.log(technician_id);
+  const sqlQuery = `SELECT maintenance_request_materials.*,
+  maintenance_requests.title, 
+  GROUP_CONCAT(quantity_used) as total_matriall
+  FROM maintenance_request_materials
+  LEFT JOIN maintenance_requests on maintenance_requests.request_id=maintenance_request_materials.request_id
+    WHERE maintenance_request_materials.status!="Closed"
+  GROUP BY maintenance_request_materials.request_id
+  `;
+
+  db.query(sqlQuery, (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).send(results);
+  });
+};

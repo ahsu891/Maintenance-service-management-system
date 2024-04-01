@@ -5,7 +5,7 @@ import { handle } from "express/lib/router";
 import axios from "../../api/axios";
 import toast from "react-hot-toast";
 import DescriptionInventory from "./DescriptionInventory";
-const URL_R = "/assign/conform";
+const URL_R = "/inventory/UpdateInventoryRequest";
 function InventoryRequestSingle({
   block_id,
   room,
@@ -19,15 +19,18 @@ function InventoryRequestSingle({
   status,
   i,
   setReff,
+
   date,
 }) {
   const [on, setOn] = useState(false);
-  function handleConform() {
+  console.log(status);
+  function handleUpdate(message) {
     const fetchData = async () => {
       try {
         // Make a GET request to the API endpoint
         const response = await axios.post(URL_R, {
-          request_id,
+          id: request_id,
+          message,
         });
         // console.log(request_id);
         // console.log(localStorage.getItem("user_id"));
@@ -38,6 +41,7 @@ function InventoryRequestSingle({
         //   setList([...response.data]);
       } catch (error) {
         console.error("Error fetching technicials:", error.message);
+        toast.error(error.response.data);
       }
     };
     // Call the fetchData function when the component mounts
@@ -67,12 +71,17 @@ function InventoryRequestSingle({
                       {status}
                     </p>
                   )}
-                  {status === "Completed" && (
+                  {status === "Accepted" && (
                     <p className=" rounded-full   w-auto block-inline bg-meta-3 bg-opacity-10 py-1 px-3 text-sm font-medium  text-meta-3">
                       {status}
                     </p>
                   )}
-                  {status === "Cancelled" && (
+                  {status === "Rejected" && (
+                    <p className=" rounded-full   w-auto block-inline  bg-danger bg-opacity-10 py-1 px-3 text-sm font-medium  text-danger">
+                      {status}
+                    </p>
+                  )}
+                  {status === "Closed" && (
                     <p className=" rounded-full   w-auto block-inline  bg-danger bg-opacity-10 py-1 px-3 text-sm font-medium  text-danger">
                       {status}
                     </p>
@@ -101,8 +110,10 @@ function InventoryRequestSingle({
             <div className="flex flex-row  gap-4 items-center">
               <div>
                 <button
-                  onClick={handleConform}
-                  disabled={status === "Completed" ? false : true}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleUpdate("Rejected");
+                  }}
                   className=" bg-danger px-3 py-1 rounded-md text-white"
                 >
                   Reject
@@ -110,11 +121,14 @@ function InventoryRequestSingle({
               </div>
               <div>
                 <button
-                  onClick={handleConform}
-                  disabled={status === "Completed" ? false : true}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleUpdate("Closed");
+                  }}
+                  // disabled={status === "Completed" ? false : true}
                   className="bg-primary px-3 py-1 rounded-md text-white"
                 >
-                  Accept
+                  Closed
                 </button>
               </div>
             </div>

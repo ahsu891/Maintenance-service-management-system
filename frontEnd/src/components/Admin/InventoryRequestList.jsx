@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import InventoryRequestSingle from "./InventoryRequestSingle";
 import axios from "../../api/axios";
-const Url_RL = "/inventory/getReqList";
+const Url_RL = "/inventory/getReqListNotClosed";
 function InventoryRequestList() {
   const [data, setData] = useState([]);
+  const [reff, setReff] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -17,7 +18,7 @@ function InventoryRequestList() {
     };
     // Call the fetchData function when the component mounts
     fetchData();
-  }, []);
+  }, [reff]);
   return (
     <div>
       {data.map((data) => (
@@ -26,6 +27,7 @@ function InventoryRequestList() {
           request_id={data.request_id}
           title={data.title}
           status={data.status}
+          setReff={setReff}
         />
       ))}
       {/* <InventoryRequestSingle /> */}

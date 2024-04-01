@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { MdOutlineContentPaste } from "react-icons/md";
-// import Logo from "../../images/icon/"
+// import Logo from "../../images/icon/";
+import { HiOutlineWrenchScrewdriver } from "react-icons/hi2";
 import SidebarLinkGroupReq from "../Requester/SidebarLinkGroupReq.js";
 
 interface SidebarProps {
@@ -353,8 +354,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     pathname.includes("request") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                  <span className="text-xl">
-                    <MdOutlineContentPaste />
+                  <span className="text-2xl">
+                    <HiOutlineWrenchScrewdriver />
                   </span>
                   Request
                 </NavLink>
