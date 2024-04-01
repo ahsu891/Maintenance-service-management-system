@@ -1,4 +1,53 @@
-function InventorySingleList({ title, status }) {
+import toast from "react-hot-toast";
+import axios from "../../api/axios";
+
+const Url_DR = "/inventory/deleteInventoryRequest";
+const URL_R = "/inventory/UpdateInventoryRequest";
+function InventorySingleList({ title, status, setReff, request_id }) {
+  function handleDelete() {
+    // console.log(allcheckedMa, selectedOption);
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(Url_DR, {
+          request_id,
+        });
+        toast.success(response.data);
+        setReff((e) => !e);
+        // setOn((e) => !e);
+
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        toast.error(error.response.data);
+      }
+    };
+
+    fetchData();
+  }
+  function handleUpdate(message) {
+    const fetchData = async () => {
+      try {
+        // Make a GET request to the API endpoint
+        const response = await axios.post(URL_R, {
+          id: request_id,
+          message,
+        });
+        // console.log(request_id);
+        // console.log(localStorage.getItem("user_id"));
+        // console.log(response.data);
+        toast.success(response.data);
+        setReff((e) => !e);
+
+        //   setList([...response.data]);
+      } catch (error) {
+        console.error("Error fetching technicials:", error.message);
+        toast.error(error.response.data);
+      }
+    };
+    // Call the fetchData function when the component mounts
+    fetchData();
+  }
+
   return (
     <div>
       <div className="">
@@ -60,24 +109,27 @@ function InventorySingleList({ title, status }) {
                     onClick={(e) => {
                       e.stopPropagation();
                       // handleUpdate("Rejected");
+                      handleDelete();
                     }}
                     // disabled={status === "Completed" ? false : true}
                     className=" bg-danger px-3 py-1 rounded-md text-white"
                   >
-                    Reject
+                    Deleted
                   </button>
                 </div>
                 <div>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      // handleUpdate("Accepted");
-                    }}
-                    // disabled={status === "Completed" ? false : true}
-                    className="bg-primary px-3 py-1 rounded-md text-white"
-                  >
-                    Accept
-                  </button>
+                  {status === "Accepted" && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleUpdate("Closed");
+                      }}
+                      // disabled={status === "Completed" ? false : true}
+                      className="bg-primary px-3 py-1 rounded-md text-white"
+                    >
+                      Closed
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

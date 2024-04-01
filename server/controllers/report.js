@@ -84,7 +84,7 @@ export const getSingleRep = (req, res) => {
   JOIN maintenance_request_materials ON maintenance_request_materials.request_id = finished_requests.request_id 
   JOIN maintenance_requests ON maintenance_requests.request_id = finished_requests.request_id 
   LEFT JOIN inventory ON inventory.id=maintenance_request_materials.material_id 
-  WHERE maintenance_requests.request_id =?;`;
+  WHERE maintenance_requests.request_id =? And maintenance_request_materials.status="Closed" ;`;
   //   SELECT material_used.detail
   //   FROM finished_requests
   //   JOIN material_used ON material_used.work_id = finished_requests.finished_id

@@ -125,7 +125,7 @@ LEFT JOIN
 };
 export const finishAss = (req, res) => {
   // Execute the SQL query
-  const { time, material, worker, request_id } = req.body;
+  const { time, worker, request_id } = req.body;
   const id = uuidv4();
   // console.log(time, material, worker);
   // console.log(user_id);
@@ -138,12 +138,12 @@ export const finishAss = (req, res) => {
   const sqlm = `
   INSERT INTO material_used (material_id, work_id, detail) VALUES (?,?,?);
   `;
-  const sqld = `
-  
-DELETE FROM technicians_assigned
-WHERE request_id=?;
+  //   const sqld = `
 
-  `;
+  // DELETE FROM technicians_assigned
+  // WHERE request_id=?;
+
+  //   `;
   const sqlu = `
   
   UPDATE maintenance_requests
@@ -168,20 +168,20 @@ WHERE request_id=?;
           // return;
         }
 
-        material.forEach((element) => {
-          db.query(sqlm, [uuidv4(), id, element.data], (error, results) => {
-            if (error) {
-              console.error("Error executing the query:", error);
-              throw new Error("Something went wrong");
-              // res.status(500).send("Internal Server Error");
-              // return;
-            }
+        // material.forEach((element) => {
+        //   db.query(sqlm, [uuidv4(), id, element.data], (error, results) => {
+        //     if (error) {
+        //       console.error("Error executing the query:", error);
+        //       throw new Error("Something went wrong");
+        //       // res.status(500).send("Internal Server Error");
+        //       // return;
+        //     }
 
-            // console.log(results);
-            // Return the query results as JSON
-            // res.status(200).json(results);
-          });
-        });
+        //     // console.log(results);
+        //     // Return the query results as JSON
+        //     // res.status(200).json(results);
+        //   });
+        // });
 
         // console.log(results);
         // Return the query results as JSON

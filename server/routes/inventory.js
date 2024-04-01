@@ -3,6 +3,7 @@ import multer from "multer";
 import { v4 as uuidv4 } from "uuid";
 import {
   addInventory,
+  deleteInventorySingleRequest,
   deleteSingleInventory,
   getInvetory,
   getReq,
@@ -38,6 +39,7 @@ router.get("/getReqListNotClosed", getReqListNotClosed);
 router.post("/getSingleInventoryInfo", getsingleInventory);
 router.post("/UpdateInventoryRequest", makeUpdateRu);
 router.post("/makeReqMat", makeReq);
+router.post("/deleteInventoryRequest", deleteInventorySingleRequest);
 router.get("/getInventory", getInvetory);
 router.delete("/deleteSingle/:id", deleteSingleInventory);
 router.put("/update/:id", updateInventory);

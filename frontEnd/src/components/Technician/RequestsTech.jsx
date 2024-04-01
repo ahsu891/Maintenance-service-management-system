@@ -69,6 +69,7 @@ function Requests({
             date={date}
             room={room}
             phone={phone}
+            status={status}
             name={requester_name}
             description={description}
             requester_name={requester_name}

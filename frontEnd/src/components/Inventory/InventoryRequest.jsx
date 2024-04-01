@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import FormLayout from "../Inventory/FormLayout";
-import InventoryRequestSingle from "../Admin/InventoryRequestSingle";
+
 import axios from "../../api/axios";
+import InventorySingleList from "./InventorySingleList";
 const Url_l = "/inventory/getReqListNotClosed";
 function InventoryRequest() {
   const [on, setOn] = useState(false);
@@ -29,8 +30,9 @@ function InventoryRequest() {
     <div>
       <div>
         {data?.map((data) => (
-          <InventoryRequestSingle
+          <InventorySingleList
             title={data.title}
+            key={data.id}
             status={data.status}
             setReff={setReff}
             request_id={data.request_id}
@@ -46,7 +48,7 @@ function InventoryRequest() {
           + Add
         </button>
       </div>
-      {on && <FormLayout />}
+      {on && <FormLayout setOn={setOn} setReff={setReff} />}
     </div>
   );
 }

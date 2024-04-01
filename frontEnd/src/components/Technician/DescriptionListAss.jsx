@@ -95,18 +95,21 @@ function DescriptionListAss({
     e.preventDefault();
     const { h, m } = e.target;
 
-    console.log(h.value, m.value);
-    console.log(allchecked);
-    console.log(addvalue);
+    // console.log(h.value, m.value);
+    // console.log(allchecked);
+    // console.log(addvalue);
     if (allchecked.length === 0) {
       return toast.error("Please Assign your Team");
+    }
+    if (+h.value === 0 && +m.value === 0) {
+      return toast.error("Can your pleas fill the time !");
     }
     const fetchData = async () => {
       try {
         // Make a GET request to the API endpoint
         const response = await axios.post(URL_F, {
           time: h.value * 60 * 60 + m.value * 60,
-          material: addvalue,
+
           worker: allchecked,
           request_id,
         });
@@ -123,7 +126,7 @@ function DescriptionListAss({
     // Call the fetchData function when the component mounts
     fetchData();
   }
-
+  console.log(status);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -141,7 +144,7 @@ function DescriptionListAss({
     };
     // Call the fetchData function when the component mounts
     fetchData();
-  }, [request_id, list]);
+  }, [request_id]);
 
   return (
     <div className="w-full ">
@@ -203,6 +206,7 @@ function DescriptionListAss({
                 <span className=" text-primary">
                   {" "}
                   <Link
+                    target="_blank"
                     to={`https://www.google.com/maps/dir/${blat},${blog}/${lat},${log}/@7.55439,37.8822889,697m/data=!3m2!1e3!4b1!4m2!4m1!3e2?entry=ttu`}
                   >
                     Go the map
@@ -283,7 +287,7 @@ function DescriptionListAss({
                   </div>
                 </dd>
               </div> */}
-              <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              {/* <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-semibold text-graydark leading-6 text-gray-900">
                   Materials Utilized
                 </dt>
@@ -336,7 +340,7 @@ function DescriptionListAss({
                     />
                   )}
                 </dd>
-              </div>
+              </div> */}
               <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-semibold text-graydark leading-6 text-gray-900">
                   Partcipate Techicains
@@ -376,13 +380,13 @@ function DescriptionListAss({
               <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 {/* <dt className="text-sm font-semibold leading-6  text-graydark"></dt> */}
                 <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {status !== "Completed" && (
+                  {status === "Completed" || (
                     <button
                       type="submit"
                       disabled={status === "Completed" ? true : false}
                       className="flex w-auto justify-self-end rounded bg-primary p-3 px-8 font-medium text-gray"
                     >
-                      Complete task
+                      Complete the task
                     </button>
                   )}
                 </dd>

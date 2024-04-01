@@ -123,12 +123,12 @@ function InventoryRequestSingle({
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleUpdate("Closed");
+                    handleUpdate("Accepted");
                   }}
                   // disabled={status === "Completed" ? false : true}
                   className="bg-primary px-3 py-1 rounded-md text-white"
                 >
-                  Closed
+                  Accepted
                 </button>
               </div>
             </div>

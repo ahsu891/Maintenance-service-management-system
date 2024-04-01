@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { v4 as uuidv4 } from "uuid";
 import fs from "fs";
+import { log } from "console";
 
 export const addInventory = (req, res) => {
   const { iname, quantity, categories } = req.body;
@@ -313,6 +314,17 @@ export const makeUpdateRu = (req, res) => {
   SET status = ?
   WHERE maintenance_request_materials.request_id = ?;
 `;
+  const sqlQuery2 = `SELECT
+  maintenance_request_materials.material_id,
+  maintenance_request_materials.quantity_used,
+  inventory.quantity
+ FROM
+ maintenance_request_materials 
+ LEFT JOIN inventory on inventory.id=maintenance_request_materials.material_id
+ WHERE maintenance_request_materials.request_id=?;
+`;
+  const sqlQuery3 = `UPDATE inventory SET quantity = ? WHERE inventory.id = ?;
+`;
 
   db.query(sqlQuery, [message, id], (error, results) => {
     if (error) {
@@ -320,7 +332,32 @@ export const makeUpdateRu = (req, res) => {
       res.status(500).send("Internal Server Error");
       return;
     }
+    console.log(results);
+    db.query(sqlQuery2, [id], (error, results) => {
+      if (error) {
+        console.error("Error executing the query:", error);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      // console.log(results);
+      results.map((data) => {
+        db.query(
+          sqlQuery3,
+          [data.quantity - data.quantity_used, data.material_id],
+          (error, results) => {
+            if (error) {
+              console.error("Error executing the query:", error);
+              res.status(500).send("Internal Server Error");
+              return;
+            }
+            // console.log(results);
 
+            // Return the query results as JSON
+          }
+        );
+      });
+      // Return the query results as JSON
+    });
     // Return the query results as JSON
     res.status(200).send("Successfully Updated");
   });
@@ -348,5 +385,25 @@ export const getReqListNotClosed = (req, res) => {
 
     // Return the query results as JSON
     res.status(200).send(results);
+  });
+};
+export const deleteInventorySingleRequest = (req, res) => {
+  // Execute the SQL query
+  const { request_id } = req.body;
+  // console.log(request_id);
+  // const { technician_id } = req.body;
+  // console.log(technician_id);
+  const sqlQuery = `DELETE FROM maintenance_request_materials 
+  WHERE maintenance_request_materials.request_id = ?`;
+
+  db.query(sqlQuery, [request_id], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("something went wrong");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).send("Successfully Deleted !");
   });
 };

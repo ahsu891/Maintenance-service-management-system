@@ -3,11 +3,12 @@ import axios from "../../api/axios";
 import { useEffect, useState } from "react";
 import ListItem from "./ListItem";
 import ListItemMat from "./ListItemMat";
+import toast from "react-hot-toast";
 const URL_gT = "/technicial/getTechnicials";
 const URL_gY = "/inventory/getListReq";
 const URL_gL = "/inventory/getInventory";
 const URL_RM = "/inventory/makeReqMat";
-function FormLayout() {
+function FormLayout({ setReff, setOn }) {
   const [data, setData] = useState([]); // fetchin from api
   const [Mat, setMa] = useState([]); // fetchin from api
   const [selectedOption, setSelectedOption] = useState(null); //selected from the selectinon bur optinal
@@ -31,6 +32,7 @@ function FormLayout() {
       try {
         const response = await axios.get(URL_gT);
         setData(response.data);
+
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -88,10 +90,14 @@ function FormLayout() {
           request_id: e.target.request?.value,
           materiald_id: allcheckedMa,
         });
+        toast.success(response.data);
+        setReff((e) => !e);
+        setOn((e) => !e);
 
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
+        toast.error(error.response.data);
       }
     };
 
