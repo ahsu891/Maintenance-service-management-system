@@ -1,3 +1,5 @@
+/** @format */
+
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout";
 import Login from "./components/auth/Login";
@@ -46,7 +48,7 @@ function App() {
         <Routes>
           <Route>
             <Route path="register" element={<SignUp />} />
-            <Route path="login" index element={<Login />} />
+            <Route path="/" index element={<Login />} />
             <Route path="unauthorized" element={<Unauthorized />} />
 
             <Route element={<Auth />}>
