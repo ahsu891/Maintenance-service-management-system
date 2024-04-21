@@ -56,52 +56,63 @@ const RequestTable = () => {
         </div> */}
 
       {/* < */}
-      <div className="max-w-full overflow-x-auto">
-        <div className=" grid grid-cols-[30px,1.5fr,1fr,1fr,0.7fr]  border-b border-[#eee]  items-center   gap-8 bg-gray-2 text-left dark:bg-meta-4  font-medium text-black dark:text-white ">
-          <div className=" py-5 px-2 pl-9 dark:border-strokedark xl:pl-11">
-            <h5 className="font-medium text-black dark:text-white">#</h5>
-          </div>
-          <div className=" py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
-            <h5 className="font-medium text-black dark:text-white">Title</h5>
-          </div>
-          <div className=" py-5 px-4 dark:border-strokedark">
-            <p className="text-black dark:text-white">Categories</p>
-          </div>
-          <div className=" py-5 px-4 dark:border-strokedark">
-            <p className="text-black dark:text-white">Date</p>
-          </div>
-          <div className="  ir py-5 px-4 dark:border-strokedark">
-            <div className=" flex flex-row items-center gap-1">
-              <p className=" inline-flex rounded-fullpy-1 px-3 text-sm font-medium ">
-                Priority
-              </p>
-            </div>
-
-            {/* Additional grid items can be added here */}
+      {requests.length === 0 ? (
+        <div className="flex items-center justify-center h-full">
+          <div className="text-center">
+            {/* <h2 className="text-xl font-semibold mb-2">No Request Yet </h2> */}
+            <p className="text-gray-500 pb-6">
+              Sorry, there is no request to display.
+            </p>
           </div>
         </div>
-        {requests?.map((data, i) => (
-          <RowRequest
-            i={i + 1}
-            block_id={data.block_id}
-            floor={data.floor}
-            phone={data.phone}
-            date={data.request_date}
-            request_id={data.request_id}
-            requester_id={data.requester_id}
-            room={data.room}
-            status={data.status}
-            description={data.description}
-            key={data.request_id}
-            title={data.title}
-            categories={data.category}
-            name={data.requester_name}
-            priority={data.priority}
-            tech={tech}
-            setRefresh={setRefresh}
-          />
-        ))}
-      </div>
+      ) : (
+        <div className="max-w-full overflow-x-auto">
+          <div className=" grid grid-cols-[30px,1.5fr,1fr,1fr,0.7fr]  border-b border-[#eee]  items-center   gap-8 bg-gray-2 text-left dark:bg-meta-4  font-medium text-black dark:text-white ">
+            <div className=" py-5 px-2 pl-9 dark:border-strokedark xl:pl-11">
+              <h5 className="font-medium text-black dark:text-white">#</h5>
+            </div>
+            <div className=" py-5 px-4 pl-9 dark:border-strokedark xl:pl-11">
+              <h5 className="font-medium text-black dark:text-white">Title</h5>
+            </div>
+            <div className=" py-5 px-4 dark:border-strokedark">
+              <p className="text-black dark:text-white">Categories</p>
+            </div>
+            <div className=" py-5 px-4 dark:border-strokedark">
+              <p className="text-black dark:text-white">Date</p>
+            </div>
+            <div className="  ir py-5 px-4 dark:border-strokedark">
+              <div className=" flex flex-row items-center gap-1">
+                <p className=" inline-flex rounded-fullpy-1 px-3 text-sm font-medium ">
+                  Priority
+                </p>
+              </div>
+
+              {/* Additional grid items can be added here */}
+            </div>
+          </div>
+          {requests?.map((data, i) => (
+            <RowRequest
+              i={i + 1}
+              block_id={data.block_id}
+              floor={data.floor}
+              phone={data.phone}
+              date={data.request_date}
+              request_id={data.request_id}
+              requester_id={data.requester_id}
+              room={data.room}
+              status={data.status}
+              description={data.description}
+              key={data.request_id}
+              title={data.title}
+              categories={data.category}
+              name={data.requester_name}
+              priority={data.priority}
+              tech={tech}
+              setRefresh={setRefresh}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

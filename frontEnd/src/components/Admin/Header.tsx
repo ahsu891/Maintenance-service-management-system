@@ -5,7 +5,7 @@ import DarkModeSwitcher from "../Admin/DarkModeSwitcher";
 import DropdownMessage from "./DropdownMessage";
 import DropdownNotification from "./DropdownNotification";
 import DropdownUser from "./DropdownUser";
-
+import LogoImage from "../../images/icon/logo2.png";
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
@@ -58,11 +58,7 @@ const Header = (props: {
           {/* <!-- Hamburger Toggle BTN --> */}
 
           <Link className="block flex-shrink-0 lg:hidden" to="/">
-            <img
-              src={"https://www.wcu.edu.et/logo2.png"}
-              width={50}
-              alt="Logo"
-            />
+            <img src={LogoImage} width={50} alt="Logo" />
           </Link>
         </div>
 

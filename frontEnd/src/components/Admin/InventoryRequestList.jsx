@@ -21,15 +21,24 @@ function InventoryRequestList() {
   }, [reff]);
   return (
     <div>
-      {data.map((data) => (
-        <InventoryRequestSingle
-          key={data.id}
-          request_id={data.request_id}
-          title={data.title}
-          status={data.status}
-          setReff={setReff}
-        />
-      ))}
+      {data.length === 0 ? (
+        <div className="flex flex-row justify-center items-center rounded-md border border-stroke bg-white px-4   pb-4.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+          <span className="py-5">No data to display.</span>
+        </div>
+      ) : (
+        <div>
+          {data.map((data) => (
+            <InventoryRequestSingle
+              key={data.id}
+              request_id={data.request_id}
+              title={data.title}
+              status={data.status}
+              setReff={setReff}
+            />
+          ))}
+        </div>
+      )}
+
       {/* <InventoryRequestSingle /> */}
     </div>
   );

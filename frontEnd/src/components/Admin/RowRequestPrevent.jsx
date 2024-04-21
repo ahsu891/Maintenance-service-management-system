@@ -34,6 +34,7 @@ function RowRequestPrevent({
         // Make a GET request to the API endpoint
         const response = await axios.delete(URL_D + `/${id}`);
         toast.success(response.data);
+        setRefreshing((e) => !e);
       } catch (error) {
         console.error("Error fetching technicials:", error.message);
         toast.error(error.message);

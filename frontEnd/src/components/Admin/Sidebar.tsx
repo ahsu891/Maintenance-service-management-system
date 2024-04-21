@@ -6,7 +6,8 @@ import SidebarLinkGroup from "./SidebarLinkGroup";
 import { GoInbox } from "react-icons/go";
 import { GoFileDirectory } from "react-icons/go";
 import { MdOutlineInventory2 } from "react-icons/md";
-// import LogoImage from ''
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import LogoImage from "../../images/icon/logo2.png";
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -69,7 +70,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-2.5 lg:py-6.5">
         <NavLink to="#">
-          <img src="https://www.wcu.edu.et/logo2.png" width={80} alt="Logso" />
+          <img src={LogoImage} width={80} alt="Logso" />
         </NavLink>
 
         <button
