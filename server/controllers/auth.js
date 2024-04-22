@@ -80,3 +80,28 @@ export const logout = (req, res) => {
   res.clearCookie("token");
   res.status(200).send({ message: "Logout successful" });
 };
+export const getSettingEdit = (req, res) => {
+  // Execute the SQL query
+  const { user_id } = req.body;
+  // console.log(user_id);
+  const sqlQuery = `
+ 
+  SELECT * FROM (
+    SELECT user_id AS id, role, username, first_name, last_name, job, position, phone, email FROM users
+    UNION
+    SELECT admin_id AS id, role, username, first_name, last_name, null as job, null as position, phone, email FROM admin
+) AS combined_users
+WHERE id=?;
+  `;
+
+  db.query(sqlQuery, [user_id], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).json(results);
+  });
+};

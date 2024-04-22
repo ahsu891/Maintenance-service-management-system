@@ -1,3 +1,4 @@
+import LogoImage from "../../images/icon/logo2.png";
 import React, { useEffect, useRef, useState } from "react";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
@@ -49,16 +50,19 @@ function ReportPrint() {
     // Call the fetchData function when the component mounts
     fetchData();
   }, [id]);
-  console.log(id);
-  console.log(data);
+  // console.log(id);
+  // console.log(data);
   return (
     <>
       <div>
         <div
           ref={pdfRef}
-          className="rounded-sm   bg-white px-5  py-10 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-5"
+          className="rounded-sm   bg-white px-5  py-7 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-5"
         >
           <div>
+            <div className="flex flex-row justify-center pb-4">
+              <img src={LogoImage} width={100} alt="ddd" />
+            </div>
             <h1 className=" pb-2 font-semibold   text-3xl text-center text-black-2">
               Wachemo University Property and General Services Directorate
             </h1>
