@@ -5,6 +5,7 @@ import Header from "../components/Admin/Header";
 import { Outlet } from "react-router-dom";
 import axios from "../api/axios";
 import toast from "react-hot-toast";
+import Spiner from "../components/Spiner";
 const URL_R = "/prevent/checkPrevent";
 
 const DefaultLayout = () => {
@@ -28,6 +29,7 @@ const DefaultLayout = () => {
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
       {/* <!-- ===== Page Wrapper Start ===== --> */}
+      {/* <Spiner /> */}
       <div className="flex h-screen overflow-hidden">
         {/* <!-- ===== Sidebar Start ===== --> */}
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -42,7 +44,6 @@ const DefaultLayout = () => {
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
             <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-              
               <Outlet />
             </div>
           </main>
