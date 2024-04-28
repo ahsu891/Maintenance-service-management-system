@@ -80,6 +80,76 @@ export const logout = (req, res) => {
   res.clearCookie("token");
   res.status(200).send({ message: "Logout successful" });
 };
+export const saveEditChange = (req, res) => {
+  // Execute the SQL query
+  // const { user_id } = req.body;
+  const {
+    fname,
+    lname,
+    password1,
+    typej,
+    typep,
+    phone,
+    username,
+    password2,
+    user_id,
+    email,
+    roles,
+  } = req.body;
+
+  let query;
+  let pass = "";
+  if (password1) {
+    const hash = bcrypt.hashSync(password1, 8);
+    pass = `,password='${hash}'`;
+    // console.log(pass);
+  }
+
+  console.log(roles);
+  if (roles === "Admin") {
+    const sqlQueryUser = `
+    UPDATE admin SET first_name= "${fname}" ,last_name = '${lname}',username="${username}"${pass}, phone='${phone}', email='${email}' WHERE admin_id = ?; `;
+
+    query = sqlQueryUser;
+  }
+  if (roles === "Requester") {
+    const sqlQueryUser = `
+  UPDATE users SET first_name= "${fname}" ,username="${username}", last_name = '${lname}'${pass} ,job='${typej}', position='${typep}', phone='${phone}', email='${email}' WHERE user_id = ?; `;
+
+    query = sqlQueryUser;
+  }
+  if (roles === "Technician") {
+    const sqlQueryUser = `
+  UPDATE technicians SET first_name= "${fname}" ,username="${username}", last_name = '${lname}'${pass}, phone='${phone}', email='${email}' WHERE technician_id = ?; `;
+
+    query = sqlQueryUser;
+  }
+  if (roles === "Inventory") {
+    const sqlQueryUser = `
+  UPDATE inventory_admin SET first_name= "${fname}" ,username="${username}", last_name = '${lname}'${pass}, phone='${phone}', email='${email}' WHERE inventory_admin_id = ?; `;
+
+    query = sqlQueryUser;
+  }
+  // const sqlQueryUser = `
+  // UPDATE users SET first_name= "${fname}" ,last_name = '${lname}' ,password='${password1}', job='${typej}', position='${typep}', phone='${phone}', email='${email}' WHERE user_id = ?; `;
+
+  db.query(query, [user_id], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    const token = jwt.sign(
+      { username: username, user_id, role: roles },
+      process.env.JWT_SECRET
+    );
+
+    res.cookie("token", token, { httpOnly: true });
+    // Return the query results as JSON
+    // console.log(results);
+    res.status(200).send("Succssfully Upadated");
+  });
+};
 export const getSettingEdit = (req, res) => {
   // Execute the SQL query
   const { user_id } = req.body;
@@ -90,9 +160,22 @@ export const getSettingEdit = (req, res) => {
     SELECT user_id AS id, role, username, first_name, last_name, job, position, phone, email FROM users
     UNION
     SELECT admin_id AS id, role, username, first_name, last_name, null as job, null as position, phone, email FROM admin
+    UNION
+    SELECT technician_id AS id, role, username, first_name, last_name, null as job, null as position, phone, email FROM technicians
+    UNION
+    SELECT inventory_admin_id  AS id, role, username, first_name, last_name, null as job, null as position, phone, email FROM inventory_admin
 ) AS combined_users
 WHERE id=?;
   `;
+  //   const sqlQuery = `
+
+  //   SELECT * FROM (
+  //     SELECT user_id AS id, role, username, first_name, last_name, job, position, phone, email FROM users
+  //     UNION
+  //     SELECT admin_id AS id, role, username, first_name, last_name, null as job, null as position, phone, email FROM admin
+  // ) AS combined_users
+  // WHERE id=?;
+  //   `;
 
   db.query(sqlQuery, [user_id], (error, results) => {
     if (error) {

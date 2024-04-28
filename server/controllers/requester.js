@@ -52,10 +52,11 @@ export const makeRequest = (req, res) => {
   );
 };
 export const register = (req, res) => {
-  const { fname, lname, password, phone, username, job, position } = req.body;
+  const { fname, lname, password, phone, username, job, position, email } =
+    req.body;
   const id = uuidv4();
   // Use placeholders in the query to prevent SQL injection
-  const insertQuery = `INSERT INTO users (user_id, role, username, password, first_name, last_name, job,position, phone) VALUES (?, ?, ?, ?,?,?, ?, ?, ?)`;
+  const insertQuery = `INSERT INTO users (user_id, role, username, password, first_name, last_name, job,position, phone,email) VALUES (?, ?,?, ?, ?,?,?, ?, ?, ?)`;
   const hash = bcrypt.hashSync(password, 8);
   // Assuming you have a connection pool named 'db'
   db.query(
@@ -69,7 +70,8 @@ export const register = (req, res) => {
       lname,
       job,
       position,
-      phone, // Assuming technician_id starts as null
+      phone,
+      email, // Assuming technician_id starts as null
     ],
     (err, results) => {
       if (err) {

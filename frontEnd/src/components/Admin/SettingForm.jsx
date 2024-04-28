@@ -1,12 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 // import LogoDark from '../../images/logo/logo-dark.svg';
+import ReactDOM from "react-dom";
 // import Lo?go from '../../images/logo/logo.svg';
 import { FaArrowAltCircleRight } from "react-icons/fa";
+import Spiner from "../Spiner";
 import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "../../api/axios";
 import { MdCancel } from "react-icons/md";
-const URL_R = "/auth/getSettingInfo";
+const URL_R = "/auth/saveSetting";
+const URL_C = "/auth/getSettingInfo";
 
 const infrom = [
   {
@@ -26,9 +29,9 @@ const SettingForm = () => {
   const [isLoading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const errRef = useRef();
-  const [data, setData] = useState(null);
-  const [showChange, setShowChange] = useState(true);
-
+  const [data, setData] = useState([]);
+  const [showChange, setShowChange] = useState(false);
+  const [fresh, setFresh] = useState(false);
   // errRef.current.focus();
   const [pos, setPos] = useState(
     () => infrom.filter((data) => data.position === "Department")[0].data
@@ -41,23 +44,24 @@ const SettingForm = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post(URL_R, {
+        setLoading(true);
+        const response = await axios.post(URL_C, {
           user_id: localStorage.getItem("user_id"),
         });
         setData(response.data);
+        // alert("hello");
         console.log(response.data);
       } catch (error) {
         console.log(error.response.data);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
 
     // Cleanup function to cancel any pending requests
-    return () => {
-      // Implement cleanup logic here if necessary
-    };
-  }, []);
+  }, [fresh]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -70,45 +74,58 @@ const SettingForm = () => {
       phone,
       username,
       password2,
+      email,
     } = e.target;
-
-    console.log(
-      fname?.value,
-      lname?.value,
-      password1?.value,
-      password2?.value,
-      typej?.value,
-      typep?.value,
-      phone?.value,
-      username?.value
-    );
+    if (password1?.value !== password2?.value) {
+      return setErrMsg("The password is not similar");
+    }
+    // console.log(
+    //   fname?.value,
+    //   lname?.value,
+    //   password1?.value,
+    //   password2?.value,
+    //   typej?.value,
+    //   typep?.value,
+    //   phone?.value,
+    //   username?.value
+    // );
     try {
       // Make an Axios request
-      setLoading(true);
-      // const response = await axios.post(URL_R, {
-      //   fname: fname.value,
-      //   lname: lname.value,
-      //   password: password.value,
-      //   position: typep.value,
-      //   job: typej.value,
-      //   phone: phone.value,
-      //   username: username.value,
-      // });
-      // console.log("Server response:", response.data);
-      // toast.success(response.data.message);
 
-      // setLoading(false);
-      // localStorage.setItem("roles", "requester");
-      // localStorage.setItem("user_id", response.data.user_id);
-      // navigate("/requester");
-      // Handle success, e.g., redirect to another page
+      const response = await axios.post(URL_R, {
+        fname: fname?.value,
+        lname: lname?.value,
+        password1: password1?.value,
+        typej: typej?.value,
+        typep: typep?.value,
+        phone: phone?.value,
+        email: email.value,
+        username: username?.value,
+        password2: password2?.value,
+        user_id: localStorage.getItem("user_id"),
+        roles: localStorage.getItem("roles"),
+      });
+      // console.log("Server response:", response.data);
+
+      toast.success(response.data);
+      // setFresh((e) => !e);
+      // // alert("hello");
+      // setData({})
+      // handleRefresh();
+      setShowChange(false);
+      setErrMsg("");
+      setFresh((prevState) => !prevState);
     } catch (error) {
       console.error("Error making Axios request:", error.message);
       // Handle error, e.g., display an error message to the user
       toast.error(error.message);
-    } finally {
-      // setLoading(false);
     }
+  }
+  if (isLoading) {
+    return ReactDOM.createPortal(
+      <Spiner />,
+      document.getElementById("45454545s")
+    );
   }
   return (
     <>
@@ -170,6 +187,21 @@ const SettingForm = () => {
                   </div>
                 </div>
 
+                <div className="mb-4">
+                  <label className="mb-2.5 block font-medium text-black dark:text-white">
+                    E-mail
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="email"
+                      required
+                      name="email"
+                      defaultValue={data?.[0]?.email}
+                      placeholder="Enter Your Email"
+                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                    />
+                  </div>
+                </div>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Phone
@@ -285,6 +317,7 @@ const SettingForm = () => {
                     </span>
                   )}
                 </div>
+
                 {showChange && (
                   <>
                     <div className="mb-4">
@@ -362,24 +395,25 @@ const SettingForm = () => {
                         </span>
                       </div>
                     </div>
+                    <div className="my-4">
+                      <p
+                        ref={errRef}
+                        className={errMsg ? "text-danger text-sm" : "hidden"}
+                        aria-live="assertive"
+                      >
+                        {errMsg}
+                      </p>
+                    </div>
                   </>
                 )}
 
                 <div className="mb-5">
                   <button
                     type="submit"
-                    value="Save "
                     className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
-                  />
-                </div>
-                <div>
-                  <p
-                    ref={errRef}
-                    className={errMsg ? "text-danger text-sm" : "hidden"}
-                    aria-live="assertive"
                   >
-                    {errMsg}
-                  </p>
+                    Save
+                  </button>
                 </div>
               </form>
             </div>

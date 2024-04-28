@@ -39,7 +39,7 @@ const SignUp = () => {
       fname,
       lname,
       password,
-
+      email,
       phone,
       username,
       repassword,
@@ -62,6 +62,7 @@ const SignUp = () => {
         job: typej.value,
         phone: phone.value,
         username: username.value,
+        email: email.value,
       });
       console.log("Server response:", response.data);
       toast.success(response.data.message);
@@ -81,15 +82,15 @@ const SignUp = () => {
   }
   return (
     <>
-      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <div className="flex flex-wrap items-center">
+      <div className="rounded-sm border py-10 border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+        <div className="flex flex-wrap items-top">
           <div className="hidden w-full xl:block xl:w-1/2">
-            <div className="py-17.5 px-26 text-center">
-              <Link className="mb-5.5 inline-block" to="/">
-                {/* <img className="hidden dark:block" src={"Logo"} alt="Logo" /> */}
-                {/* <img className="dark:hidden" src={"LogoDark"} alt="Logo" /> */}
-              </Link>
-              <p className="2xl:px-20">Make the Request is Easy.</p>
+            <div className="py-17.5  px-26 text-center">
+              {/* <Link className="mb-5.5 inline-block" to="/">
+                <img className="hidden dark:block" src={"Logo"} alt="Logo" />
+                <img className="dark:hidden" src={"LogoDark"} alt="Logo" />
+              </Link> */}
+              {/* <p className="bg-primary 2xl:px-20">Make the Request is Easy.</p> */}
 
               <span className="mt-15 inline-block">
                 <svg
@@ -267,6 +268,20 @@ const SignUp = () => {
                   </div>
                 </div>
 
+                <div className="mb-4">
+                  <label className="mb-2.5 block font-medium text-black dark:text-white">
+                    E-mail
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="email"
+                      required
+                      name="email"
+                      placeholder="Enter Your Email"
+                      className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+                    />
+                  </div>
+                </div>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Phone

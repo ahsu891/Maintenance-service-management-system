@@ -44,6 +44,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <div id="45454545s"></div>
         <Routes>
           <Route>
             <Route path="register" element={<SignUp />} />
@@ -60,6 +61,7 @@ function App() {
                   <Route index element={<Dashboard />} />
                   <Route path="/requester/request" element={<FormLayout />} />
                   <Route path="/requester/complain" element={<Complain />} />
+                  <Route path="/requester/settings" element={<Setting />} />
                 </Route>
               </Route>
               {/* Admin Page */}
@@ -89,6 +91,7 @@ function App() {
                   <Route path="/technician/workorder" element={<WorkOrder />}>
                     <Route index element={<RequestList />} />
                   </Route>
+                  <Route path="/technician/settings" element={<Setting />} />
                 </Route>
               </Route>
 
@@ -100,6 +103,7 @@ function App() {
                     path="/inventory/request"
                     element={<InventoryRequest />}
                   />
+                  <Route path="/inventory/settings" element={<Setting />} />
                 </Route>
               </Route>
               {/* </Auth> */}
