@@ -14,7 +14,7 @@ const CardTwo = ({ total_assigned, assigned_percentage }) => {
           <span className="text-sm font-medium">Total Request Assigned</span>
         </div>
 
-        <span className="flex items-center gap-1 text-sm font-medium text-meta-3">
+        {/* <span className="flex items-center gap-1 text-sm font-medium text-meta-3">
           {assigned_percentage}%
           <svg
             className="fill-meta-3"
@@ -29,7 +29,7 @@ const CardTwo = ({ total_assigned, assigned_percentage }) => {
               fill=""
             />
           </svg>
-        </span>
+        </span> */}
       </div>
     </div>
   );

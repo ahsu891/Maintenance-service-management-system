@@ -67,11 +67,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
-      {/* <!-- SIDEBAR HEADER --> */}
+      {/* <!-flw- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-2.5 lg:py-6.5">
-        <NavLink to="#">
-          <img src={LogoImage} width={80} alt="Logso" />
-        </NavLink>
+        <div className="flex flex-row items-center gap-2">
+          <NavLink to="#">
+            <img src={LogoImage} width={80} alt="Logso" />
+          </NavLink>
+          <p className="  text-3xl font-medium text-white    Satoshi">WCU</p>
+        </div>
 
         <button
           ref={trigger}

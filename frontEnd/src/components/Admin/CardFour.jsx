@@ -3,7 +3,7 @@ const CardFour = ({ total_rejected, rejected_percentage }) => {
     <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
         <svg
-          className="fill-primary dark:fill-white"
+          className="fill-danger dark:fill-white"
           width="22"
           height="18"
           viewBox="0 0 22 18"
@@ -30,12 +30,12 @@ const CardFour = ({ total_rejected, rejected_percentage }) => {
           <h4 className="text-title-md font-bold text-black dark:text-white">
             {total_rejected}
           </h4>
-          <span className="text-sm font-medium">Total Request Users</span>
+          <span className="text-sm font-medium">Total Rejected</span>
         </div>
 
         <span className="flex items-center gap-1 text-sm font-medium text-meta-7">
           {rejected_percentage}%
-          <svg
+          {/* <svg
             className=" fill-meta-7"
             width="10"
             height="11"
@@ -47,7 +47,7 @@ const CardFour = ({ total_rejected, rejected_percentage }) => {
               d="M5.64284 7.69237L9.09102 4.33987L10 5.22362L5 10.0849L-8.98488e-07 5.22362L0.908973 4.33987L4.35716 7.69237L4.35716 0.0848701L5.64284 0.0848704L5.64284 7.69237Z"
               fill=""
             />
-          </svg>
+          </svg> */}
         </span>
       </div>
     </div>

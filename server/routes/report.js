@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  getCharData,
   getRep,
   getSingleRep,
   getTopDashboard,
@@ -9,6 +10,7 @@ const router = express.Router();
 router.get("/getReport", getRep);
 router.post("/getSingleReport", getSingleRep);
 router.get("/getTopDashboard", getTopDashboard);
+router.get("/getChartData", getCharData);
 // router.post("/getAssign", getAssign);
 // router.post("/getAssignGroup", getAssGroup);
 // router.post("/finishAss", finishAss);

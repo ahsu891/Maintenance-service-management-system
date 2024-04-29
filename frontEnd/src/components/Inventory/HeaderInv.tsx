@@ -5,7 +5,7 @@ import LogoImage from "../../images/icon/logo2.png";
 // import DarkModeSwitcher from "../Admin/DarkModeSwitcher";
 // import DropdownMessage from "./DropdownMessage";
 // import DropdownNotification from "./DropdownNotification";
-// import DropdownUser from "./DropdownUser";
+import DropdownUserInv from "./DropdownUserInv";
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -115,7 +115,7 @@ const Header = (props: {
           </ul>
 
           {/* <!-- User Area --> */}
-          {/* <DropdownUser /> */}
+          <DropdownUserInv />
           {/* <!-- User Area --> */}
         </div>
       </div>

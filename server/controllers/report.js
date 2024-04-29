@@ -159,3 +159,34 @@ FROM
     res.status(200).send(results);
   });
 };
+export const getCharData = (req, res) => {
+  // Execute the SQL query
+  const sqlQuery = `SELECT 
+  SUM(CASE WHEN category = 'Water' THEN 1 ELSE 0 END) AS total_water,
+  ROUND((SUM(CASE WHEN category = 'Water' THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS water_percentage,
+  
+  SUM(CASE WHEN category = 'General' THEN 1 ELSE 0 END) AS total_general,
+  ROUND((SUM(CASE WHEN category = 'General' THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS general_percentage,
+  
+  SUM(CASE WHEN category = 'Electrical' THEN 1 ELSE 0 END) AS total_electrical,
+  ROUND((SUM(CASE WHEN category = 'Electrical' THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS electrical_percentage,
+  
+  SUM(CASE WHEN category = 'Other' THEN 1 ELSE 0 END) AS total_other,
+  ROUND((SUM(CASE WHEN category = 'Other' THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS other_percentage
+  
+FROM 
+  maintenance_requests;
+
+    `;
+
+  db.query(sqlQuery, (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).send(results);
+  });
+};
