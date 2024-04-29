@@ -1,4 +1,4 @@
-const CardFour = () => {
+const CardFour = ({ total_rejected, rejected_percentage }) => {
   return (
     <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
@@ -28,15 +28,15 @@ const CardFour = () => {
       <div className="mt-4 flex items-end justify-between">
         <div>
           <h4 className="text-title-md font-bold text-black dark:text-white">
-            3.456
+            {total_rejected}
           </h4>
           <span className="text-sm font-medium">Total Request Users</span>
         </div>
 
-        <span className="flex items-center gap-1 text-sm font-medium text-meta-5">
-          0.95%
+        <span className="flex items-center gap-1 text-sm font-medium text-meta-7">
+          {rejected_percentage}%
           <svg
-            className="fill-meta-5"
+            className=" fill-meta-7"
             width="10"
             height="11"
             viewBox="0 0 10 11"

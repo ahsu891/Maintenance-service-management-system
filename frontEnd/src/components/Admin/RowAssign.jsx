@@ -33,9 +33,21 @@ function RowAssign({
         <p className="text-black dark:text-white">{block_no}</p>
       </td>
       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-        <p className=" rounded-full bg-primary bg-opacity-10 py-1 px-3 text-sm font-medium text-primary">
-          {priority}
-        </p>
+        {priority === "Low" && (
+          <p className=" rounded-full bg-primary bg-opacity-10 py-1 px-3 text-sm font-medium text-primary">
+            {priority}
+          </p>
+        )}
+        {priority === "Medium" && (
+          <p className=" rounded-full bg-warning bg-opacity-10 py-1 px-3 text-sm font-medium text-warning">
+            {priority}
+          </p>
+        )}
+        {priority === "High" && (
+          <p className=" rounded-full bg-danger bg-opacity-10 py-1 px-3 text-sm font-medium text-danger">
+            {priority}
+          </p>
+        )}
       </td>
 
       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">

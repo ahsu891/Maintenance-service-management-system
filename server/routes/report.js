@@ -1,9 +1,14 @@
 import express from "express";
-import { getRep, getSingleRep } from "../controllers/report.js";
+import {
+  getRep,
+  getSingleRep,
+  getTopDashboard,
+} from "../controllers/report.js";
 const router = express.Router();
 
 router.get("/getReport", getRep);
 router.post("/getSingleReport", getSingleRep);
+router.get("/getTopDashboard", getTopDashboard);
 // router.post("/getAssign", getAssign);
 // router.post("/getAssignGroup", getAssGroup);
 // router.post("/finishAss", finishAss);

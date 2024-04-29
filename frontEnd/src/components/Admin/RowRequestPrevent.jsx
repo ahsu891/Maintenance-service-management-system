@@ -68,9 +68,21 @@ function RowRequestPrevent({
         <div className="border-b border-[#eee]  ir py-5 px-4 dark:border-strokedark flex flex-row items-center">
           <div className=" flex flex-row items-center gap-1">
             {}
-            <p className="  rounded-full bg-primary bg-opacity-10 py-1 px-3 text-sm font-medium text-primary flex flex-row items-center">
-              {priority}
-            </p>
+            {priority === "Low" && (
+              <p className=" rounded-full bg-primary bg-opacity-10 py-1 px-3 text-sm font-medium text-primary">
+                {priority}
+              </p>
+            )}
+            {priority === "Medium" && (
+              <p className=" rounded-full bg-warning bg-opacity-10 py-1 px-3 text-sm font-medium text-warning">
+                {priority}
+              </p>
+            )}
+            {priority === "High" && (
+              <p className=" rounded-full bg-danger bg-opacity-10 py-1 px-3 text-sm font-medium text-danger">
+                {priority}
+              </p>
+            )}
           </div>
         </div>
         <div className="border-b border-[#eee] py-5 px-4 dark:border-strokedark flex flex-row items-center">
