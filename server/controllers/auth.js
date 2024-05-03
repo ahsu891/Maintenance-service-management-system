@@ -8,14 +8,15 @@ export const login = (req, res) => {
   // checkPrevent();
   db.query(
     `SELECT * FROM (
-      SELECT user_id AS id, role, username, password FROM users
+      SELECT user_id AS id, role,first_name,last_name, username, password FROM users
       UNION
-      SELECT admin_id AS id, role, username, password FROM admin
+      SELECT admin_id AS id, role,first_name,last_name,  username, password FROM admin
       UNION
-      SELECT technician_id AS id, role, username, password FROM technicians
+      SELECT technician_id AS id, role, first_name,last_name,username,  password FROM technicians
       UNION
-      SELECT inventory_admin_id AS id, role, username, password FROM inventory_admin
+      SELECT inventory_admin_id AS id, role,first_name,last_name, username,  password FROM inventory_admin
   ) AS combined_users
+
   WHERE username = ?;`,
     [username],
     (error, results) => {
@@ -30,7 +31,8 @@ export const login = (req, res) => {
       const user = results[0];
       //   var hash = bcrypt.hashSync("1046031413", 8);
       // var hash = bcrypt.hashSync("12345678", 8);
-      // console.log(hash);
+      // console.log(hash);\
+      // console.log(user);
       //   Compare the provided password with the hashed password in the database
       bcrypt.compare(password, user.password, (bcryptError, match) => {
         if (bcryptError || !match) {
@@ -49,6 +51,8 @@ export const login = (req, res) => {
           message: `Login successful. Redirecting...`,
           username: user.username,
           user_id: user.id,
+          full_name: `${user.first_name} ${user.last_name}`,
+
           role: user.role,
         });
       });
@@ -58,6 +62,7 @@ export const login = (req, res) => {
 
 export const checkLogin = (req, res) => {
   const token = req.cookies.token;
+  // console.log(token);
   if (!token) {
     return res.status(401).send({ message: "Unauthorized" });
   }
@@ -78,6 +83,7 @@ export const checkLogin = (req, res) => {
 
 export const logout = (req, res) => {
   res.clearCookie("token");
+  // res.redirect("/login");
   res.status(200).send({ message: "Logout successful" });
 };
 export const saveEditChange = (req, res) => {
@@ -147,7 +153,10 @@ export const saveEditChange = (req, res) => {
     res.cookie("token", token, { httpOnly: true });
     // Return the query results as JSON
     // console.log(results);
-    res.status(200).send("Succssfully Upadated");
+    res.status(200).json({
+      message: "Successfully Updated",
+      full_name: `${fname} ${lname}`,
+    });
   });
 };
 export const getSettingEdit = (req, res) => {

@@ -48,6 +48,8 @@ const Login = () => {
       setAuth({ user, pwd, roles });
       localStorage.setItem("roles", roles);
       localStorage.setItem("user_id", user_id);
+      localStorage.setItem("full_name", response?.data?.full_name);
+
       // alert(localStorage.getItem("roles"));
       setUser("");
       setPwd("");

@@ -159,6 +159,42 @@ FROM
     res.status(200).send(results);
   });
 };
+export const getTopDashboardRequester = (req, res) => {
+  // Execute the SQL query
+  const { user_id } = req.body;
+  console.log(user_id);
+  const sqlQuery = `
+ 
+  SELECT 
+  SUM(CASE WHEN status = 'Pending' THEN 1 ELSE 0 END) AS total_pending,
+  ROUND((SUM(CASE WHEN status = 'Pending' THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS pending_percentage,
+  
+  SUM(CASE WHEN status = 'Assigned' THEN 1 ELSE 0 END) AS total_assigned,
+  ROUND((SUM(CASE WHEN status = 'Assigned' THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS assigned_percentage,
+  
+  SUM(CASE WHEN status = 'Rejected' THEN 1 ELSE 0 END) AS total_rejected,
+  ROUND((SUM(CASE WHEN status = 'Rejected' THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS rejected_percentage,
+  
+  SUM(CASE WHEN status IN ('Closed', 'Completed') THEN 1 ELSE 0 END) AS total_completed,
+  ROUND((SUM(CASE WHEN status IN ('Closed', 'Completed') THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS completed_percentage
+FROM 
+  maintenance_requests
+  WHERE requester_id=?;
+
+
+    `;
+
+  db.query(sqlQuery, [user_id], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).send(results);
+  });
+};
 export const getCharData = (req, res) => {
   // Execute the SQL query
   const sqlQuery = `SELECT 

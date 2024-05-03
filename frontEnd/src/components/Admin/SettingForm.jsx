@@ -107,7 +107,8 @@ const SettingForm = () => {
       });
       // console.log("Server response:", response.data);
 
-      toast.success(response.data);
+      toast.success(response.data.message);
+      localStorage.setItem("full_name", response?.data?.full_name);
       // setFresh((e) => !e);
       // // alert("hello");
       // setData({})

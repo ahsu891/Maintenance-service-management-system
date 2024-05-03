@@ -1,14 +1,36 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "../../api/axios";
+import toast from "react-hot-toast";
 
 // import "UserOne" from '../images/user/user-01.png';
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
+  const navigation = useNavigate();
+  const namet = localStorage.getItem("full_name");
+  const nameParts = namet?.split(" ");
 
+  // Get the first letter of the first name and last name
+  const firstLetterFirstName = nameParts?.[0].charAt(0).toUpperCase();
+  const firstLetterLastName = nameParts?.[1].charAt(0).toUpperCase();
+  async function logout() {
+    try {
+      const response = await axios.get("/auth/logout", {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      toast.success(response.data.message);
+      navigation("/login");
+      localStorage.removeItem("full_name");
+      localStorage.removeItem("user_id");
+      localStorage.removeItem("roles");
+    } catch (err) {
+      toast.error("Something went wrong");
+    }
+  }
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -45,13 +67,18 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+            {namet}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          {/* <span className="block text-xs">UX Designer</span> */}
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          <img src={"UserOne"} alt="User" />
+          <div className="flex items-center justify-center w-12 h-12 rounded-full  bg-gray-2 text-gray-600">
+            <span className="text-xl font-bold">
+              {firstLetterFirstName}
+              {firstLetterLastName}
+            </span>
+          </div>
         </span>
 
         <svg
@@ -83,7 +110,7 @@ const DropdownUser = () => {
         }`}
       >
         <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
-          <li>
+          {/* <li>
             <Link
               to="/profile"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
@@ -107,10 +134,10 @@ const DropdownUser = () => {
               </svg>
               My Profile
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link
-              to="#"
+              to="/requester/request"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg
@@ -126,12 +153,12 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              My Contacts
+              My Request
             </Link>
           </li>
           <li>
             <Link
-              to="/settings"
+              to="/requester/settings"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
               <svg
@@ -151,11 +178,14 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              Account Settings
+              Settings
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button
+          onClick={logout}
+          className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+        >
           <svg
             className="fill-current"
             width="22"

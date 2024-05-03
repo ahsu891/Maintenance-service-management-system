@@ -4,12 +4,14 @@ import {
   getRep,
   getSingleRep,
   getTopDashboard,
+  getTopDashboardRequester,
 } from "../controllers/report.js";
 const router = express.Router();
 
 router.get("/getReport", getRep);
 router.post("/getSingleReport", getSingleRep);
 router.get("/getTopDashboard", getTopDashboard);
+router.post("/getTopDashboardRequster", getTopDashboardRequester);
 router.get("/getChartData", getCharData);
 // router.post("/getAssign", getAssign);
 // router.post("/getAssignGroup", getAssGroup);
