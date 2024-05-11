@@ -9,12 +9,14 @@ import CardFouor from "../Admin/CardFour";
 import ChartOne from "./ChartOne";
 import ChartThree from "./ChartThree";
 import axios from "../../api/axios";
+import Chat from "./Chat";
 const URL_D = "/report/getTopDashboard";
 const URL_C = "/report/getChartData";
+const URL_G = "/report/getDashGraph";
 function About() {
   const [data, setData] = useState([]);
   const [chart, setChart] = useState([]);
-
+  const [graph, setGraph] = useState([]);
   // useEffect hook to make the Axios request when the component mounts
   useEffect(() => {
     // Function to make the Axios request
@@ -64,6 +66,30 @@ function About() {
       // Any cleanup code can go here
     };
   }, []);
+  useEffect(() => {
+    // Function to make the Axios request
+    const fetchData = async () => {
+      try {
+        // Make the Axios GET request
+        const response = await axios.get(URL_G);
+
+        // Set the response data to the state
+        setGraph(response.data);
+        console.log(response.data);
+      } catch (error) {
+        // Handle any errors
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    // Call the fetchData function
+    fetchData();
+
+    // Clean up function (optional)
+    return () => {
+      // Any cleanup code can go here
+    };
+  }, []);
 
   return (
     <div>
@@ -87,7 +113,7 @@ function About() {
       </div>
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
         <div className="col-span-12 xl:col-span-8">
-          <ChartOne />
+          <ChartOne graph={graph} />
         </div>
         <div className="col-span-12 xl:col-span-4">
           <ChartThree
@@ -102,6 +128,7 @@ function About() {
           />
         </div>
       </div>
+      <Chat />
     </div>
   );
 }

@@ -33,6 +33,7 @@ import ReportPrint from "./components/Admin/ReportPrint";
 import InventoryRequestAdmin from "./components/Admin/InventoryRequestAdmin";
 import InventoryRequest from "./components/Inventory/InventoryRequest";
 import Setting from "./components/Admin/Setting";
+import DashboardTech from "./components/Technician/DashboardTech";
 // import MainTable from "./components/Admin/MainTable";
 const ROLES = {
   User: "Requester",
@@ -90,6 +91,7 @@ function App() {
               {/* Admin Technicial */}
               <Route element={<RequireAuth allowedRoles={ROLES.Technician} />}>
                 <Route path="/technician" element={<DefaultLayoutTech />}>
+                  <Route path="/technician" index element={<DashboardTech />} />
                   <Route path="/technician/workorder" element={<WorkOrder />}>
                     <Route index element={<RequestList />} />
                   </Route>

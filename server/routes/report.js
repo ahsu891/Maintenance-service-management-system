@@ -1,6 +1,10 @@
 import express from "express";
 import {
   getCharData,
+  getCharDataInv,
+  getDashGraph,
+  getDashInv,
+  getDashTech,
   getRep,
   getSingleRep,
   getTopDashboard,
@@ -13,6 +17,10 @@ router.post("/getSingleReport", getSingleRep);
 router.get("/getTopDashboard", getTopDashboard);
 router.post("/getTopDashboardRequster", getTopDashboardRequester);
 router.get("/getChartData", getCharData);
+router.get("/getChartInv", getCharDataInv);
+router.post("/getDashTech", getDashTech);
+router.get("/getDashInv", getDashInv);
+router.get("/getDashGraph", getDashGraph);
 // router.post("/getAssign", getAssign);
 // router.post("/getAssignGroup", getAssGroup);
 // router.post("/finishAss", finishAss);

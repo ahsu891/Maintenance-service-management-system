@@ -226,3 +226,164 @@ FROM
     res.status(200).send(results);
   });
 };
+export const getCharDataInv = (req, res) => {
+  // Execute the SQL query
+  const sqlQuery = `SELECT 
+  SUM(CASE WHEN item_category = 'Water' THEN quantity ELSE 0 END) AS total_water,
+  ROUND((SUM(CASE WHEN item_category = 'Water' THEN quantity ELSE 0 END) / SUM(quantity)) * 100, 2) AS water_percentage,
+  
+  SUM(CASE WHEN item_category = 'General' THEN quantity ELSE 0 END) AS total_general,
+  ROUND((SUM(CASE WHEN item_category = 'General' THEN quantity ELSE 0 END) / SUM(quantity)) * 100, 2) AS general_percentage,
+  
+  SUM(CASE WHEN item_category = 'Electrical' THEN quantity ELSE 0 END) AS total_electrical,
+  ROUND((SUM(CASE WHEN item_category = 'Electrical' THEN quantity ELSE 0 END) / SUM(quantity)) * 100, 2) AS electrical_percentage,
+  
+  SUM(CASE WHEN item_category = 'Other' THEN quantity ELSE 0 END) AS total_other,
+  ROUND((SUM(CASE WHEN item_category = 'Other' THEN quantity ELSE 0 END) / SUM(quantity)) * 100, 2) AS other_percentage
+  
+  
+FROM 
+  inventory;
+`;
+
+  db.query(sqlQuery, (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).send(results);
+  });
+};
+export const getDashTech = (req, res) => {
+  // Execute the SQL query
+  const { tech_id } = req.body;
+  const sqlQuery = `
+  SELECT 
+    SUM(CASE WHEN result.status = 'Assigned' THEN 1 ELSE 0 END) AS total_assigned,
+    ROUND((SUM(CASE WHEN result.status = 'Assigned' THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS assigned_percentage,
+    
+    
+    SUM(CASE WHEN result.status IN ('Closed', 'Completed') THEN 1 ELSE 0 END) AS total_completed,
+    ROUND((SUM(CASE WHEN result.status IN ('Closed', 'Completed') THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS completed_percentage
+  FROM (
+      SELECT 
+          maintenance_requests.*
+      FROM 
+          maintenance_requests
+      JOIN 
+          technicians_assigned ON technicians_assigned.request_id = maintenance_requests.request_id
+      WHERE technicians_assigned.technician_id=?
+     
+  ) AS result
+  
+  `;
+
+  db.query(sqlQuery, [tech_id], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).send(results);
+  });
+};
+export const getDashInv = (req, res) => {
+  // Execute the SQL query
+
+  const sqlQuery = `SELECT 
+  (SELECT COUNT(*) FROM inventory) AS total_inventory,
+  (SELECT COUNT(*) FROM inventory WHERE quantity < 3) AS low_inventory_count,
+  ROUND(((SELECT COUNT(*) FROM inventory WHERE quantity < 3) * 100.0 / (SELECT COUNT(*) FROM inventory)), 2) AS average_quantity_low_inventory;
+`;
+
+  db.query(sqlQuery, (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).send(results);
+  });
+};
+
+export const getDashGraph = (req, res) => {
+  const q = `SELECT DATE_FORMAT(request_date, '%Y-%m') AS month_value, 
+  COUNT(*) AS count 
+  FROM maintenance_requests 
+  WHERE request_date >= DATE_SUB(CURDATE(), 
+  INTERVAL 1 YEAR) 
+  GROUP BY month_value
+   ORDER BY month_value;`;
+  db.query(q, (err, data) => {
+    if (err) {
+      res.json(err);
+      console.log(err);
+    } else {
+      // Define an array of month names
+      const months = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+
+      // Create an array to store the result with counts for each month
+      const resultArray = months.map((monthName) => {
+        const matchingRow = data.find((row) => {
+          // Input date in the format "YYYY-MM"
+          const inputDate = row.month_value;
+
+          // Create a JavaScript Date object from the input date
+          const dateParts = inputDate.split("-");
+          const year = parseInt(dateParts[0], 10);
+          const month = parseInt(dateParts[1], 10) - 1; // Months are 0-indexed, so subtract 1
+
+          const jsDate = new Date(year, month);
+
+          // Get the short month name
+          const monthNames = [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ];
+          const shortMonthName = monthNames[jsDate.getMonth()];
+
+          return shortMonthName === monthName;
+        });
+        return {
+          month: monthName,
+          count: matchingRow ? matchingRow.count : 0, // Set count to 0 if no data for the month
+        };
+      });
+
+      // Print or use the resultArray as needed
+      const monthData = resultArray.map((data) => data.count);
+      // console.log(resultArray.count);
+      res.status(200).send(monthData);
+    }
+  });
+};
