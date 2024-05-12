@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ListItem from "./ListItem";
 import ListItemMat from "./ListItemMat";
 import toast from "react-hot-toast";
+import { socket } from "../../layout/DefaultLayoutInv";
 const URL_gT = "/technicial/getTechnicials";
 const URL_gY = "/inventory/getListReq";
 const URL_gL = "/inventory/getInventory";
@@ -27,6 +28,14 @@ function FormLayout({ setReff, setOn }) {
     `${data.item_name} `.toLowerCase().includes(inputTwo.toLowerCase())
   );
   // console.log(allcheckedTH);
+  const handleNotification = (title) => {
+    socket.emit("sendNotification", {
+      id: new Date(),
+      user_id: localStorage.getItem("user_id"),
+      type: "Inventory Request",
+      title,
+    });
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -93,7 +102,7 @@ function FormLayout({ setReff, setOn }) {
         toast.success(response.data);
         setReff((e) => !e);
         setOn((e) => !e);
-
+        handleNotification("I want to check if you'r accep the request");
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);

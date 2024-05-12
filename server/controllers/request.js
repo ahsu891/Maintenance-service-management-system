@@ -28,6 +28,26 @@ LEFT JOIN
     res.status(200).json(results);
   });
 };
+export const getDashTable = (req, res) => {
+  // Execute the SQL query
+  const { user_id } = req.body;
+  const sqlQuery = `SELECT *
+  FROM maintenance_requests
+  WHERE requester_id = ?
+  ORDER BY request_date DESC;
+  `;
+
+  db.query(sqlQuery, [user_id], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).send(results);
+  });
+};
 export const getReqAss = (req, res) => {
   // Execute the SQL query
   const sqlQuery = `SELECT technicians_assigned.*,

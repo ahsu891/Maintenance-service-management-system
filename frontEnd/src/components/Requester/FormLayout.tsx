@@ -3,12 +3,21 @@ import React, { useState } from "react";
 import axios from "../../api/axios";
 import toast from "react-hot-toast";
 import RequestList from "./RequestList";
-
+import io from "socket.io-client";
+import { socket } from "../../layout/DefaultLayoutReq";
 const URL_R = "/requester/makeRequest";
 const FormLayout = () => {
   const [reff, setReff] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [on, setOn] = useState(false);
+  const handleNotification = (title) => {
+    socket.emit("sendNotification", {
+      id: new Date(),
+      user_id: localStorage.getItem("user_id"),
+      type: "Maintenance Request",
+      title,
+    });
+  };
   async function handleSubmit(e) {
     e.preventDefault();
     const {
@@ -52,6 +61,7 @@ const FormLayout = () => {
       setLoading(false);
       setReff((e) => !e);
       setOn((e) => !e);
+      handleNotification(title.value);
       // Handle success, e.g., redirect to another page
     } catch (error) {
       console.error("Error making Axios request:", error.message);

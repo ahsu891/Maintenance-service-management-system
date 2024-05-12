@@ -6,10 +6,11 @@ import LogoImage from "../../images/icon/logo2.png";
 // import DropdownMessage from "./DropdownMessage";
 // import DropdownNotification from "./DropdownNotification";
 import DropdownUserInv from "./DropdownUserInv";
-
+import { Socket } from "socket.io-client";
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
+  socket: Socket;
 }) => {
   return (
     <header className="sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">

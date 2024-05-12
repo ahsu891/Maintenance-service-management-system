@@ -5,11 +5,24 @@ import DarkModeSwitcher from "../Admin/DarkModeSwitcher";
 import DropdownMessage from "./DropdownMessage";
 import DropdownNotification from "./DropdownNotification";
 import DropdownUser from "./DropdownUser";
+import { Socket } from "socket.io-client";
+import io from "socket.io-client";
 import LogoImage from "../../images/icon/logo2.png";
+interface Notification {
+  id: number;
+  user_id: string;
+  type: string;
+  title: string;
+}
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
+  socket: Socket;
+  notifications: Notification[];
+  setNotifications: Notification[];
 }) => {
+  // console.log(props.notifications, "tfy");
+
   return (
     <header className="sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
       <div className="flex flex-grow items-center justify-between py-4 px-4 shadow-2 md:px-6 2xl:px-11">
@@ -105,7 +118,11 @@ const Header = (props: {
             {/* <!-- Dark Mode Toggler --> */}
 
             {/* <!-- Notification Menu Area --> */}
-            <DropdownNotification />
+            <DropdownNotification
+              notifications={props.notifications}
+              socket={props.socket}
+              setNotifications={props.setNotifications}
+            />
             {/* <!-- Notification Menu Area --> */}
 
             {/* <!-- Chat Notification Area --> */}

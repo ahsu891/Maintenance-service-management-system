@@ -144,11 +144,17 @@ export const checkPrevent = async (req, res) => {
         // console.log(new Date().toISOString().split("T")[0]);
         const startDate = data.start_date;
         const nextDays = new Date(startDate);
-        nextDays.setDate(startDate?.getDate() + 1);
-        if (
-          nextDays.toISOString().split("T")[0] ===
-          new Date().toISOString().split("T")[0]
-        ) {
+        nextDays.setDate(nextDays.getDate() + 1);
+
+        // Get today's date
+        const today = new Date();
+        const todayDateString = today.toISOString().split("T")[0];
+
+        // Convert nextDays date to a string in the format "YYYY-MM-DD"
+        const nextDaysDateString = nextDays.toISOString().split("T")[0];
+        // console.log(nextDaysDateString, todayDateString, "fff");
+        if (nextDaysDateString === todayDateString) {
+          // console.log("hello ahmed");
           const insertQuery = `INSERT INTO maintenance_requests (request_id, requester_id, request_date, completion_date, status, title,room,floor, description, image, priority, block_id,category) VALUES (?, ?, ?,?,?, ?, ?, ?, ?, ?, ?, ?,?)`;
 
           // Assuming you have a connection pool named 'db'
@@ -165,9 +171,9 @@ export const checkPrevent = async (req, res) => {
               data.floor,
               data.description,
               null, // Assuming technician_id starts as null
-              "Low",
+              data.priority,
               data.block_no,
-              "Water",
+              data.categories,
             ],
             (err, results) => {
               if (err) {
@@ -204,13 +210,13 @@ export const checkPrevent = async (req, res) => {
 
             // console.log("Data inserted successfully");
             // console.log(nextScheduledDate);
+            res.status(200).send("Successfully");
           });
         }
       });
 
       // Return the query results as JSON
       // console.log("Hello aaaaaas");
-      res.status(200).send(" Successfully assign the secheduled maintance");
     });
 
     // Respond with the ID of the inserted record

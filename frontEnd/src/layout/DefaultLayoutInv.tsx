@@ -5,8 +5,9 @@ import HeaderInv from "../components/Inventory/HeaderInv";
 import { Outlet } from "react-router-dom";
 import axios from "../api/axios";
 import toast from "react-hot-toast";
+import io from "socket.io-client";
 const URL_R = "/prevent/checkPrevent";
-
+export const socket = io("http://localhost:8800");
 const DefaultLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   useEffect(() => {
@@ -37,6 +38,7 @@ const DefaultLayout = () => {
         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
           {/* <!-- ===== Header Start ===== --> */}
           <HeaderInv
+            socket={socket}
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
           />

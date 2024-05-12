@@ -128,7 +128,7 @@ function About() {
           />
         </div>
       </div>
-      <Chat />
+      {/* <Chat /> */}
     </div>
   );
 }

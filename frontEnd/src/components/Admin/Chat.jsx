@@ -6,28 +6,47 @@ const socket = io("http://localhost:8800"); // Replace with your server URL
 function Chat() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const [notifications, setNotifications] = useState([]);
+  // useEffect(() => {
+  //   console.log("Effect hook called");
+  //   // Listen for incoming messages
+  //   socket.on("chat message", (msg) => {
+  //     console.log("Message received:", msg);
+  //     setMessages((prevMessages) => [...prevMessages, msg]);
+  //   });
 
+  //   // Clean up function
+  //   return () => {
+  //     socket.off("chat message");
+  //   };
+  // }, []);
   useEffect(() => {
-    console.log("Effect hook called");
-    // Listen for incoming messages
-    socket.on("chat message", (msg) => {
-      console.log("Message received:", msg);
-      setMessages((prevMessages) => [...prevMessages, msg]);
+    socket?.emit("newUser", localStorage.getItem("user_id"));
+  }, [socket]);
+  const handleNotification = (type) => {
+    socket.emit("sendNotification", {
+      id: new Date(),
+      user_id: localStorage.getItem("user_id"),
+      type: "Watre",
+      title: "Hello ",
     });
-
-    // Clean up function
+  };
+  useEffect(() => {
+    socket.on("getNotification", (data) => {
+      setNotifications((prev) => [...prev, data]);
+    });
     return () => {
-      socket.off("chat message");
+      socket.off("getNotification");
     };
-  }, []);
-
+    //   };
+  }, [socket]);
   const sendMessage = () => {
     if (input.trim() !== "") {
       socket.emit("chat message", input);
       setInput("");
     }
   };
-
+  console.log(notifications);
   return (
     <div>
       <div>
@@ -40,7 +59,7 @@ function Chat() {
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
-      <button onClick={sendMessage}>Send</button>
+      <button onClick={handleNotification}>Send</button>
     </div>
   );
 }

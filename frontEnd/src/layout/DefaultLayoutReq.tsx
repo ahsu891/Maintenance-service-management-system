@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import SidebarReq from "../components/Requester/SidebarReq.js";
 import HeaderReq from "../components/Requester/HeaderReq.js";
 import { Outlet } from "react-router-dom";
-
+import io from "socket.io-client";
+export const socket = io("http://localhost:8800");
 const DefaultLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  useEffect(() => {
+    socket?.emit("newUser", localStorage.getItem("user_id"));
+  }, [socket]);
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
       {/* <!-- ===== Page Wrapper Start ===== --> */}
@@ -21,6 +24,7 @@ const DefaultLayout = () => {
           <HeaderReq
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
+            socket={socket}
           />
           {/* <!-- ===== Header End ===== --> */}
 

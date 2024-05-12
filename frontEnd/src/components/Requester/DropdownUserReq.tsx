@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import toast from "react-hot-toast";
-
+import { Socket } from "socket.io-client";
+import io from "socket.io-client";
 // import "UserOne" from '../images/user/user-01.png';
 
 const DropdownUser = () => {
