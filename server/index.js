@@ -97,6 +97,34 @@ io.on("connection", (socket) => {
       date: new Date(),
     });
   });
+  // send the notification for Technition
+  socket.on("sendNotificationTech", ({ id, user_id, type, title }) => {
+    const sqlQuery = `INSERT INTO notify (id, user_id,type, title, created_at, status) VALUES (?,?,?,?,?,?);`;
+    // const receiver = getUser(user_id);
+    // console.log(receiver);
+    db.query(
+      sqlQuery,
+      [id, user_id, type, title, new Date(), 0],
+      (error, results) => {
+        if (error) {
+          console.error("Error executing the query:", error);
+
+          return;
+        }
+
+        // Return the query results as JSON
+      }
+    );
+    console.log(id, user_id, type, title);
+
+    io.emit("getNotificationTech", {
+      id,
+      user_id,
+      type,
+      title,
+      date: new Date(),
+    });
+  });
 
   // Handle disconnections
   socket.on("disconnect", () => {

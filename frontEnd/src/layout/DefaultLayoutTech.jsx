@@ -1,12 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import SidebarTech from "../components/Technician/SidebarTech";
 import HeaderTech from "../components/Technician/HeaderTech";
 import { Outlet } from "react-router-dom";
-
+import io from "socket.io-client";
+const socket = io("http://localhost:8800");
 const DefaultLayout = () => {
+  const [notifications, setNotifications] = useState([]);
+  useEffect(() => {
+    socket?.emit("newUser", localStorage.getItem("user_id"));
+  }, [socket]);
+  useEffect(() => {
+    socket.on("getNotificationTech", (data) => {
+      setNotifications((prev) => [data, ...prev]);
+    });
+    return () => {
+      socket.off("getNotificationTech");
+    };
+    //   };
+  }, [socket]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  console.log(notifications, "aosjdhgk;jsh");
   return (
     <div className="dark:bg-boxdark-2 dark:text-bodydark">
       {/* <!-- ===== Page Wrapper Start ===== --> */}
@@ -24,6 +38,9 @@ const DefaultLayout = () => {
           <HeaderTech
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
+            notifications={notifications}
+            setNotifications={setNotifications}
+            socket={socket}
           />
           {/* <!-- ===== Header End ===== --> */}
 

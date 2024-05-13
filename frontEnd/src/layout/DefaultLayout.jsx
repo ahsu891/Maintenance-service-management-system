@@ -8,7 +8,7 @@ import io from "socket.io-client";
 import toast from "react-hot-toast";
 import Spiner from "../components/Spiner";
 const URL_R = "/prevent/checkPrevent";
-const socket = io("http://localhost:8800");
+export const socket = io("http://localhost:8800");
 const DefaultLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);

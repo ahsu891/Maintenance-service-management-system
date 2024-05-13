@@ -3,6 +3,7 @@ import TechList from "./TechList";
 import axios from "../../api/axios";
 import toast from "react-hot-toast";
 import { dateFormating, formatDateRelativeToToday } from "../../api/helper";
+import { socket } from "../../layout/DefaultLayout";
 const URL_A = "/assign/assingTech";
 function DescriptionList({
   block,
@@ -29,6 +30,14 @@ function DescriptionList({
       (data) => data.specialization === "Water" && data.available === "active"
     )
   );
+  const handleNotification = (title) => {
+    socket.emit("sendNotificationTech", {
+      id: new Date(),
+      user_id: allchecked,
+      type: "Maintenance Request",
+      title,
+    });
+  };
   async function handleAssign(e) {
     e.preventDefault();
 
@@ -49,6 +58,7 @@ function DescriptionList({
       setVisible((e) => !e);
       console.log(response.data);
       toast.success(response.data);
+      handleNotification(title);
     } catch (error) {
       console.error("Error fetching technicials:", error.message);
     }
