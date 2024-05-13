@@ -1,5 +1,5 @@
 import { GoChecklist } from "react-icons/go";
-const CardThree = ({ total_completed, completed_percentage }) => {
+const CardThree = ({ total_completed, percenteg }) => {
   return (
     <div className="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
@@ -32,7 +32,7 @@ const CardThree = ({ total_completed, completed_percentage }) => {
         </div>
 
         <span className="flex items-center gap-1 text-sm font-medium text-meta-3">
-          {completed_percentage}%
+          {percenteg.toFixed(2)}%
           {/* <svg
             className="fill-meta-3"
             width="10"

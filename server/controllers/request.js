@@ -48,6 +48,7 @@ export const getDashTable = (req, res) => {
     res.status(200).send(results);
   });
 };
+
 export const getReqAss = (req, res) => {
   // Execute the SQL query
   const sqlQuery = `SELECT technicians_assigned.*,

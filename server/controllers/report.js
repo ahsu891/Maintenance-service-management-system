@@ -262,12 +262,10 @@ export const getDashTech = (req, res) => {
   const { tech_id } = req.body;
   const sqlQuery = `
   SELECT 
-    SUM(CASE WHEN result.status = 'Assigned' THEN 1 ELSE 0 END) AS total_assigned,
-    ROUND((SUM(CASE WHEN result.status = 'Assigned' THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS assigned_percentage,
+    SUM(CASE WHEN result.status IN ('Assigned', 'Completed')  THEN 1 ELSE 0 END) AS total_assigned
+   
     
     
-    SUM(CASE WHEN result.status IN ('Closed', 'Completed') THEN 1 ELSE 0 END) AS total_completed,
-    ROUND((SUM(CASE WHEN result.status IN ('Closed', 'Completed') THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS completed_percentage
   FROM (
       SELECT 
           maintenance_requests.*
@@ -275,11 +273,32 @@ export const getDashTech = (req, res) => {
           maintenance_requests
       JOIN 
           technicians_assigned ON technicians_assigned.request_id = maintenance_requests.request_id
-      WHERE technicians_assigned.technician_id=?
+     
+          WHERE technicians_assigned.technician_id=?
+          
+          
+        ) AS result
+        
+        `;
+  const sqlQueryC = `
+        
+        SELECT 
+        SUM(CASE WHEN result.status = 'Closed' THEN 1 ELSE 0 END) AS total_completed
+        
+        FROM (
+          SELECT 
+          maintenance_requests.*
+          FROM 
+          maintenance_requests
+          JOIN 
+          finished_requests ON finished_requests.request_id = maintenance_requests.request_id
+          
+          WHERE finished_requests.technician_id=?
      
   ) AS result
-  
-  `;
+   
+        
+        `;
 
   db.query(sqlQuery, [tech_id], (error, results) => {
     if (error) {
@@ -288,8 +307,20 @@ export const getDashTech = (req, res) => {
       return;
     }
 
+    const totalAssigned = results[0].total_assigned;
+    db.query(sqlQueryC, [tech_id], (error, results) => {
+      if (error) {
+        console.error("Error executing the query:", error);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      const total_completed = results[0].total_completed;
+      // Return the query results as JSON
+      // console.log(total_completed, totalAssigned);
+
+      res.status(200).send([{ total_completed, totalAssigned }]);
+    });
     // Return the query results as JSON
-    res.status(200).send(results);
   });
 };
 export const getDashInv = (req, res) => {

@@ -86,3 +86,28 @@ export const toggele = (req, res) => {
     }
   });
 };
+export const getDashTableTech = (req, res) => {
+  // Execute the SQL query
+  const { user_id } = req.body;
+  const sqlQuery = `SELECT 
+  maintenance_requests.*
+  FROM 
+  maintenance_requests
+  JOIN 
+  finished_requests ON finished_requests.request_id = maintenance_requests.request_id
+  
+  WHERE finished_requests.technician_id=? And maintenance_requests.status='Closed'
+  ORDER BY request_date DESC;
+  `;
+
+  db.query(sqlQuery, [user_id], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).send(results);
+  });
+};
