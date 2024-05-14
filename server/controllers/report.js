@@ -63,6 +63,7 @@ export const getSingleRep = (req, res) => {
     WHERE  maintenance_requests.request_id=?
     GROUP BY 
       maintenance_requests.request_id
+      ORDER BY maintenance_requests.request_date DESC;
   `;
 
   const technicianQuery = `
@@ -137,8 +138,8 @@ export const getTopDashboard = (req, res) => {
   SUM(CASE WHEN status = 'Assigned' THEN 1 ELSE 0 END) AS total_assigned,
   ROUND((SUM(CASE WHEN status = 'Assigned' THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS assigned_percentage,
   
-  SUM(CASE WHEN status = 'Rejected' THEN 1 ELSE 0 END) AS total_rejected,
-  ROUND((SUM(CASE WHEN status = 'Rejected' THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS rejected_percentage,
+  SUM(CASE WHEN status IN ('Rejected', 'Cancelled') THEN 1 ELSE 0 END) AS total_rejected,
+  ROUND((SUM(CASE WHEN status IN ('Rejected', 'Cancelled') THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS rejected_percentage,
   
   SUM(CASE WHEN status IN ('Closed', 'Completed') THEN 1 ELSE 0 END) AS total_completed,
   ROUND((SUM(CASE WHEN status IN ('Closed', 'Completed') THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS completed_percentage
@@ -172,8 +173,8 @@ export const getTopDashboardRequester = (req, res) => {
   SUM(CASE WHEN status = 'Assigned' THEN 1 ELSE 0 END) AS total_assigned,
   ROUND((SUM(CASE WHEN status = 'Assigned' THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS assigned_percentage,
   
-  SUM(CASE WHEN status = 'Rejected' THEN 1 ELSE 0 END) AS total_rejected,
-  ROUND((SUM(CASE WHEN status = 'Rejected' THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS rejected_percentage,
+  SUM(CASE WHEN status IN ('Rejected', 'Cancelled') THEN 1 ELSE 0 END) AS total_rejected,
+  ROUND((SUM(CASE WHEN status IN ('Rejected', 'Cancelled') THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS rejected_percentage,
   
   SUM(CASE WHEN status IN ('Closed', 'Completed') THEN 1 ELSE 0 END) AS total_completed,
   ROUND((SUM(CASE WHEN status IN ('Closed', 'Completed') THEN 1 ELSE 0 END) / COUNT(*)) * 100, 2) AS completed_percentage

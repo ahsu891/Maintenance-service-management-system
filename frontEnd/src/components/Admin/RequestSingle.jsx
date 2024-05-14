@@ -1,10 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { AiOutlineMessage } from "react-icons/ai";
 import { handle } from "express/lib/router";
 import axios from "../../api/axios";
 import toast from "react-hot-toast";
 const URL_R = "/assign/conform";
+const URL_RM = "/assign/getRejectMessage";
+const URL_RD = "/assign/cancelReject";
+const fetchData = async (request_id, setMessage) => {
+  try {
+    // Make a GET request to the API endpoint
+    const response = await axios.post(URL_RM, {
+      request_id,
+    });
+    // console.log(request_id);
+    // console.log(localStorage.getItem("user_id"));
+    // console.log(response.data, "dddddddddddd");
+    setMessage(response.data);
+    //   setList([...response.data]);
+  } catch (error) {
+    console.error("Error fetching technicials:", error.message);
+  }
+};
 function RequestSingle({
   block_id,
   room,
@@ -20,6 +37,17 @@ function RequestSingle({
   setReff,
   date,
 }) {
+  const [message, setMessage] = useState([
+    {
+      id: "eaba6518",
+      message: "",
+      request_id: "b98ad56d-537c-4e8d-bddd-acdde35a16f8",
+    },
+  ]);
+  if (status === "Rejected") {
+    // Call the fetchData function when the component mounts
+    fetchData(request_id, setMessage);
+  }
   function handleConform() {
     const fetchData = async () => {
       try {
@@ -41,10 +69,38 @@ function RequestSingle({
     // Call the fetchData function when the component mounts
     fetchData();
   }
+  function handleDelete() {
+    const fetchData = async () => {
+      try {
+        // Make a GET request to the API endpoint
+        const response = await axios.post(URL_RD, {
+          request_id,
+        });
+        // console.log(request_id);
+        // console.log(localStorage.getItem("user_id"));
+        // console.log(response.data);
+        toast.success(response.data);
+        setReff((e) => !e);
+
+        //   setList([...response.data]);
+      } catch (error) {
+        console.error("Error fetching technicials:", error.message);
+        toast.error("something went wrong");
+      }
+    };
+    // Call the fetchData function when the component mounts
+    fetchData();
+  }
   console.log(status);
   return (
     <div className="">
-      <div className="my-5 relative border-l-4 rounded-md border-primary   transition-all  2s ">
+      <div
+        className={`my-5 w-full relative border-l-4 rounded-md  ${
+          status === "Rejected" ? "border-[#F87171] " : " border-primary "
+        } ${
+          status === "Rejected" ? "bg-[#F87171]" : "bg-white"
+        }   bg-opacity-[15%]   transition-all  2s `}
+      >
         <div className=" rounded-md border  border-stroke bg-white px-6   pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           <div className="flex md:flex-row flex-col justify-between py-4 items-center px-4 pr-7">
             <div>
@@ -67,7 +123,7 @@ function RequestSingle({
                       {status}
                     </p>
                   )}
-                  {status === "Cancelled" && (
+                  {status === "Rejected" && (
                     <p className=" rounded-full   w-auto block-inline  bg-danger bg-opacity-10 py-1 px-3 text-sm font-medium  text-danger">
                       {status}
                     </p>
@@ -93,25 +149,56 @@ function RequestSingle({
                 </p>
               </span>
             </div> */}
-            <div className="flex flex-row  gap-6 items-center">
-              <div className="flex flex-row gap-1  items-center">
-                <p className=" text-boxdark">
-                  If the request is done Please confirm
-                </p>
-                <span className="text-primary animate-fade-right animate-duration-1000 duration-10 hover:translate-x-2 ">
-                  <FaArrowRightLong />
-                </span>
+            {status !== "Rejected" && (
+              <div className="flex flex-row  gap-6 items-center">
+                <div className="flex flex-row gap-1  items-center">
+                  <p className=" text-boxdark">
+                    If the request is done Please confirm
+                  </p>
+                  <span className="text-primary animate-fade-right animate-duration-1000 duration-10 hover:translate-x-2 ">
+                    <FaArrowRightLong />
+                  </span>
+                </div>
+                <div>
+                  <button
+                    onClick={handleConform}
+                    disabled={status === "Completed" ? false : true}
+                    className="bg-primary px-3 py-1 rounded-md text-white"
+                  >
+                    Conform
+                  </button>
+                </div>
               </div>
-              <div>
+            )}
+            {status === "Rejected" && (
+              <div className="max-w-[50%]    flex flex-row  gap-6 items-center">
+                <div className="flex flex-row gap-1 ">
+                  <p className=" text-boxdark">
+                    {/* <p className="leading-relaxed text-[#CD5D5D]">
+                      Lorem dummy text of the l Lorem, ipsum dolor sit amet
+                      consectetur adipisicing elit. Labore perspiciatis
+                      necessitatibus, quae error cumque laudantium nobis
+                      consequuntur quia incidunt esse eius ut omnis libero,
+                      facere temporibus aspernatur hic molestias voluptatibus.
+                      printing
+                    </p> */}
+                    <p className="leading-relaxed text-[#CD5D5D]">
+                      {message?.[0].message}
+                    </p>
+                  </p>
+                </div>
+              </div>
+            )}
+            {status === "Rejected" && (
+              <div className="   align-bottom self-center">
                 <button
-                  onClick={handleConform}
-                  disabled={status === "Completed" ? false : true}
-                  className="bg-primary px-3 py-1 rounded-md text-white"
+                  onClick={handleDelete}
+                  className="bg-[#CD5D5D] px-2 py-1 rounded-md text-white"
                 >
-                  Conform
+                  Delete
                 </button>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

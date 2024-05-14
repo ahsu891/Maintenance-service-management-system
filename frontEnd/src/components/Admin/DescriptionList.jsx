@@ -4,6 +4,7 @@ import axios from "../../api/axios";
 import toast from "react-hot-toast";
 import { dateFormating, formatDateRelativeToToday } from "../../api/helper";
 import { socket } from "../../layout/DefaultLayout";
+import RejectionMessage from "./RejectionMessage";
 const URL_A = "/assign/assingTech";
 function DescriptionList({
   block,
@@ -89,7 +90,7 @@ function DescriptionList({
                 Full Name
               </dt>
               <dd className="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
-                {name}
+                {name || "Preventive maintenace"}
               </dd>
             </div>
             <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
@@ -121,7 +122,7 @@ function DescriptionList({
                 Phone
               </dt>
               <dd className="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
-                {phone}
+                {phone || "not available !"}
               </dd>
             </div>
 
@@ -154,7 +155,7 @@ function DescriptionList({
                 Description
               </dt>
               <dd className="mt-1 text-sm leading-6  text-graydark sm:col-span-2 sm:mt-0">
-                {description}
+                {description || "--"}
               </dd>
             </div>
             {/*  */}
@@ -218,13 +219,17 @@ function DescriptionList({
                   />
                 </dd>
               </div>
-              <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 flex flex-row gap-2">
                 {/* <dt className="text-sm font-semibold leading-6  text-graydark"></dt> */}
-                <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                <div className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 flex flex-row gap-2">
                   <button className="flex w-auto justify-self-end rounded bg-primary p-3 px-8 font-medium text-gray">
                     Assign
                   </button>
-                </dd>
+                  <RejectionMessage
+                    request_id={request_id}
+                    setRefresh={setRefresh}
+                  />
+                </div>
               </div>
             </form>
           </dl>

@@ -72,8 +72,8 @@ LEFT JOIN
 LEFT JOIN
   blocks ON maintenance_requests.block_id = blocks.blocks_id
   WHERE 
-  technicians_assigned.technician_id=?;
-
+  technicians_assigned.technician_id=?
+  ORDER BY maintenance_requests.request_date DESC
   `;
 
   db.query(sqlQuery, [user_id], (error, results) => {
@@ -288,6 +288,96 @@ WHERE request_id=?;
       // console.log(results);
       // Return the query results as JSON
       res.status(200).json("Sucessfully work the Task");
+    });
+  } catch (error) {
+    console.error("Caught an error:", error.message);
+    res.status(500).send("Internal Server Error");
+  }
+};
+export const RejectMassage = (req, res) => {
+  // Execute the SQL query
+  const { request_id, reason } = req.body;
+  // console.log(request_id);
+  const sqldRM = `INSERT INTO reject_message (id,message, request_id) VALUES (?, ?, ?);
+  `;
+  const sqlut = `
+  
+  UPDATE maintenance_requests SET status = 'Rejected' WHERE maintenance_requests.request_id = ?;
+  `;
+  try {
+    db.query(sqldRM, [uuidv4(), reason, request_id], (error, results) => {
+      if (error) {
+        console.error("Error executing the query:", error);
+        throw new Error("Something went wrong");
+        // res.status(500).send("Internal Server Error");
+        // return;
+      }
+      db.query(sqlut, [request_id], (error, results) => {
+        if (error) {
+          console.error("Error executing the query:", error);
+          throw new Error("Something went wrong");
+          // res.status(500).send("Internal Server Error");
+          // return;
+        }
+
+        // console.log(results);
+        // Return the query results as JSON
+        res.status(200).send("The Request is Rejected");
+      });
+      // console.log(results);
+      // Return the query results as JSON
+      // res.status(200).json(results);
+    });
+  } catch (error) {
+    console.error("Caught an error:", error.message);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+export const getRejectMessage = (req, res) => {
+  // Execute the SQL query
+  const { request_id } = req.body;
+  // console.log(request_id);
+  const sqldRM = `SELECT * FROM reject_message WHERE request_id=?`;
+
+  try {
+    db.query(sqldRM, [request_id], (error, results) => {
+      if (error) {
+        console.error("Error executing the query:", error);
+        throw new Error("Something went wrong");
+        // res.status(500).send("Internal Server Error");
+        // return;
+      }
+
+      res.status(200).send(results);
+      // console.log(results);
+      // Return the query results as JSON
+      // res.status(200).json(results);
+    });
+  } catch (error) {
+    console.error("Caught an error:", error.message);
+    res.status(500).send("Internal Server Error");
+  }
+};
+export const makeCancelReject = (req, res) => {
+  // Execute the SQL query
+  const { request_id } = req.body;
+  // console.log(request_id);
+  const sqldRM = `UPDATE maintenance_requests SET status = 'Cancelled' WHERE maintenance_requests.request_id = ?;`;
+
+  try {
+    db.query(sqldRM, [request_id], (error, results) => {
+      if (error) {
+        console.error("Error executing the query:", error);
+        throw new Error("Something went wrong");
+        // res.status(500).send("Internal Server Error");
+        // return;
+      }
+
+      res.status(200).send("Deleted Succesfully");
+      // console.log(results);
+      // Return the query results as JSON
+      // res.status(200).json(results);
     });
   } catch (error) {
     console.error("Caught an error:", error.message);

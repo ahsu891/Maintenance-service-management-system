@@ -97,7 +97,9 @@ export const register = (req, res) => {
 export const getSingleRequester = (req, res) => {
   // Execute the SQL query
   const { requester_id } = req.body;
-  const sqld = `SELECT * FROM maintenance_requests WHERE requester_id=? AND maintenance_requests.status!="Closed"`;
+  const sqld = `SELECT * FROM maintenance_requests 
+  WHERE requester_id=? AND maintenance_requests.status!="Closed" AND maintenance_requests.status!="Cancelled" 
+  ORDER BY maintenance_requests.request_date DESC `;
 
   db.query(sqld, [requester_id], (error, results) => {
     if (error) {

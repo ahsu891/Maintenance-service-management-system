@@ -34,7 +34,9 @@ function Requests({
               <div className="flex flex-row text-sm gap-5 items-center">
                 <div className="py-2">
                   <span>Requested by : </span>
-                  <span className="text-boxdark">{requester_name}</span>
+                  <span className="text-boxdark">
+                    {requester_name || "Preventive maintenance"}
+                  </span>
                 </div>
                 <span className="text-boxdark">
                   Block-<span className="text-primary">{block_id}</span>

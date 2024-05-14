@@ -112,6 +112,7 @@ function ReportPrint() {
                     className="flex
                 flex-row gap-2"
                   >
+                    {data?.materialDetails?.length === 0 && " -none-"}
                     {data?.materialDetails?.map((dat, i) => (
                       <span key={i * 1 + 288 * 22}>
                         {i + 1}.{dat.item_name} {`(${dat.quantity_used})`},
@@ -133,11 +134,11 @@ function ReportPrint() {
         </div>
         <div className="row text-center mt-5 flex flex-row gap-2  justify-between">
           <button
-            className="btn text-white px-2 rounded-sm py-2 bg-primary"
+            className="btn text-white px-2 rounded-sm py-1 bg-primary"
             // onClick={downloadPDF}
             onClick={() => navigate(-1)}
           >
-            {"<--"} Back
+            {"<"}
           </button>
           <button
             className="btn text-white px-2 rounded-sm py-2 bg-primary"

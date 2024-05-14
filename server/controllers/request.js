@@ -14,7 +14,8 @@ FROM
 LEFT JOIN
   users ON maintenance_requests.requester_id = users.user_id
   WHERE 
-  maintenance_requests.status='Pending';
+  maintenance_requests.status='Pending'
+  ORDER BY maintenance_requests.request_date DESC;;
   `;
 
   db.query(sqlQuery, (error, results) => {
@@ -55,6 +56,7 @@ export const getReqAss = (req, res) => {
   maintenance_requests.title,
   maintenance_requests.status,
   maintenance_requests.priority,
+  maintenance_requests.request_date,
   maintenance_requests.block_id,
   CONCAT(technicians.first_name, ' ', technicians.last_name) AS technician_name,
   technicians.specialization,
@@ -64,7 +66,8 @@ export const getReqAss = (req, res) => {
   LEFT JOIN technicians ON technicians_assigned.technician_id = technicians.technician_id 
   LEFT JOIN
   users ON maintenance_requests.requester_id = users.user_id
-  WHERE maintenance_requests.status!='Pending';`;
+  WHERE maintenance_requests.status ='Assigned' or  maintenance_requests.status ='Completed' 
+  ORDER BY maintenance_requests.request_date DESC;`;
 
   db.query(sqlQuery, (error, results) => {
     if (error) {

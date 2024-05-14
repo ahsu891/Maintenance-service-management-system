@@ -63,7 +63,7 @@ function RequestManagement() {
                     Status
                   </th>
                   <th className="py-4 px-4 font-medium text-black dark:text-white">
-                    Actions
+                    Date
                   </th>
                 </tr>
               </thead>
@@ -93,6 +93,7 @@ function RequestManagement() {
                     priority={data.priority}
                     status={data.status}
                     block_no={data.block_id}
+                    date={data.request_date}
                   />
                 ))}
               </tbody>

@@ -348,7 +348,8 @@ export const getPreventiveConf = async (req, res) => {
     maintenance_requests
   
     WHERE 
-    maintenance_requests.requester_id IS null and maintenance_requests.status !='Closed' ;`;
+    maintenance_requests.requester_id IS null and maintenance_requests.status !='Closed' AND maintenance_requests.status !='Cancelled' 
+    ORDER BY maintenance_requests.request_date DESC;;`;
 
     // Respond with the fetched records
     db.query(h, (err, results) => {
