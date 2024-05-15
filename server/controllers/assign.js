@@ -384,3 +384,33 @@ export const makeCancelReject = (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
+
+export const ComplainMessege = (req, res) => {
+  // Execute the SQL query
+  const { request_id, description } = req.body;
+  // console.log(request_id);
+  const sqldRM = `INSERT INTO complain (id, request_id, created_at, description) VALUES (?, ?,?, ?); `;
+
+  try {
+    db.query(
+      sqldRM,
+      [uuidv4(), request_id, new Date(), description],
+      (error, results) => {
+        if (error) {
+          console.error("Error executing the query:", error);
+          throw new Error("Something went wrong");
+          // res.status(500).send("Internal Server Error");
+          // return;
+        }
+
+        res.status(200).send("The thank you for complaint 😃");
+        // console.log(results);
+        // Return the query results as JSON
+        // res.status(200).json(results);
+      }
+    );
+  } catch (error) {
+    console.error("Caught an error:", error.message);
+    res.status(500).send("Internal Server Error");
+  }
+};

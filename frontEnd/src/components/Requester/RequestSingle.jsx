@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { AiOutlineMessage } from "react-icons/ai";
 import { handle } from "express/lib/router";
+// import { AiOutlineMessage } from "react-icons/ai";
 import axios from "../../api/axios";
 import toast from "react-hot-toast";
+import ModalRquesterAccepter from "./ModalRquesterAccepter";
 const URL_R = "/assign/conform";
 const URL_RM = "/assign/getRejectMessage";
 const URL_RD = "/assign/cancelReject";
@@ -49,7 +51,7 @@ function RequestSingle({
     fetchData(request_id, setMessage);
   }
 
-  function handleConform() {
+  function handleConform(request_id) {
     const fetchData = async () => {
       try {
         // Make a GET request to the API endpoint
@@ -187,14 +189,22 @@ function RequestSingle({
                     <FaArrowRightLong />
                   </span>
                 </div>
-                <div>
+                <div className="flex flex-row gap-2 items-center">
                   <button
-                    onClick={handleConform}
+                    onClick={() => handleConform(request_id)}
                     disabled={status === "Completed" ? false : true}
                     className="bg-primary px-3 py-1 rounded-md text-white"
                   >
                     Conform
                   </button>
+                  <span className="">
+                    <ModalRquesterAccepter
+                      request_id={request_id}
+                      setReff={setReff}
+                      status={status}
+                      handleConform={handleConform}
+                    />
+                  </span>
                 </div>
               </div>
             )}

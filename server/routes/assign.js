@@ -1,6 +1,7 @@
 import express from "express";
 import {
   AssignTech,
+  ComplainMessege,
   RejectMassage,
   conform,
   finishAss,
@@ -19,6 +20,7 @@ router.post("/getAssignGroup", getAssGroup);
 router.post("/finishAss", finishAss);
 router.post("/conform", conform);
 router.post("/rejectMessage", RejectMassage);
+router.post("/complainMessage", ComplainMessege);
 router.post("/getRejectMessage", getRejectMessage);
 router.post("/cancelReject", makeCancelReject);
 
