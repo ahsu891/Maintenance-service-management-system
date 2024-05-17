@@ -9,6 +9,7 @@ import {
   getSingleRep,
   getTopDashboard,
   getTopDashboardRequester,
+  turnToExeclFile,
 } from "../controllers/report.js";
 const router = express.Router();
 
@@ -21,6 +22,7 @@ router.get("/getChartInv", getCharDataInv);
 router.post("/getDashTech", getDashTech);
 router.get("/getDashInv", getDashInv);
 router.get("/getDashGraph", getDashGraph);
+router.get("/converttoExcel", turnToExeclFile);
 // router.post("/getAssign", getAssign);
 // router.post("/getAssignGroup", getAssGroup);
 // router.post("/finishAss", finishAss);

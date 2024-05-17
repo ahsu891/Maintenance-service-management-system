@@ -3,6 +3,7 @@ import ModalRequester from "./ModalRequester";
 import { AiOutlineMessage } from "react-icons/ai";
 import toast from "react-hot-toast";
 import axios from "../../api/axios";
+import { socket } from "../../layout/DefaultLayoutReq";
 const URL_R = "/assign/complainMessage";
 export default function ModalRquesterAccepter({
   status,
@@ -19,7 +20,14 @@ export default function ModalRquesterAccepter({
   const handleCloseModal = () => {
     setModalOpen(false);
   };
-
+  const handleNotification = (title) => {
+    socket.emit("sendNotification", {
+      id: new Date(),
+      user_id: localStorage.getItem("user_id"),
+      type: "Complaint Request",
+      title,
+    });
+  };
   const handleSubmitComplaint = async (description) => {
     // Handle complaint submission here (e.g., send it to a server)
     console.log("Complaint Description:", description);
@@ -30,6 +38,7 @@ export default function ModalRquesterAccepter({
 
       toast.success(response.data);
       handleConform(request_id);
+      handleNotification(description);
       setReff((e) => !e);
     } catch (err) {
       toast.error(err.response.data);

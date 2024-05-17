@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { IoNewspaperOutline } from "react-icons/io5";
 // import Logo from "../../images/icon/"
+import { AiOutlineMessage } from "react-icons/ai";
 import SidebarLinkGroup from "./SidebarLinkGroup";
 import { GoInbox } from "react-icons/go";
 import { GoFileDirectory } from "react-icons/go";
@@ -277,6 +278,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Calendar --> */}
 
               {/* <!-- Menu Item Profile --> */}
+              <li>
+                <NavLink
+                  to="/admin/complain"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/complain") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <span className="text-xl">
+                    <AiOutlineMessage />
+                  </span>
+                  Complains
+                </NavLink>
+              </li>
               <li>
                 <NavLink
                   to="/admin/usermanagement"

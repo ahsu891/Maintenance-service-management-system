@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { db } from "../db.js";
 import { v4 as uuidv4 } from "uuid";
+import { rejects } from "assert";
 
 export const getRep = (req, res) => {
   // Execute the SQL query
@@ -122,8 +123,9 @@ export const getSingleRep = (req, res) => {
         }
 
         responseObj.materialDetails = materialResults;
-
         // Return the combined results as JSON
+
+        console.log(responseObj);
         res.status(200).json(responseObj);
       });
     });
@@ -418,4 +420,180 @@ export const getDashGraph = (req, res) => {
       res.status(200).send(monthData);
     }
   });
+};
+
+export const turnToExeclFile = (req, res) => {
+  // const { requestId } = req.body; // Replace with the actual request ID from req.params or req.body
+
+  // Execute the SQL queries
+
+  const sqlQueryRquestId = `SELECT request_id
+  FROM finished_requests
+ `;
+
+  const sqlQuery = `
+  SELECT 
+  finished_requests.*,
+  maintenance_requests.request_id,
+  maintenance_requests.title,
+  maintenance_requests.category,
+  CONCAT(COALESCE(users.first_name, 'Preventive'), ' ', COALESCE(users.last_name, 'Maintenance')) AS requester_name,
+  maintenance_requests.completion_date,
+  users.phone,
+  users.job,
+  maintenance_requests.block_id
+FROM 
+  finished_requests
+JOIN 
+  maintenance_requests ON finished_requests.request_id = maintenance_requests.request_id
+JOIN 
+  technicians ON finished_requests.technician_id = technicians.technician_id
+LEFT JOIN 
+  users ON users.user_id = maintenance_requests.requester_id
+WHERE  
+  maintenance_requests.request_id = ?
+ORDER BY 
+  maintenance_requests.request_date DESC;
+;
+  `;
+
+  const technicianQuery = `
+    SELECT 
+      CONCAT(technicians.first_name, ' ', technicians.last_name) AS technician_full_name
+    FROM 
+      finished_requests
+    JOIN 
+      maintenance_requests ON finished_requests.request_id = maintenance_requests.request_id
+    JOIN 
+      technicians ON finished_requests.technician_id = technicians.technician_id
+    JOIN 
+      users ON users.user_id = maintenance_requests.requester_id
+    WHERE  maintenance_requests.request_id=?
+  `;
+
+  const materialQuery = ` SELECT maintenance_request_materials.*,
+  inventory.item_name FROM finished_requests
+  JOIN maintenance_request_materials ON maintenance_request_materials.request_id = finished_requests.request_id 
+  JOIN maintenance_requests ON maintenance_requests.request_id = finished_requests.request_id 
+  LEFT JOIN inventory ON inventory.id=maintenance_request_materials.material_id 
+  WHERE maintenance_requests.request_id =? And maintenance_request_materials.status="Closed" ;`;
+  //   SELECT material_used.detail
+  //   FROM finished_requests
+  //   JOIN material_used ON material_used.work_id = finished_requests.finished_id
+  //   JOIN maintenance_requests ON maintenance_requests.request_id = finished_requests.request_id
+  //   WHERE maintenance_requests.request_id = ?;
+  // `;
+  // excelFile;
+  db.query(sqlQueryRquestId, async (error, materialResults) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    console.log(materialResults.length);
+    // Return the combined results as JSON
+
+    const dataObject = [];
+    const requestIDArray = materialResults.map(async (e) => {
+      let dataarray;
+
+      dataarray = new Promise((resolve, reject) => {
+        db.query(sqlQuery, [e.request_id], (error, results) => {
+          if (error) {
+            console.error("Error executing the query:", error);
+            reject(error);
+            res.status(500).send("Internal Server Error");
+            return;
+          }
+          // console.log(results);
+          const responseObj = {
+            ...results?.[0],
+          };
+          // console.log(responseObj);
+          db.query(
+            technicianQuery,
+            [e.request_id],
+            (error, technicianResults) => {
+              if (error) {
+                console.error("Error executing the query:", error);
+                res.status(500).send("Internal Server Error");
+                return;
+              }
+
+              responseObj.technicianDetails = technicianResults
+                .map((tech) => tech.technician_full_name)
+                .join(", ");
+              // console.log(responseObj);
+              db.query(
+                materialQuery,
+                [e.request_id],
+                (error, materialResults) => {
+                  if (error) {
+                    console.error("Error executing the query:", error);
+                    res.status(500).send("Internal Server Error");
+                    return;
+                  }
+
+                  responseObj.materialDetails = materialResults
+                    .map((obj) => `${obj.item_name} (${obj.quantity_used})`)
+                    .join(", ");
+                  // Return the combined results as JSON
+                  // dataObject = [...dataObject, responseObj];
+                  // dataObject.push(responseObj);
+                  // console.log(responseObj);
+                  // console.log(dataObject);
+                  resolve(responseObj);
+                  // res.status(200).json(responseObj);
+                }
+              );
+            }
+          );
+        });
+      });
+
+      return dataarray;
+    });
+
+    // console.log(requestIDArray);
+    const ppp = await Promise.all([...requestIDArray]);
+    // console.log(ppp);
+    res.status(200).json(ppp);
+    // return dataObject;
+  });
+  // Execute the queries in parallel
+  // db.query(sqlQuery, [requestId], (error, results) => {
+  //   if (error) {
+  //     console.error("Error executing the query:", error);
+  //     res.status(500).send("Internal Server Error");
+  //     return;
+  //   }
+  //   // console.log(results);
+  //   const responseObj = {
+  //     ...results.?[0],
+  //   };
+
+  //   db.query(technicianQuery, [requestId], (error, technicianResults) => {
+  //     if (error) {
+  //       console.error("Error executing the query:", error);
+  //       res.status(500).send("Internal Server Error");
+  //       return;
+  //     }
+
+  //     responseObj.technicianDetails = technicianResults.map(tech => tech.technician_full_name).join(', ');
+
+  //     db.query(materialQuery, [requestId], (error, materialResults) => {
+  //       if (error) {
+  //         console.error("Error executing the query:", error);
+  //         res.status(500).send("Internal Server Error");
+  //         return;
+  //       }
+
+  //       responseObj.materialDetails = materialResults.map(obj => `${obj.item_name} (${obj.quantity_used})`).join(', ');
+  //       // Return the combined results as JSON
+
+  //       console.log(responseObj);
+  //       res.status(200).json(responseObj);
+  //     });
+  //   });
+  // });
 };

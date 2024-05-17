@@ -111,3 +111,31 @@ export const getDashTableTech = (req, res) => {
     res.status(200).send(results);
   });
 };
+export const getTheTechicianNME = (req, res) => {
+  // Execute the SQL query
+
+  const sqlQuery = `SELECT finall.*,
+  CONCAT(mrr.first_name, ' ', mrr.last_name) AS requester_full_name 
+  FROM (SELECT result.*,
+        mri.technician_id
+  FROM (
+  SELECT c.description , 
+        mr.request_id,
+         mr.title 
+  FROM complain c
+  JOIN maintenance_requests mr ON c.request_id = mr.request_id) as result
+  JOIN finished_requests mri ON result.request_id = mri.request_id) as finall
+  JOIN technicians mrr ON finall.technician_id = mrr. technician_id
+  `;
+
+  db.query(sqlQuery, (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).send(results);
+  });
+};

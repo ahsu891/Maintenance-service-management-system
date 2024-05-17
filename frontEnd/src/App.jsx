@@ -27,6 +27,7 @@ import Dashboard from "./components/Requester/Dashboard";
 import DashboardInv from "./components/Inventory/DashboardInv";
 import Table from "./components/Inventory/TableTwo";
 import Complain from "./components/Requester/Complain";
+import ComplainAdmin from "./components/Admin/ComplainAdmin";
 import Calendar from "./components/Admin/Calendar";
 import Report from "./components/Admin/Report";
 import ReportPrint from "./components/Admin/ReportPrint";
@@ -85,6 +86,7 @@ function App() {
                   />
                   <Route path="/admin/status" element={<RequestManagement />} />
                   <Route path="/admin/report/:id" element={<ReportPrint />} />
+                  <Route path="/admin/complain" element={<ComplainAdmin />} />
                   <Route path="/admin/settings" element={<Setting />} />
                 </Route>
               </Route>

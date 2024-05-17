@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import RequestList from "./RequestList";
 import io from "socket.io-client";
 import { socket } from "../../layout/DefaultLayoutReq";
+import ChangetoExcel from "../Admin/ChangetoExcel";
 const URL_R = "/requester/makeRequest";
 const FormLayout = () => {
   const [reff, setReff] = useState(false);
@@ -76,6 +77,9 @@ const FormLayout = () => {
     <div className="">
       <div>
         <RequestList reff={reff} setReff={setReff} />
+      </div>
+      <div>
+        <ChangetoExcel />
       </div>
       <div className=" flex flex-row justify-end my-2">
         <button
