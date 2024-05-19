@@ -429,6 +429,7 @@ export const turnToExeclFile = (req, res) => {
 
   const sqlQueryRquestId = `SELECT request_id
   FROM finished_requests
+  GROUP By request_id
  `;
 
   const sqlQuery = `
@@ -452,8 +453,8 @@ LEFT JOIN
   users ON users.user_id = maintenance_requests.requester_id
 WHERE  
   maintenance_requests.request_id = ?
-ORDER BY 
-  maintenance_requests.completion_date DESC;
+  
+  ORDER BY maintenance_requests.completion_date DESC;
 ;
   `;
 

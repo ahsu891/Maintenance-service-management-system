@@ -126,7 +126,7 @@ LEFT JOIN
 export const finishAss = (req, res) => {
   // Execute the SQL query
   const { time, worker, request_id } = req.body;
-  const id = uuidv4();
+
   // console.log(time, material, worker);
   // console.log(user_id);
   const sqlQuery = `
@@ -159,7 +159,9 @@ export const finishAss = (req, res) => {
 
   `;
   try {
+    console.log(worker);
     worker?.forEach((element) => {
+      const id = uuidv4();
       db.query(sqlQuery, [id, request_id, element, time], (error, results) => {
         if (error) {
           console.error("Error executing the query:", error);

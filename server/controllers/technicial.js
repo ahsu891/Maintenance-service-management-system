@@ -114,14 +114,25 @@ export const getDashTableTech = (req, res) => {
 export const getTheTechicianNME = (req, res) => {
   // Execute the SQL query
 
-  const sqlQuery = `SELECT finall.*,
-  CONCAT(mrr.first_name, ' ', mrr.last_name) AS requester_full_name 
-  FROM (SELECT result.*,
+  const sqlQuery = `SELECT result.*,
         mri.technician_id
   FROM (
   SELECT c.description , 
         mr.request_id,
          mr.title 
+  FROM complain c
+  JOIN maintenance_requests mr ON c.request_id = mr.request_id) as result
+  JOIN finished_requests mri ON result.request_id = mri.request_id
+  GROUP by result.request_id`;
+
+  const sqlQuerl = `SELECT finall.*,
+  CONCAT(mrr.first_name, ' ', mrr.last_name) AS full_name 
+  FROM (SELECT result.*,
+        mri.technician_id
+  FROM (
+  SELECT 
+        mr.request_id
+        
   FROM complain c
   JOIN maintenance_requests mr ON c.request_id = mr.request_id) as result
   JOIN finished_requests mri ON result.request_id = mri.request_id) as finall
@@ -135,7 +146,29 @@ export const getTheTechicianNME = (req, res) => {
       return;
     }
 
+    console.log(results);
+    db.query(sqlQuerl, (error, resultss) => {
+      if (error) {
+        console.error("Error executing the query:", error);
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      const jsonReturn = results.map((data) => {
+        return {
+          ...data,
+          technician_name: resultss
+            .filter((dataa) => dataa.request_id === data.request_id)
+            .map((daa) => daa.full_name)
+            .join(","),
+        };
+      });
+      // console.log(jsonReturn);
+
+      // Return the query results as JSON
+      res.status(200).send(jsonReturn);
+    });
+
     // Return the query results as JSON
-    res.status(200).send(results);
+    // res.status(200).send(results);
   });
 };

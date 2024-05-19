@@ -74,7 +74,7 @@ function ComplainTabel() {
                     key={data.request_id}
                     title={data.title}
                     description={data.description}
-                    requester_full_name={data.requester_full_name}
+                    technician_name={data.technician_name}
                   />
                 ))}
               </tbody>

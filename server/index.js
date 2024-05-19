@@ -73,7 +73,8 @@ io.on("connection", (socket) => {
   socket.on("sendNotification", ({ id, user_id, type, title }) => {
     const sqlQuery = `INSERT INTO notify (id, user_id,type, title, created_at, status) VALUES (?,?,?,?,?,?);`;
     const receiver = getUser(user_id);
-    console.log(receiver);
+    // console.log(receiver);
+    // console.log(us);
     db.query(
       sqlQuery,
       [id, user_id, type, title, new Date(), 0],
@@ -87,7 +88,7 @@ io.on("connection", (socket) => {
         // Return the query results as JSON
       }
     );
-    console.log(id, user_id, type, title);
+    // console.log(id, user_id, type, title);
 
     io.emit("getNotification", {
       id,
@@ -102,27 +103,33 @@ io.on("connection", (socket) => {
     const sqlQuery = `INSERT INTO notify (id, user_id,type, title, created_at, status) VALUES (?,?,?,?,?,?);`;
     // const receiver = getUser(user_id);
     // console.log(receiver);
-    db.query(
-      sqlQuery,
-      [id, user_id, type, title, new Date(), 0],
-      (error, results) => {
-        if (error) {
-          console.error("Error executing the query:", error);
+    // console.log(user_id, "hhh");
+    // user_id.forEach(element=>{
+    //   db.query(
+    //     sqlQuery,
+    //     [id, element, type, title, new Date(), 0],
+    //     (error, results) => {
+    //       if (error) {
+    //         console.error("Error executing the query:", error);
 
-          return;
-        }
+    //         return;
+    //       }
 
-        // Return the query results as JSON
-      }
-    );
-    console.log(id, user_id, type, title);
+    //       // Return the query results as JSON
+    //     }
+    //   );
 
-    io.emit("getNotificationTech", {
-      id,
-      user_id,
-      type,
-      title,
-      date: new Date(),
+    // })
+
+    // console.log(id, user_id, type, title);
+    user_id.forEach((element) => {
+      io.emit("getNotificationTech", {
+        id,
+        user_id: element,
+        type,
+        title,
+        date: new Date(),
+      });
     });
   });
 
