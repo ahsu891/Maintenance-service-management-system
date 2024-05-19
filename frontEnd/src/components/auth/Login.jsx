@@ -358,11 +358,16 @@ const Login = () => {
                   Sign in with Google
                 </button> */}
 
-                  <div className="mt-6 text-center">
+                  <div className="mt-6  flex flex-row items-center  justify-between text-center">
                     <p>
                       Don’t have any account?{" "}
                       <Link to="/register" className="text-primary">
                         Sign Up
+                      </Link>
+                    </p>
+                    <p>
+                      <Link to="/forgotPassword" className="text-primary">
+                        Forget Password
                       </Link>
                     </p>
                   </div>

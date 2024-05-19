@@ -35,6 +35,8 @@ import InventoryRequestAdmin from "./components/Admin/InventoryRequestAdmin";
 import InventoryRequest from "./components/Inventory/InventoryRequest";
 import Setting from "./components/Admin/Setting";
 import DashboardTech from "./components/Technician/DashboardTech";
+import ForgotPassword from "./components/FrogetPassword";
+import ResetPassword from "./components/ResetPassword";
 // import MainTable from "./components/Admin/MainTable";
 const ROLES = {
   User: "Requester",
@@ -54,7 +56,8 @@ function App() {
             <Route path="register" element={<SignUp />} />
             <Route path="login" index element={<Login />} />
             <Route path="unauthorized" element={<Unauthorized />} />
-
+            <Route path="/forgotPassword" element={<ForgotPassword />} />
+            <Route path="/resetPassword/:token" element={<ResetPassword />} />
             <Route element={<Auth />}>
               {/* Admin Requster */}
               {/* withAuth( */}

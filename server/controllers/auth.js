@@ -1,6 +1,18 @@
 import { db } from "../db.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import nodemailer from "nodemailer";
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // Use `true` for port 465, `false` for all other ports
+  auth: {
+    user: "ahmedsufiyan854@gmail.com",
+    pass: process.env.APP_PASS,
+  },
+});
 
 export const login = (req, res) => {
   const { username, password } = req.body;
@@ -185,15 +197,192 @@ WHERE id=?;
   // ) AS combined_users
   // WHERE id=?;
   //   `;
+};
+export const forgetPassword = async (req, res) => {
+  const { email } = req.body;
+  const sql = `SELECT * FROM (
+    SELECT user_id AS id, role,first_name,last_name,email, username FROM users
+    UNION
+    SELECT admin_id AS id, role,first_name,last_name,email,  username FROM admin
+    UNION
+    SELECT technician_id AS id, role, first_name,last_name,email,username FROM technicians
+    UNION
+    SELECT inventory_admin_id AS id, role,first_name,last_name,email, username FROM inventory_admin
+) AS combined_users
 
-  db.query(sqlQuery, [user_id], (error, results) => {
+WHERE email = ?
+
+`;
+  console.log(process.env.APP_PASS);
+
+  db.query(sql, [email], async (error, results) => {
     if (error) {
       console.error("Error executing the query:", error);
       res.status(500).send("Internal Server Error");
       return;
     }
 
+    const [rows] = results;
+
+    if (results.length === 0) {
+      return res
+        .status(400)
+        .json({ message: "User with this email does not exist." });
+    }
+    // console.log(rows);
+    const user = rows;
+    // const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' });
+
+    const token = jwt.sign(
+      { id: user.id, role: user.role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+
+    const url = `http://localhost:5173/resetPassword/${token}`;
+
+    // await transporter.sendMail({
+
+    //   subject: "Reset Password",
+    //   html: `<p>Click <a href="${url}">here</a> to reset your password</p>`,
+    // });
+
+    await transporter.sendMail({
+      from: '"Wachemo University 👻" <ahmedsufiyan854@gmail.com>', // sender address
+      to: user.email, // list of receivers
+      subject: "Reset Password", // Subject line
+      text: "Hello world?", // plain text body
+      html: `<p>Click <a href="${url}">here</a> to reset your password</p>`, // html body
+    });
+    res.json({ message: "Password reset link sent to your email." });
+
     // Return the query results as JSON
-    res.status(200).json(results);
+    // res.status(200).json(results);
   });
+
+  // const [rows] = await db.query(sql, [email]);
+
+  // if (rows.length === 0) {
+  //   return res
+  //     .status(400)
+  //     .json({ message: "User with this email does not exist." });
+  // }
+
+  // const user = rows[0];
+  // // const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1h' });
+
+  // const token = jwt.sign(
+  //   { id: user.id, role: user.role },
+  //   process.env.JWT_SECRET,
+  //   {
+  //     expiresIn: "1h",
+  //   }
+  // );
+
+  // const url = `http://localhost:5173/resetPassword/${token}`;
+
+  // await transporter.sendMail({
+  //   to: user.email,
+  //   subject: "Reset Password",
+  //   html: `<p>Click <a href="${url}">here</a> to reset your password</p>`,
+  // });
+
+  // res.json({ message: "Password reset link sent to your email." });
+
+  // db.query(sqlQuery, [user_id], (error, results) => {
+  //   if (error) {
+  //     console.error("Error executing the query:", error);
+  //     res.status(500).send("Internal Server Error");
+  //     return;
+  //   }
+
+  //   // Return the query results as JSON
+  //   res.status(200).json(results);
+  // });
+};
+export const resetPassword = async (req, res) => {
+  // const { email } = req.body;
+  const sql = `SELECT * FROM (
+    SELECT user_id AS id, role,first_name,last_name,email, username FROM users
+    UNION
+    SELECT admin_id AS id, role,first_name,last_name,email,  username FROM admin
+    UNION
+    SELECT technician_id AS id, role, first_name,last_name,email,username FROM technicians
+    UNION
+    SELECT inventory_admin_id AS id, role,first_name,last_name,email, username FROM inventory_admin
+) AS combined_users
+
+WHERE id = ?
+
+`;
+
+  const { token, password } = req.body;
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // const [rows] = await db.query(sql, [decoded.id]);
+    db.query(sql, [decoded.id], async (error, results) => {
+      if (error) {
+        console.error("Error executing the query:", error);
+        throw new Error("Something went wrong");
+        // res.status(500).send("Internal Server Error");
+        // return;
+      }
+      const [rows] = results;
+      if (results.length === 0) {
+        return res
+          .status(400)
+          .json({ message: "Invalid token or user does not exist." });
+      }
+
+      const user = rows;
+      // console.log(decoded.role, user);
+      // if (new Date() > new Date(user.reset_token_expiry)) {
+      //   return res.status(400).json({ message: 'Token has expired.' });
+      // }
+      const hashedPassword = await bcrypt.hash(password, 8);
+      let query;
+      if (decoded.role === "Admin") {
+        const sqlQueryUser = `
+        UPDATE admin SET  password=? WHERE admin_id = ?; `;
+        query = sqlQueryUser;
+      }
+
+      if (decoded.role === "Requester") {
+        const sqlQueryUser = `
+        UPDATE users SET  password=? WHERE user_id = ?; `;
+        query = sqlQueryUser;
+      }
+      if (decoded.role === "Technician") {
+        const sqlQueryUser = `
+        UPDATE technicians SET  password=? WHERE technician_id = ?; `;
+        query = sqlQueryUser;
+      }
+      if (decoded.role === "Inventory") {
+        const sqlQueryUser = `
+        UPDATE inventory_admin SET  password=? WHERE inventory_admin_id = ?; `;
+        query = sqlQueryUser;
+      }
+
+      // await db.query(query, [hashedPassword, user.id]);
+
+      db.query(query, [hashedPassword, user.id], async (error, results) => {
+        if (error) {
+          console.error("Error executing the query:", error);
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+
+        // Return the query results as JSON
+        res.json({ message: "Password has been reset successfully." });
+        // res.status(200).json(results);
+      });
+      // console.log(results);
+      // Return the query results as JSON
+    });
+  } catch (error) {
+    res.status(400).json({ message: "Invalid token or token has expired." });
+  }
 };
