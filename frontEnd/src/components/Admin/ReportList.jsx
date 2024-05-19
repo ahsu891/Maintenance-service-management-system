@@ -1,29 +1,128 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../api/axios";
 import RowReport from "./RowReport";
+import ChangetoExcel from "./ChangetoExcel";
+import { dateFormating, secondsToHMS } from "../../api/helper";
+import { FiFilter } from "react-icons/fi";
 const URL_Rep = "/report/getReport";
-
+const Url_p = "/report/converttoExcel";
 function RequestManagement() {
   const [requests, setRequest] = useState([]);
+  const [datae, setDatae] = useState([]);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [filteredData, setFilteredData] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Make a GET request to the API endpoint
-        const response = await axios.get(URL_Rep);
-        setRequest([...response.data]);
-        console.log(response.data);
-      } catch (error) {
-        console.error("Error fetching technicials:", error.message);
+  const handleFilter = () => {
+    if (!startDate || !endDate) {
+      return;
+    }
+    const filtered = datae.filter((item) => {
+      const itemDate = new Date(item.completion_date);
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      console.log(end, start, itemDate);
+      return itemDate >= start && itemDate <= end;
+    });
+    setDatae(filtered);
+  };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // Make a GET request to the API endpoint
+  //       const response = await axios.get(URL_Rep);
+  //       setRequest([...response.data]);
+  //       console.log(response.data);
+  //     } catch (error) {
+  //       console.error("Error fetching technicials:", error.message);
+  //     }
+  //   };
+  //   // Call the fetchData function when the component mounts
+  //   fetchData();
+  // }, []);
+
+  useEffect(
+    function () {
+      async function fechingData() {
+        try {
+          // Make a GET request to the API endpoint
+          const response = await axios.get(Url_p);
+          setDatae(response.data);
+          console.log(response.data, "hhhhhh");
+          // console.log(response.data);
+        } catch (error) {
+          console.error("Error fetching technicials:", error.message);
+        }
       }
+      fechingData();
+    },
+    [filteredData]
+  );
+
+  const filterDataa = datae.map((data, i) => {
+    return {
+      "#": i + 1,
+      category: data.category,
+      compl_date: dateFormating(data.completion_date),
+      time: secondsToHMS(data.time_took),
+      technician_name: data.technicianDetails,
+      // block_no: data.block_id,
+      requested_by: data.requester_name,
+      phone: data.phone || "0970752122",
+      matrial: data.materialDetails || "none",
     };
-    // Call the fetchData function when the component mounts
-    fetchData();
-  }, []);
+  });
 
   return (
     <div>
-      {requests.length === 0 ? (
+      <div className=" my-4 flex flex-row items-center justify-between gap-2">
+        <div className="flex flex-row items-center gap-2">
+          <div className="flex flex-row gap-1 items-center">
+            <div className="flex flex-row items-center">
+              <label className="block  text-graydark mb-1">Start Date:</label>
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="p-2 border border-gray rounded"
+              />
+            </div>
+            <div className=" flex flex-row items-center">
+              <label className="block text-graydark mb-1">End Date:</label>
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className="p-2 border border-gray rounded"
+              />
+            </div>
+          </div>
+          <div className="flex flex-row gap-1 items-center">
+            <div className="flex flex-row items-center gap-2">
+              <button
+                onClick={handleFilter}
+                className=" p-2 bg-primary text-white rounded b"
+              >
+                <span className="flex flex-row items-center gap-2">
+                  <FiFilter /> Filter
+                </span>
+              </button>
+              <button
+                onClick={() => {
+                  setFilteredData((e) => !e);
+                  setStartDate("");
+                  setEndDate("");
+                }}
+                className=" p-2 bg-primary text-white rounded b"
+              >
+                <span className="flex flex-row items-center gap-2">Cancel</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <ChangetoExcel className="self-end" filterDataa={filterDataa} />
+      </div>
+      {datae.length === 0 ? (
         <div className="flex flex-row justify-center items-center rounded-md  px-4   pb-6 sm:px-7.5 xl:pb-1">
           <span className="py-2">No data to display.</span>
         </div>
@@ -44,7 +143,7 @@ function RequestManagement() {
                     Categories
                   </th>
                   <th className="min-w-[140px] py-4 px-4 font-medium text-black dark:text-white">
-                    Done by
+                    Done Date
                   </th>
                   <th className="min-w-[140px] py-4 px-4 font-medium text-black dark:text-white">
                     Requested by
@@ -71,7 +170,7 @@ function RequestManagement() {
               );
             })} */}
 
-                {requests?.map((data, i) => (
+                {datae?.map((data, i) => (
                   <RowReport
                     i={i + 1}
                     key={data.request_id}
@@ -80,7 +179,7 @@ function RequestManagement() {
                     requester_name={data.requester_name}
                     completion_date={data.completion_date}
                     request_id={data.request_id}
-                    technician_full_name={data.technician_full_name}
+                    technician_full_name={data.technicianDetails || "none"}
                   />
                 ))}
               </tbody>

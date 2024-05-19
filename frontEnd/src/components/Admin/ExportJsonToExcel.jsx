@@ -1,6 +1,6 @@
 import React from "react";
 import * as XLSX from "xlsx";
-
+import { SiMicrosoftexcel } from "react-icons/si";
 const ExportJsonToExcel = ({ jsonData }) => {
   const exportToExcel = () => {
     // Create a new workbook and worksheet
@@ -12,7 +12,13 @@ const ExportJsonToExcel = ({ jsonData }) => {
     XLSX.writeFile(workbook, "data.xlsx");
   };
 
-  return <button onClick={exportToExcel}>Export to Excel</button>;
+  return (
+    <div>
+      <button className="  text-white " onClick={exportToExcel}>
+        <SiMicrosoftexcel className="  text-meta-3 text-2xl " />
+      </button>
+    </div>
+  );
 };
 
 export default ExportJsonToExcel;

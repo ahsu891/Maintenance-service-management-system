@@ -2,6 +2,7 @@ import React from "react";
 import { IoPrintOutline } from "react-icons/io5";
 import { MdLocalGasStation } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
+import { dateFormating } from "../../api/helper";
 
 function RowAssign({
   i,
@@ -32,7 +33,9 @@ function RowAssign({
         <p className="text-black dark:text-white">{category}</p>
       </td>
       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-        <p className="text-black dark:text-white">{technician_full_name}</p>
+        <p className="text-black dark:text-white">
+          {dateFormating(completion_date)}
+        </p>
       </td>
       <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
         <p className="text-black dark:text-white">{requester_name}</p>

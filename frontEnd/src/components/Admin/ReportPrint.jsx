@@ -90,8 +90,11 @@ function ReportPrint() {
                     2. Department requesting the maintenance:{" "}
                   </h1>
                   <span>
-                    {data?.maintenanceDetails?.[0]?.requester_name}
-                    {`(${data?.maintenanceDetails?.[0]?.phone})`}
+                    {data?.maintenanceDetails?.[0]?.requester_name ||
+                      "preventive"}
+                    {`(${
+                      data?.maintenanceDetails?.[0]?.phone || "(0970752122)"
+                    })`}
                   </span>
                 </div>
               </div>

@@ -67,5 +67,5 @@ export function secondsToHMS(seconds) {
   const formattedMinutes = minutes > 0 ? `${minutes} ` : "";
   const formattedSeconds = `${remainingSeconds}s`;
 
-  return `${formattedHours || 0}h: ${formattedMinutes || 0}m `;
+  return `${formattedHours || 0}:${formattedMinutes || 0}`;
 }

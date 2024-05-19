@@ -59,7 +59,7 @@ export const getSingleRep = (req, res) => {
       maintenance_requests ON finished_requests.request_id = maintenance_requests.request_id
     JOIN 
       technicians ON finished_requests.technician_id = technicians.technician_id
-    JOIN 
+      LEFT JOIN 
       users ON users.user_id = maintenance_requests.requester_id
     WHERE  maintenance_requests.request_id=?
     GROUP BY 
@@ -76,7 +76,7 @@ export const getSingleRep = (req, res) => {
       maintenance_requests ON finished_requests.request_id = maintenance_requests.request_id
     JOIN 
       technicians ON finished_requests.technician_id = technicians.technician_id
-    JOIN 
+     left JOIN 
       users ON users.user_id = maintenance_requests.requester_id
     WHERE  maintenance_requests.request_id=?
   `;
@@ -453,7 +453,7 @@ LEFT JOIN
 WHERE  
   maintenance_requests.request_id = ?
 ORDER BY 
-  maintenance_requests.request_date DESC;
+  maintenance_requests.completion_date DESC;
 ;
   `;
 
@@ -466,7 +466,7 @@ ORDER BY
       maintenance_requests ON finished_requests.request_id = maintenance_requests.request_id
     JOIN 
       technicians ON finished_requests.technician_id = technicians.technician_id
-    JOIN 
+   LEFT JOIN 
       users ON users.user_id = maintenance_requests.requester_id
     WHERE  maintenance_requests.request_id=?
   `;
@@ -490,7 +490,7 @@ ORDER BY
       res.status(500).send("Internal Server Error");
       return;
     }
-    console.log(materialResults.length);
+    // console.log(materialResults.length);
     // Return the combined results as JSON
 
     const dataObject = [];

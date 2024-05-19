@@ -1,49 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ExportJsonToExcel from "./ExportJsonToExcel";
+import ChangetoPdf from "./ChangetoPdf";
 import axios from "../../api/axios";
 import { dateFormating, secondsToHMS } from "../../api/helper";
 const Url_p = "/report/converttoExcel";
-const ChangetoExcel = () => {
+const ChangetoExcel = ({ filterDataa }) => {
   // Sample JSON data
   const [datae, setDatae] = useState([]);
-  async function fechingData() {
-    try {
-      // Make a GET request to the API endpoint
-      const response = await axios.get(Url_p);
-      setDatae(response.data);
-      console.log(response.data);
-      // console.log(response.data);
-    } catch (error) {
-      console.error("Error fetching technicials:", error.message);
-    }
-  }
+
   // Call the fetchData function when the component mounts
 
-  const data = [
-    { name: "John Doe", age: 30, email: "john@example.com" },
-    { name: "Jane Doe", age: 25, email: "jane@example.com" },
-    // Add more data as needed
-  ];
+  useEffect(function () {
+    async function fechingData() {
+      try {
+        // Make a GET request to the API endpoint
+        const response = await axios.get(Url_p);
+        setDatae(response.data);
+        console.log(response.data);
+        // console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching technicials:", error.message);
+      }
+    }
+    fechingData();
+  }, []);
 
-  const filterData = datae.map((data) => {
-    return {
-      title: data.title,
-      category: data.category,
-      finished_date: dateFormating(data.completion_date),
-      time: secondsToHMS(data.time_took),
-      technicians_name: data.technicianDetails,
-      block_no: data.block_id,
-      requested_by: data.requester_name,
-      requester_phone: data.phone || "0970752122",
-      occupation: data.job || "MTL",
-    };
-  });
+  // const filterData = datae.map((data, i) => {
+  //   return {
+  //     "#": i + 1,
+  //     category: data.category,
+  //     compl_date: dateFormating(data.completion_date),
+  //     time: secondsToHMS(data.time_took),
+  //     technician_name: data.technicianDetails,
+  //     // block_no: data.block_id,
+  //     requested_by: data.requester_name,
+  //     phone: data.phone || "0970752122",
+  //     matrial: data.materialDetails || "none",
+  //   };
+  // });
   //   console.log(filterData);
 
   return (
     <div>
-      <h1 onClick={fechingData}>Export JSON to Excel Example </h1>
-      <ExportJsonToExcel jsonData={filterData} />
+      <div className="flex flex-row gap-2  items-center mr-3">
+        <p className="mb-1 text-primary text-lg">Export to :</p>
+        <ExportJsonToExcel jsonData={filterDataa} />
+        <ChangetoPdf jsonData={filterDataa} />
+      </div>
     </div>
   );
 };
