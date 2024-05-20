@@ -103,34 +103,41 @@ function InventorySingleList({ title, status, setReff, request_id }) {
                 </p>
               </span>
             </div> */}
+              {/* {localStorage.getItem("roles")==="Inventory"&&} */}
+
               <div className="flex flex-row  gap-4 items-center">
-                <div>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      // handleUpdate("Rejected");
-                      handleDelete();
-                    }}
-                    // disabled={status === "Completed" ? false : true}
-                    className=" bg-danger px-3 py-1 rounded-md text-white"
-                  >
-                    Deleted
-                  </button>
-                </div>
-                <div>
-                  {status === "Accepted" && (
+                {status !== "Accepted" && (
+                  <div>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleUpdate("Closed");
+                        // handleUpdate("Rejected");
+                        handleDelete();
                       }}
                       // disabled={status === "Completed" ? false : true}
-                      className="bg-primary px-3 py-1 rounded-md text-white"
+                      className=" bg-danger px-3 py-1 rounded-md text-white"
                     >
-                      Closed
+                      Deleted
                     </button>
-                  )}
-                </div>
+                  </div>
+                )}
+
+                {localStorage.getItem("roles") === "Inventory" && (
+                  <div>
+                    {status === "Accepted" && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleUpdate("Closed");
+                        }}
+                        // disabled={status === "Completed" ? false : true}
+                        className="bg-primary px-3 py-1 rounded-md text-white"
+                      >
+                        Closed
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>

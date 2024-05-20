@@ -8,7 +8,7 @@ const URL_R = "/requester/register";
 
 const infrom = [
   {
-    position: "Department",
+    position: "Department Head",
     data: ["Software Engineering", "Geomatices", "COTM", "Civil Engineering"],
   },
   {

@@ -73,17 +73,26 @@ function FormLayout({ setReff, setOn }) {
       // Cancel the request (if using axios cancellation)
     };
   }, []);
-  const fetchData = async (id) => {
-    try {
-      const response = await axios.post(URL_gY, {
-        technician_id: id,
-      });
-      setListTech(response.data);
-      console.log("ahello", response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+  useEffect(() => {
+    const fetchData = async (id) => {
+      try {
+        const response = await axios.post(URL_gY, {
+          technician_id: localStorage.getItem("user_id"),
+        });
+        setListTech(response.data);
+        console.log("ahello", response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+
+    // Clean up function to cancel the request if the component unmounts or the effect re-runs
+    return () => {
+      // Cancel the request (if using axios cancellation)
+    };
+  }, []);
 
   function handleSumbit(e) {
     e.preventDefault();
@@ -128,7 +137,7 @@ function FormLayout({ setReff, setOn }) {
             </div>
             <form onSubmit={handleSumbit}>
               <div className="p-6.5">
-                <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 ">
+                {/* <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 ">
                   <dt className="mb-2.5 block text-black dark:text-white ">
                     Techicain Name
                   </dt>
@@ -166,13 +175,7 @@ function FormLayout({ setReff, setOn }) {
                           />
                         </div>
                       </div>
-                      {/* <button
-                        type="button"
-                        // onClick={handleAdd}
-                        className="flex w-auto justify-self-end rounded bg-primary p-2 px-5 font-medium text-gray"
-                      >
-                        Add
-                      </button> */}
+                      
                     </div>
                     <ListItem
                       list={filtered}
@@ -182,7 +185,7 @@ function FormLayout({ setReff, setOn }) {
                       setSelectedOption={setSelectedOption}
                     />
                   </dd>
-                </div>
+                </div> */}
                 <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                   <dt className="mb-2.5 block text-black dark:text-white ">
                     Maintenance Request

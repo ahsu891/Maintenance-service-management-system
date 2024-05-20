@@ -96,7 +96,9 @@ export const getInvetory = (req, res) => {
   // Create the SQL insert query
   try {
     db.query(
-      "SELECT * FROM inventory ORDER BY last_update DESC;",
+      `SELECT * FROM inventory 
+    
+    ORDER BY last_update DESC `,
       (err, results) => {
         if (err) {
           console.error("Error executing SQL query:", err);

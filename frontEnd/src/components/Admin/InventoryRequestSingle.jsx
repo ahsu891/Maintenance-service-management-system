@@ -128,7 +128,7 @@ function InventoryRequestSingle({
                   // disabled={status === "Completed" ? false : true}
                   className="bg-primary px-3 py-1 rounded-md text-white"
                 >
-                  Accepted
+                  Accept
                 </button>
               </div>
             </div>

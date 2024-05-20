@@ -4,6 +4,7 @@ import { MdOutlineContentPaste } from "react-icons/md";
 // import Logo from "../../images/icon/"
 import SidebarLinkGroupReq from "../Requester/SidebarLinkGroupReq.js";
 import LogoImage from "../../images/icon/logo2.png";
+import { HiOutlineWrenchScrewdriver } from "react-icons/hi2";
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -340,6 +341,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <MdOutlineContentPaste />
                   </span>
                   Work Order
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/technician/request"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("request") && "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <span className="text-xl">
+                    <HiOutlineWrenchScrewdriver />
+                  </span>
+                  Material Request
                 </NavLink>
               </li>
               <li>

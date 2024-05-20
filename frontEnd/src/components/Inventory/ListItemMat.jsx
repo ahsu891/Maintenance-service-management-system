@@ -4,7 +4,8 @@ import { IoMdArrowDropright } from "react-icons/io";
 import ItemBe from "./ItemBe";
 function ListItem({ allchecked, setAllChecked, list, setAllData }) {
   const [count, setCount] = useState(0);
-
+  const filtered = list.filter((data) => data.quantity > 0);
+  // console.log(list, filtered);
   function handleChange(e) {
     if (!e.target.checked) {
       setAllChecked([...allchecked, e.target.value]);
@@ -54,7 +55,7 @@ function ListItem({ allchecked, setAllChecked, list, setAllData }) {
         className="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700 dark:text-gray-200"
         aria-labelledby="dropdownSearchButton"
       >
-        {list?.map((data) => (
+        {filtered?.map((data) => (
           <li key={data.id}>
             <div className="flex items-center p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
               <ItemBe

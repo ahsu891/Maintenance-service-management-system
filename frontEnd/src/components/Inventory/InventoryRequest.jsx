@@ -39,16 +39,20 @@ function InventoryRequest() {
           />
         ))}
       </div>
-      <div className="flex flex-row justify-end">
-        <button
-          // disabled={isLoading
-          onClick={() => setOn((e) => !e)}
-          className="flex w-auto justify-self-end rounded my-2 bg-primary px-3 py-2 font-medium text-gray"
-        >
-          + Add
-        </button>
-      </div>
-      {on && <FormLayout setOn={setOn} setReff={setReff} />}
+      {localStorage.getItem("roles") === "Technician" && (
+        <>
+          <div className="flex flex-row justify-end">
+            <button
+              // disabled={isLoading
+              onClick={() => setOn((e) => !e)}
+              className="flex w-auto justify-self-end rounded my-2 bg-primary px-3 py-2 font-medium text-gray"
+            >
+              + Add
+            </button>
+          </div>
+          {on && <FormLayout setOn={setOn} setReff={setReff} />}
+        </>
+      )}
     </div>
   );
 }

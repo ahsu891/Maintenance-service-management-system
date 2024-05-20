@@ -100,6 +100,10 @@ function App() {
                   <Route path="/technician/workorder" element={<WorkOrder />}>
                     <Route index element={<RequestList />} />
                   </Route>
+                  <Route
+                    path="/technician/request"
+                    element={<InventoryRequest />}
+                  />
                   <Route path="/technician/settings" element={<Setting />} />
                 </Route>
               </Route>
