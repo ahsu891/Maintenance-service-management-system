@@ -44,7 +44,6 @@ const SettingForm = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true);
         const response = await axios.post(URL_C, {
           user_id: localStorage.getItem("user_id"),
         });
@@ -54,7 +53,6 @@ const SettingForm = () => {
       } catch (error) {
         console.log(error.response.data);
       } finally {
-        setLoading(false);
       }
     };
 
@@ -62,7 +60,7 @@ const SettingForm = () => {
 
     // Cleanup function to cancel any pending requests
   }, [fresh]);
-
+  console.log(isLoading);
   async function handleSubmit(e) {
     e.preventDefault();
     const {
@@ -91,7 +89,7 @@ const SettingForm = () => {
     // );
     try {
       // Make an Axios request
-
+      setLoading(true);
       const response = await axios.post(URL_R, {
         fname: fname?.value,
         lname: lname?.value,
@@ -115,18 +113,19 @@ const SettingForm = () => {
       // handleRefresh();
       setShowChange(false);
       setErrMsg("");
+
       setFresh((prevState) => !prevState);
     } catch (error) {
       console.error("Error making Axios request:", error.message);
       // Handle error, e.g., display an error message to the user
       toast.error(error.message);
+    } finally {
+      setLoading(false);
     }
   }
+
   if (isLoading) {
-    return ReactDOM.createPortal(
-      <Spiner />,
-      document.getElementById("45454545s")
-    );
+    return <Spiner />;
   }
   return (
     <>

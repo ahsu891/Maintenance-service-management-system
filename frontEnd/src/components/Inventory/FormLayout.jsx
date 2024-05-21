@@ -97,9 +97,9 @@ function FormLayout({ setReff, setOn }) {
   function handleSumbit(e) {
     e.preventDefault();
 
-    console.log(e.target.request?.value);
+    // console.log(e.target.request?.value);
     if (!e.target.request?.value || allcheckedMa.length === 0) {
-      return alert("film the form please");
+      return toast.error("fill the form please");
     }
     // console.log(allcheckedMa, selectedOption);
     const fetchData = async () => {
