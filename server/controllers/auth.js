@@ -197,6 +197,15 @@ WHERE id=?;
   // ) AS combined_users
   // WHERE id=?;
   //   `;
+
+  db.query(sqlQuery, [user_id], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+    res.status(200).send(results);
+  });
 };
 export const forgetPassword = async (req, res) => {
   const { email } = req.body;
