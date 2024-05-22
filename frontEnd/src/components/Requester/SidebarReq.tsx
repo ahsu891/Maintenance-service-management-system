@@ -344,7 +344,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   Request
                 </NavLink>
               </li>
-              <li>
+              {/* <li>
                 <NavLink
                   to="/requester/complain"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -357,7 +357,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   </span>
                   Complain
                 </NavLink>
-              </li>
+              </li> */}
               <li>
                 <NavLink
                   to="/requester/settings"

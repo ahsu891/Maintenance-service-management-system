@@ -6,26 +6,34 @@ import { useEffect, useState } from "react";
 import FormInventory from "../Inventory/FormInventory";
 import axios from "../../api/axios";
 import RowInventory from "./RowInventory";
+import S from "../Spiner";
 const URL_GI = "inventory/getInventory";
 const TableTwo = () => {
   const [data, setData] = useState([]);
   const [on, setOn] = useState(false);
   const [fresh, setFresh] = useState(false);
-
+  const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(URL_GI); // Replace with your API endpoint
         setData(response.data);
         console.log(response.data);
         // console.log(resonse.)
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, [fresh]);
+
+  if (isLoading) {
+    return <S />;
+  }
 
   return (
     <div>

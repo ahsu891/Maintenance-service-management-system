@@ -5,6 +5,7 @@ import axios from "../../api/axios";
 import SearchBar from "./SearchBar";
 import { Link } from "react-router-dom";
 import FormLayout from "./FormLayout";
+import Spiner from "../Spiner";
 // import { use } from "express/lib/application";
 // import SignIn from "../auth/SignIn";
 // bg-danger bg-warning
@@ -15,6 +16,7 @@ const TableThree = () => {
   const [on, setOne] = useState(false);
   const [filtered, setfiltered] = useState([]);
   const [ref, setRef] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   function handleOn() {
     setOne((e) => !e);
   }
@@ -24,10 +26,13 @@ const TableThree = () => {
     const fetchData = async () => {
       try {
         // Make a GET request to the API endpoint
+        setLoading(true);
         const response = await axios.get(URL);
         setTechnicials(response.data);
       } catch (error) {
         console.error("Error fetching technicials:", error.message);
+      } finally {
+        setLoading(false);
       }
     };
     // Call the fetchData function when the component mounts
@@ -38,6 +43,9 @@ const TableThree = () => {
     setfiltered(technicials);
   }, [technicials]);
   // console.log(filtered);
+  if (isLoading) {
+    return <Spiner />;
+  }
   return (
     <div>
       <div className="rounded-sm border border-stroke bg-white px-5  pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">

@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../api/axios";
 import RowRequest from "./RowRequest";
-
+import Spiner from "../Spiner";
 const URL = "/request/getRequests";
 const URL_R = "/technicial/getTechnicials";
 const RequestTable = () => {
   const [requests, setRequest] = useState([]);
   const [tech, setTech] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         // Make a GET request to the API endpoint
         const response = await axios.get(URL);
         setRequest([...response.data]);
         // console.log(response.data);
       } catch (error) {
         console.error("Error fetching technicials:", error.message);
+      } finally {
+        setLoading(false);
       }
     };
     // Call the fetchData function when the component mounts
@@ -41,6 +45,10 @@ const RequestTable = () => {
   // useEffect(() => {
   //   setfiltered(technicials);
   // }, [technicials]);
+  if (isLoading) {
+    return <Spiner />;
+  }
+
   // console.log(filtered);
   return (
     <div className="rounded-sm border border-stroke bg-white px-5  pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">

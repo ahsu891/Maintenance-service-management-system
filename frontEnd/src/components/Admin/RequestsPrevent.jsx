@@ -3,9 +3,12 @@ import axios from "../../api/axios";
 import RowRequestPrevent from "./RowRequestPrevent";
 import FormPreventive from "./FormPreventive";
 import RequestSingle from "./RequestSingle";
+import Spiner from "../Spiner";
 const URL_R = "/prevent/getPrevent";
 const URL_RC = "/prevent/getPreventConf";
 function RequestsPrevent() {
+  const [isLoadin, setLoading] = useState(false);
+  const [isLoadins, setLoadings] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [data, setData] = useState([]);
   const [refreshingC, setRefreshingC] = useState(false);
@@ -14,12 +17,15 @@ function RequestsPrevent() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         // Make a GET request to the API endpoint
         const response = await axios.post(URL_R);
         setData([...response.data]);
         // console.log(response.data);
       } catch (error) {
         console.error("Error fetching technicials:", error.message);
+      } finally {
+        setLoading(false);
       }
     };
     // Call the fetchData function when the component mounts
@@ -28,17 +34,23 @@ function RequestsPrevent() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoadings(true);
         // Make a GET request to the API endpoint
         const response = await axios.get(URL_RC);
         setDataC([...response.data]);
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching technicials:", error.message);
+      } finally {
+        setLoadings(false);
       }
     };
     // Call the fetchData function when the component mounts
     fetchData();
   }, [refreshingC]);
+  if (isLoadin || isLoadins) {
+    return <Spiner />;
+  }
   return (
     <div>
       {dataC?.map((data, i) => (

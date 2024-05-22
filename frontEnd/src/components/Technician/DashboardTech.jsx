@@ -39,12 +39,12 @@ function DashboardTech() {
     <div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5">
         <CardOne
-          total_assigned={data?.[0]?.totalAssigned}
-          assigned_percentage={data?.[0]?.assigned_percentage}
+          total_assigned={data?.[0]?.totalAssigned || 0}
+          assigned_percentage={data?.[0]?.assigned_percentage || 0}
         />
 
         <CardThree
-          total_completed={data?.[0]?.total_completed}
+          total_completed={data?.[0]?.total_completed || 0}
           percenteg={
             (data?.[0]?.total_completed * 100) /
             (data?.[0]?.total_completed + data?.[0]?.totalAssigned)

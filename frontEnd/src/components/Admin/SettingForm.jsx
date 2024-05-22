@@ -32,6 +32,7 @@ const SettingForm = () => {
   const [data, setData] = useState([]);
   const [showChange, setShowChange] = useState(false);
   const [fresh, setFresh] = useState(false);
+  const [isLoadings, setIsLoadings] = useState(false);
   // errRef.current.focus();
   const [pos, setPos] = useState(
     () => infrom.filter((data) => data.position === "Department")[0].data
@@ -43,6 +44,7 @@ const SettingForm = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoadings(true);
       try {
         const response = await axios.post(URL_C, {
           user_id: localStorage.getItem("user_id"),
@@ -53,6 +55,7 @@ const SettingForm = () => {
       } catch (error) {
         console.log(error.response.data);
       } finally {
+        setIsLoadings(false);
       }
     };
 
@@ -124,7 +127,7 @@ const SettingForm = () => {
     }
   }
 
-  if (isLoading) {
+  if (isLoading || isLoadings) {
     return <Spiner />;
   }
   return (

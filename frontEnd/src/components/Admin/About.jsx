@@ -51,7 +51,7 @@ function About() {
 
         // Set the response data to the state
         setChart(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         // Handle any errors
         console.error("Error fetching data:", error);
@@ -75,7 +75,7 @@ function About() {
 
         // Set the response data to the state
         setGraph(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         // Handle any errors
         console.error("Error fetching data:", error);
@@ -95,20 +95,20 @@ function About() {
     <div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <CardOne
-          total_pending={data?.[0]?.total_pending}
-          pending_percentage={data?.[0]?.pending_percentage}
+          total_pending={data?.[0]?.total_pending || 0}
+          pending_percentage={data?.[0]?.pending_percentage || 0}
         />
         <CardTwo
-          total_assigned={data?.[0]?.total_assigned}
-          assigned_percentage={data?.[0]?.assigned_percentage}
+          total_assigned={data?.[0]?.total_assigned || 0}
+          assigned_percentage={data?.[0]?.assigned_percentage || 0}
         />
         <CardThree
-          total_completed={data?.[0]?.total_completed}
-          completed_percentage={data?.[0]?.completed_percentage}
+          total_completed={data?.[0]?.total_completed || 0}
+          completed_percentage={data?.[0]?.completed_percentage || 0}
         />
         <CardFouor
-          total_rejected={data?.[0]?.total_rejected}
-          rejected_percentage={data?.[0]?.rejected_percentage}
+          total_rejected={data?.[0]?.total_rejected || 0}
+          rejected_percentage={data?.[0]?.rejected_percentage || 0}
         />
       </div>
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
@@ -117,14 +117,14 @@ function About() {
         </div>
         <div className="col-span-12 xl:col-span-4">
           <ChartThree
-            total_water={chart?.[0]?.total_water}
-            water_percentage={chart?.[0]?.water_percentage}
-            total_general={chart?.[0]?.total_general}
-            general_percentage={chart?.[0]?.general_percentage}
-            total_electrical={chart?.[0]?.total_electrical}
-            electrical_percentage={chart?.[0]?.electrical_percentage}
-            total_other={chart?.[0]?.total_other}
-            completed_other={chart?.[0]?.other_percentage}
+            total_water={chart?.[0]?.total_water || 0}
+            water_percentage={chart?.[0]?.water_percentage || 0}
+            total_general={chart?.[0]?.total_general || 0}
+            general_percentage={chart?.[0]?.general_percentage || 0}
+            total_electrical={chart?.[0]?.total_electrical || 0}
+            electrical_percentage={chart?.[0]?.electrical_percentage || 0}
+            total_other={chart?.[0]?.total_other || 0}
+            completed_other={chart?.[0]?.other_percentage || 0}
           />
         </div>
       </div>

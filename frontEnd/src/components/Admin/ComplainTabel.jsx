@@ -2,25 +2,31 @@ import React, { useEffect, useState } from "react";
 import axios from "../../api/axios";
 import RowAssign from "./RowAssign";
 import RowComplain from "./RowComplain";
+import Spiner from "../Spiner";
 const URL_R = "/technicial/getTechicianName";
 function ComplainTabel() {
   const [requests, setRequest] = useState([]);
-
+  const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         // Make a GET request to the API endpoint
         const response = await axios.get(URL_R);
         setRequest([...response.data]);
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching technicials:", error.message);
+      } finally {
+        setLoading(false);
       }
     };
     // Call the fetchData function when the component mounts
     fetchData();
   }, []);
-
+  if (isLoading) {
+    return <Spiner />;
+  }
   return (
     <div>
       <div className="rounded-sm border border-stroke bg-white px-5  pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">

@@ -7,11 +7,14 @@
 import { useEffect, useState } from "react";
 import RowDashboardTable from "./RowDashboardTable";
 import axios from "../../api/axios";
+import Spiner from "../Spiner";
 const URL_T = "/request/getDashTable";
 const TableOne = () => {
   const [table, setTable] = useState([]);
+  const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     // Function to make the Axios request
+    setLoading(true);
     const fetchData = async () => {
       try {
         // Make the Axios GET request
@@ -25,6 +28,8 @@ const TableOne = () => {
       } catch (error) {
         // Handle any errors
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -36,6 +41,11 @@ const TableOne = () => {
       // Any cleanup code can go here
     };
   }, []);
+
+  if (isLoading) {
+    return <Spiner />;
+  }
+
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
       <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
@@ -70,16 +80,23 @@ const TableOne = () => {
             </h5>
           </div>
         </div>
-        {table?.map((t) => (
-          <RowDashboardTable
-            key={t.request_id}
-            category={t.category}
-            status={t.status}
-            block={t.block_id}
-            priority={t.priority}
-            title={t.title}
-          />
-        ))}
+        {table.length === 0 && (
+          <div className=" text-graydark flex flex-row items-center justify-center font-medium my-3">
+            {" "}
+            No Request Yet
+          </div>
+        )}
+        {table.length > 0 &&
+          table?.map((t) => (
+            <RowDashboardTable
+              key={t.request_id}
+              category={t.category}
+              status={t.status}
+              block={t.block_id}
+              priority={t.priority}
+              title={t.title}
+            />
+          ))}
         {/* <RowDashboardTable /> */}
       </div>
     </div>

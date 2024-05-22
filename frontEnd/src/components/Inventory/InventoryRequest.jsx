@@ -3,19 +3,24 @@ import FormLayout from "../Inventory/FormLayout";
 
 import axios from "../../api/axios";
 import InventorySingleList from "./InventorySingleList";
+import S from "../Spiner";
 const Url_l = "/inventory/getReqListNotClosed";
 function InventoryRequest() {
   const [on, setOn] = useState(false);
   const [data, setDate] = useState([]);
   const [reff, setReff] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(Url_l);
         setDate(response.data);
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -26,6 +31,10 @@ function InventoryRequest() {
       // Cancel the request (if using axios cancellation)
     };
   }, [reff]);
+
+  if (isLoading) {
+    return <S />;
+  }
   return (
     <div>
       <div>

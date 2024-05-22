@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../api/axios";
 import RowAssign from "./RowAssign";
+import Spiner from "../Spiner";
 const URL_R = "/request/getRequestsAssign";
 function RequestManagement() {
   const [requests, setRequest] = useState([]);
-
+  const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         // Make a GET request to the API endpoint
         const response = await axios.get(URL_R);
         setRequest([...response.data]);
         console.log(response.data);
       } catch (error) {
         console.error("Error fetching technicials:", error.message);
+      } finally {
+        setLoading(false);
       }
     };
     // Call the fetchData function when the component mounts
     fetchData();
   }, []);
-
+  if (isLoading) {
+    return <Spiner />;
+  }
   return (
     <div>
       <div className="rounded-sm border border-stroke bg-white px-5  pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
@@ -47,9 +53,7 @@ function RequestManagement() {
                   <th className="min-w-[100px] py-4 px-4 font-medium text-black dark:text-white">
                     Categories
                   </th>
-                  <th className="min-w-[140px] py-4 px-4 font-medium text-black dark:text-white">
-                    Assign to
-                  </th>
+
                   <th className="min-w-[140px] py-4 px-4 font-medium text-black dark:text-white">
                     Requested by
                   </th>

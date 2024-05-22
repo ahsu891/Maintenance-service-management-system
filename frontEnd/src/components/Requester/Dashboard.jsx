@@ -44,20 +44,20 @@ function Dashboard() {
     <div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <CardOne
-          total_pending={data?.[0]?.total_pending}
-          pending_percentage={data?.[0]?.pending_percentage}
+          total_pending={data?.[0]?.total_pending || 0}
+          pending_percentage={data?.[0]?.pending_percentage || 0}
         />
         <CardTwo
-          total_assigned={data?.[0]?.total_assigned}
-          assigned_percentage={data?.[0]?.assigned_percentage}
+          total_assigned={data?.[0]?.total_assigned || 0}
+          assigned_percentage={data?.[0]?.assigned_percentage || 0}
         />
         <CardThree
-          total_completed={data?.[0]?.total_completed}
-          completed_percentage={data?.[0]?.completed_percentage}
+          total_completed={data?.[0]?.total_completed || 0}
+          completed_percentage={data?.[0]?.completed_percentage || 0}
         />
         <CardFouor
-          total_rejected={data?.[0]?.total_rejected}
-          rejected_percentage={data?.[0]?.rejected_percentage}
+          total_rejected={data?.[0]?.total_rejected || 0}
+          rejected_percentage={data?.[0]?.rejected_percentage || 0}
         />
       </div>
       <div className="my-4">

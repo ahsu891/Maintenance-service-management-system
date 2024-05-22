@@ -61,23 +61,23 @@ function DashboardInv() {
   return (
     <div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5">
-        <CardTwo total_assigned={data?.[0]?.total_inventory} />
+        <CardTwo total_assigned={data?.[0]?.total_inventory || 0} />
         <CardFour
-          total_completed={data?.[0]?.low_inventory_count}
-          completed_percentage={data?.[0]?.average_quantity_low_inventory}
+          total_completed={data?.[0]?.low_inventory_count || 0}
+          completed_percentage={data?.[0]?.average_quantity_low_inventory || 0}
         />
       </div>
       <div className="my-4">
         <div className="col-span-12 xl:col-span-4">
           <ChartThree
-            total_water={chart?.[0]?.total_water}
-            water_percentage={chart?.[0]?.water_percentage}
-            total_general={chart?.[0]?.total_general}
-            general_percentage={chart?.[0]?.general_percentage}
-            total_electrical={chart?.[0]?.total_electrical}
-            electrical_percentage={chart?.[0]?.electrical_percentage}
-            total_other={chart?.[0]?.total_other}
-            completed_other={chart?.[0]?.other_percentage}
+            total_water={chart?.[0]?.total_water || 0}
+            water_percentage={chart?.[0]?.water_percentage || 0}
+            total_general={chart?.[0]?.total_general || 0}
+            general_percentage={chart?.[0]?.general_percentage || 0}
+            total_electrical={chart?.[0]?.total_electrical || 0}
+            electrical_percentage={chart?.[0]?.electrical_percentage || 0}
+            total_other={chart?.[0]?.total_other || 0}
+            completed_other={chart?.[0]?.other_percentage || 0}
           />
         </div>
       </div>

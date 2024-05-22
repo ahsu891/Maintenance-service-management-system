@@ -4,6 +4,7 @@ import RowReport from "./RowReport";
 import ChangetoExcel from "./ChangetoExcel";
 import { dateFormating, secondsToHMS } from "../../api/helper";
 import { FiFilter } from "react-icons/fi";
+import Spiner from "../Spiner";
 const URL_Rep = "/report/getReport";
 const Url_p = "/report/converttoExcel";
 function RequestManagement() {
@@ -12,7 +13,7 @@ function RequestManagement() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [filteredData, setFilteredData] = useState(false);
-
+  const [isLoading, setLoading] = useState(false);
   const handleFilter = () => {
     if (!startDate || !endDate) {
       return;
@@ -45,6 +46,7 @@ function RequestManagement() {
     function () {
       async function fechingData() {
         try {
+          setLoading(true);
           // Make a GET request to the API endpoint
           const response = await axios.get(Url_p);
           setDatae(response.data);
@@ -52,6 +54,8 @@ function RequestManagement() {
           // console.log(response.data);
         } catch (error) {
           console.error("Error fetching technicials:", error.message);
+        } finally {
+          setLoading(false);
         }
       }
       fechingData();
@@ -73,6 +77,9 @@ function RequestManagement() {
     };
   });
 
+  if (isLoading) {
+    return <Spiner />;
+  }
   return (
     <div>
       <div className=" my-4 flex flex-row items-center justify-between gap-2">

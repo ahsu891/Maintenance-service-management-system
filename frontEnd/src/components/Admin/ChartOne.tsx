@@ -136,7 +136,7 @@ const ChartOne = ({ graph }) => {
       setState({
         series: [
           {
-            name: "Product One",
+            name: "Rquests",
             data: [...graph],
           },
         ],
@@ -187,7 +187,7 @@ const ChartOne = ({ graph }) => {
         <div id="chartOne" className="-ml-5">
           <ReactApexChart
             options={options}
-            series={state.series}
+            series={state?.series}
             type="area"
             height={350}
           />

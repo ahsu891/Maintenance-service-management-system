@@ -69,3 +69,22 @@ export function secondsToHMS(seconds) {
 
   return `${formattedHours || 0}:${formattedMinutes || 0}`;
 }
+
+export function checkCookie(name) {
+  // Get all cookies as a single string
+  const cookies = document.cookie;
+
+  // Split the cookie string into individual cookies
+  const cookiesArray = cookies.split("; ");
+
+  // Loop through the array to find the cookie with the specified name
+  for (let i = 0; i < cookiesArray.length; i++) {
+    const cookie = cookiesArray[i];
+    const [cookieName, cookieValue] = cookie.split("=");
+    if (cookieName === name) {
+      return true;
+    }
+  }
+
+  return false;
+}

@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import RequestTech from "../Technician/RequestsTech";
 import axios from "../../api/axios";
+import S from "../Spiner";
 const URL_A = "/assign/getAssign";
+
 function RequestList() {
   const [assignReq, setAssignReq] = useState([]);
   const [reff, setReff] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         // Make a GET request to the API endpoint
         const response = await axios.post(URL_A, {
           user_id: localStorage.getItem("user_id"),
@@ -18,12 +22,17 @@ function RequestList() {
         setAssignReq([...response.data]);
       } catch (error) {
         console.error("Error fetching technicials:", error.message);
+      } finally {
+        setLoading(false);
       }
     };
     // Call the fetchData function when the component mounts
     fetchData();
   }, [reff]);
-  console.log(assignReq);
+  // console.log(assignReq);
+  if (isLoading) {
+    return <S />;
+  }
   return (
     <div>
       {assignReq.length === 0 ? (
