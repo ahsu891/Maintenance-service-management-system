@@ -95,9 +95,9 @@ function RequestManagement() {
   }
   return (
     <div>
-      <div className=" my-4 flex flex-row items-center justify-between gap-2">
+      <div className=" my-4 flex flex-col sm:flex-row items-center justify-between gap-2">
         <div className="flex flex-row items-center gap-2">
-          <div className="flex flex-row gap-1 items-center">
+          <div className="flex flex-col sm:flex-row gap-1 items-center">
             <div className="flex flex-row items-center">
               <label className="block  text-graydark mb-1">Start Date:</label>
               <input
@@ -118,7 +118,7 @@ function RequestManagement() {
             </div>
           </div>
           <div className="flex flex-row gap-1 items-center">
-            <div className="flex flex-row items-center gap-2">
+            <div className="flex flex-col sm:flex-row items-center gap-2">
               <button
                 onClick={handleFilter}
                 className=" p-2 bg-primary text-white rounded b"
