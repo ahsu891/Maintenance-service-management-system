@@ -80,3 +80,20 @@ export const getReqAss = (req, res) => {
     res.status(200).json(results);
   });
 };
+export const deletefun = (req, res) => {
+  // Execute the SQL query
+  const { request_id } = req.body;
+  console.log(request_id);
+  const sqlQuery = `DELETE FROM complain WHERE complain.request_id =?`;
+
+  db.query(sqlQuery, [request_id], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      res.status(500).send("Internal Server Error");
+      return;
+    }
+
+    // Return the query results as JSON
+    res.status(200).send("Succesfully Deleted");
+  });
+};

@@ -7,6 +7,7 @@ const URL_R = "/technicial/getTechicianName";
 function ComplainTabel() {
   const [requests, setRequest] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [freshh, setFresh] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -23,7 +24,7 @@ function ComplainTabel() {
     };
     // Call the fetchData function when the component mounts
     fetchData();
-  }, []);
+  }, [freshh]);
   if (isLoading) {
     return <Spiner />;
   }
@@ -57,6 +58,9 @@ function ComplainTabel() {
                   <th className="min-w-[140px] py-4 px-4 font-medium text-black dark:text-white">
                     Assign To
                   </th>
+                  <th className="min-w-[60px] py-4 px-4 font-medium text-black dark:text-white">
+                    Action
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -79,8 +83,10 @@ function ComplainTabel() {
                     i={i + 1}
                     key={data.request_id}
                     title={data.title}
+                    request_id={data.request_id}
                     description={data.description}
                     technician_name={data.technician_name}
+                    setFresh={setFresh}
                   />
                 ))}
               </tbody>

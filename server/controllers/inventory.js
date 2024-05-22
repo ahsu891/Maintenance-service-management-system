@@ -311,7 +311,7 @@ export const makeUpdateRu = (req, res) => {
   // const { technician_id } = req.body;
   // console.log(technician_id);
   const { message, id } = req.body;
-  console.log(message);
+  // console.log(message);
   const sqlQuery = `UPDATE maintenance_request_materials
   SET status = ?
   WHERE maintenance_request_materials.request_id = ?;
@@ -334,7 +334,7 @@ export const makeUpdateRu = (req, res) => {
       res.status(500).send("Internal Server Error");
       return;
     }
-    console.log(results);
+    // console.log(results);
     db.query(sqlQuery2, [id], (error, results) => {
       if (error) {
         console.error("Error executing the query:", error);

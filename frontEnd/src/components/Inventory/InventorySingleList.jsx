@@ -1,5 +1,6 @@
 import toast from "react-hot-toast";
 import axios from "../../api/axios";
+import DeleteOppup from "../Admin/DeleteOppup";
 
 const Url_DR = "/inventory/deleteInventoryRequest";
 const URL_R = "/inventory/UpdateInventoryRequest";
@@ -106,9 +107,10 @@ function InventorySingleList({ title, status, setReff, request_id }) {
               {/* {localStorage.getItem("roles")==="Inventory"&&} */}
 
               <div className="flex flex-row  gap-4 items-center">
-                {status !== "Accepted" && (
-                  <div>
-                    <button
+                {status !== "Accepted" &&
+                  localStorage.getItem("roles") !== "Inventory" && (
+                    <div>
+                      {/* <button
                       onClick={(e) => {
                         e.stopPropagation();
                         // handleUpdate("Rejected");
@@ -118,9 +120,16 @@ function InventorySingleList({ title, status, setReff, request_id }) {
                       className=" bg-danger px-3 py-1 rounded-md text-white"
                     >
                       Deleted
-                    </button>
-                  </div>
-                )}
+                    </button> */}
+                      <DeleteOppup
+                        Delts={(e) => {
+                          // e.stopPropagation();
+                          // handleUpdate("Rejected");
+                          handleDelete();
+                        }}
+                      />
+                    </div>
+                  )}
 
                 {localStorage.getItem("roles") === "Inventory" && (
                   <div>

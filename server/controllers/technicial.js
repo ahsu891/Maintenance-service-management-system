@@ -146,7 +146,7 @@ export const getTheTechicianNME = (req, res) => {
       return;
     }
 
-    console.log(results);
+    // console.log(results);
     db.query(sqlQuerl, (error, resultss) => {
       if (error) {
         console.error("Error executing the query:", error);

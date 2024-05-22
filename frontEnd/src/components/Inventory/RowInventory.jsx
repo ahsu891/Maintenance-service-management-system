@@ -7,6 +7,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import FormInventoryEdit from "./FormInventoryEdit";
 import { IoMdCloseCircle } from "react-icons/io";
+import DeleteOppup from "../Admin/DeleteOppup";
 
 const URL_R = "/inventory/deleteSingle";
 function RowInventory({
@@ -72,7 +73,8 @@ function RowInventory({
                 className="hover:text-primary"
               />
             )}
-            <MdDelete onClick={handleDelete} className="hover:text-primary" />
+            {/* <MdDelete onClick={handleDelete} className="hover:text-primary" /> */}
+            <DeleteOppup className="" Delts={handleDelete} />
           </div>
         </div>
       </div>

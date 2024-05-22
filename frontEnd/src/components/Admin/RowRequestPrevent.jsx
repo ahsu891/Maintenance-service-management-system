@@ -5,6 +5,7 @@ import { MdEdit } from "react-icons/md";
 import FormPreventiveEdit from "./FormPreventiveEdit";
 import axios from "../../api/axios";
 import toast from "react-hot-toast";
+import DeleteOppup from "./DeleteOppup";
 const URL_D = "/prevent/deletePrevent";
 function RowRequestPrevent({
   block_id,
@@ -93,15 +94,13 @@ function RowRequestPrevent({
             >
               <MdEdit />{" "}
             </span>
-            <span
-              onClick={() => {
+
+            <DeleteOppup
+              Delts={() => {
                 setRefreshing((e) => !e);
                 handleDelet();
               }}
-              className="hover:text-primary"
-            >
-              <MdDelete />
-            </span>
+            />
           </div>
         </div>
       </div>

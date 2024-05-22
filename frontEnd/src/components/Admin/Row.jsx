@@ -7,6 +7,7 @@ import { MdPhone } from "react-icons/md";
 import SwitcherTwo from "./SwitcherTwo";
 import toast from "react-hot-toast";
 import axios from "../../api/axios";
+import DeleteOppup from "./DeleteOppup";
 const URLDEL = "/technicial/deleteTech";
 const URL_T = "/technicial/toggle";
 function Row({ name, categories, status, phone, technicial_id, setRef, i }) {
@@ -104,16 +105,14 @@ function Row({ name, categories, status, phone, technicial_id, setRef, i }) {
             )}
           </button>
           {/* <SwitcherTwo key={name} /> */}
-          <button
-            onClick={() => {
+
+          <DeleteOppup
+            className="text-2xl"
+            Delts={() => {
               TechDelete();
               setRef((r) => !r);
             }}
-            disabled={isLoading}
-            className="hover:text-primary"
-          >
-            <MdDelete className="text-2xl" />
-          </button>
+          />
           {/* <button className="hover:text-primary">
             <MdModeEditOutline className="text-2xl" />
           </button> */}
