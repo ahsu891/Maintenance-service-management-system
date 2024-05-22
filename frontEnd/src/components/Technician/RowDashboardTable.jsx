@@ -7,11 +7,13 @@ function RowDashboardTable({ category, status, block, priority, title, date }) {
         {/* <div className="flex-shrink-0">
             <img src={"BrandOne"} alt="Brand" />
           </div> */}
-        <p className="hidden text-black dark:text-white sm:block">{title}</p>
+        <p className=" text-black dark:text-white ">{title}</p>
       </div>
 
       <div className="flex items-center justify-center p-2.5 xl:p-5">
-        <p className="text-black dark:text-white">{category}</p>
+        <p className="hidden  text-black dark:text-white sm:block">
+          {category}
+        </p>
       </div>
 
       <div className="flex items-center justify-center p-2.5 xl:p-5">
