@@ -58,7 +58,7 @@ const TableTwo = () => {
         </div>
 
         <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-          <div className="col-span-3 flex items-center">
+          <div className="sm:col-span-3 col-span-2 flex items-center">
             <p className="font-medium">Item Name</p>
           </div>
           <div className="col-span-2 hidden items-center sm:flex">
