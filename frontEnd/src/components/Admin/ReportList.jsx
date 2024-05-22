@@ -5,6 +5,7 @@ import ChangetoExcel from "./ChangetoExcel";
 import { dateFormating, secondsToHMS } from "../../api/helper";
 import { FiFilter } from "react-icons/fi";
 import Spiner from "../Spiner";
+import Pagination from "./Pagination";
 const URL_Rep = "/report/getReport";
 const Url_p = "/report/converttoExcel";
 function RequestManagement() {
@@ -27,6 +28,18 @@ function RequestManagement() {
     });
     setDatae(filtered);
   };
+  const [currentPage, setCurrentPage] = useState(1);
+  const data = datae;
+  const rowsPerPage = 5;
+  const totalPages = Math.ceil(data.length / rowsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentData = data.slice(indexOfFirstRow, indexOfLastRow);
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
@@ -177,7 +190,7 @@ function RequestManagement() {
               );
             })} */}
 
-                {datae?.map((data, i) => (
+                {currentData?.map((data, i) => (
                   <RowReport
                     i={i + 1}
                     key={data.request_id}
@@ -191,6 +204,14 @@ function RequestManagement() {
                 ))}
               </tbody>
             </table>
+            <div className=" flex flex-row  justify-end">
+              {/* {on && <FormLayout toggle={() => handleOn()} />} */}
+              <Pagination
+                totalPages={totalPages}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />
+            </div>
           </div>
         </div>
       )}

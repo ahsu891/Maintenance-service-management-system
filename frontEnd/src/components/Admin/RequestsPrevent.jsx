@@ -4,6 +4,7 @@ import RowRequestPrevent from "./RowRequestPrevent";
 import FormPreventive from "./FormPreventive";
 import RequestSingle from "./RequestSingle";
 import Spiner from "../Spiner";
+import Pagination from "./Pagination";
 const URL_R = "/prevent/getPrevent";
 const URL_RC = "/prevent/getPreventConf";
 function RequestsPrevent() {
@@ -14,6 +15,18 @@ function RequestsPrevent() {
   const [refreshingC, setRefreshingC] = useState(false);
   const [dataC, setDataC] = useState([]);
   const [add, setAdd] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const datar = data;
+  const rowsPerPage = 5;
+  const totalPages = Math.ceil(datar.length / rowsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentData = datar.slice(indexOfFirstRow, indexOfLastRow);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -123,7 +136,7 @@ function RequestsPrevent() {
                 <p className="text-black dark:text-white">Action</p>
               </div>
             </div>
-            {data?.map((data, i) => (
+            {currentData?.map((data, i) => (
               <RowRequestPrevent
                 i={i + 1}
                 id={data.id}
@@ -160,12 +173,19 @@ function RequestsPrevent() {
           </div> */}
 
         {/* < */}
-
-        <div>
-          {add && (
-            <FormPreventive setAdd={setAdd} setRefreshing={setRefreshing} />
-          )}
-        </div>
+      </div>
+      <div className=" my-1 flex flex-row  justify-end">
+        {/* {on && <FormLayout toggle={() => handleOn()} />} */}
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
+      <div className="my-2 px-4">
+        {add && (
+          <FormPreventive setAdd={setAdd} setRefreshing={setRefreshing} />
+        )}
       </div>
     </div>
   );

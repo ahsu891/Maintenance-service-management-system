@@ -6,6 +6,7 @@ import SearchBar from "./SearchBar";
 import { Link } from "react-router-dom";
 import FormLayout from "./FormLayout";
 import Spiner from "../Spiner";
+import Pagination from "./Pagination";
 // import { use } from "express/lib/application";
 // import SignIn from "../auth/SignIn";
 // bg-danger bg-warning
@@ -21,7 +22,18 @@ const TableThree = () => {
     setOne((e) => !e);
   }
   console.log(typeof handleOn);
+  const [currentPage, setCurrentPage] = useState(1);
+  const data = filtered;
+  const rowsPerPage = 5;
+  const totalPages = Math.ceil(data.length / rowsPerPage);
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentData = data.slice(indexOfFirstRow, indexOfLastRow);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -75,7 +87,7 @@ const TableThree = () => {
               </tr>
             </thead>
             <tbody>
-              {filtered?.map((input, i) => {
+              {currentData?.map((input, i) => {
                 return (
                   <Row
                     i={i + 1}
@@ -100,6 +112,14 @@ const TableThree = () => {
             {on ? "Cancel" : "Add Member"}
           </button>
         </div>
+      </div>
+      <div className=" flex flex-row  justify-end">
+        {/* {on && <FormLayout toggle={() => handleOn()} />} */}
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       </div>
       {/* < */}
       <div className="my-5">

@@ -7,12 +7,25 @@ import FormInventory from "../Inventory/FormInventory";
 import axios from "../../api/axios";
 import RowInventory from "./RowInventory";
 import S from "../Spiner";
+import Pagination from "../Admin/Pagination";
 const URL_GI = "inventory/getInventory";
 const TableTwo = () => {
   const [data, setData] = useState([]);
   const [on, setOn] = useState(false);
   const [fresh, setFresh] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const dataa = data;
+  const rowsPerPage = 5;
+  const totalPages = Math.ceil(dataa.length / rowsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentData = dataa.slice(indexOfFirstRow, indexOfLastRow);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -61,7 +74,7 @@ const TableTwo = () => {
             <p className="font-medium">Action</p>
           </div>
         </div>
-        {data.map((data) => (
+        {currentData.map((data) => (
           <RowInventory
             key={data.id}
             id={data.id}
@@ -83,6 +96,14 @@ const TableTwo = () => {
           >
             {on ? "Cancel" : "Add"}
           </button>
+        </div>
+        <div className=" my-2 flex flex-row  justify-end">
+          {/* {on && <FormLayout toggle={() => handleOn()} />} */}
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
         </div>
         {on && (
           <div className="my-8">

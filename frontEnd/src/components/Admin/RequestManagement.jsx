@@ -2,10 +2,23 @@ import React, { useEffect, useState } from "react";
 import axios from "../../api/axios";
 import RowAssign from "./RowAssign";
 import Spiner from "../Spiner";
+import Pagination from "./Pagination";
 const URL_R = "/request/getRequestsAssign";
 function RequestManagement() {
   const [requests, setRequest] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const data = requests;
+  const rowsPerPage = 5;
+  const totalPages = Math.ceil(data.length / rowsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentData = data.slice(indexOfFirstRow, indexOfLastRow);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -86,7 +99,7 @@ function RequestManagement() {
                 />
               );
             })} */}
-                {requests.map((data, i) => (
+                {currentData.map((data, i) => (
                   <RowAssign
                     i={i + 1}
                     key={data.assignment_date}
@@ -106,8 +119,13 @@ function RequestManagement() {
         )}
       </div>
       {/* < */}
-      <div className="my-5">
+      <div className=" flex flex-row  justify-end">
         {/* {on && <FormLayout toggle={() => handleOn()} />} */}
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );

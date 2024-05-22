@@ -3,11 +3,24 @@ import axios from "../../api/axios";
 import RowAssign from "./RowAssign";
 import RowComplain from "./RowComplain";
 import Spiner from "../Spiner";
+import Pagination from "./Pagination";
 const URL_R = "/technicial/getTechicianName";
 function ComplainTabel() {
   const [requests, setRequest] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [freshh, setFresh] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const data = requests;
+  const rowsPerPage = 5;
+  const totalPages = Math.ceil(data.length / rowsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentData = data.slice(indexOfFirstRow, indexOfLastRow);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,6 +38,7 @@ function ComplainTabel() {
     // Call the fetchData function when the component mounts
     fetchData();
   }, [freshh]);
+
   if (isLoading) {
     return <Spiner />;
   }
@@ -78,7 +92,7 @@ function ComplainTabel() {
                 />
               );
             })} */}
-                {requests.map((data, i) => (
+                {currentData.map((data, i) => (
                   <RowComplain
                     i={i + 1}
                     key={data.request_id}
@@ -95,8 +109,13 @@ function ComplainTabel() {
         )}
       </div>
       {/* < */}
-      <div className="my-5">
+      <div className=" flex flex-row  justify-end">
         {/* {on && <FormLayout toggle={() => handleOn()} />} */}
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );

@@ -8,10 +8,24 @@ import { useEffect, useState } from "react";
 import RowDashboardTable from "./RowDashboardTable";
 import axios from "../../api/axios";
 import Spiner from "../Spiner";
+import Pagination from "../Admin/Pagination";
+// import { Pagination } from "@mui/material";
 const URL_T = "/request/getDashTable";
 const TableOne = () => {
   const [table, setTable] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const data = table;
+  const rowsPerPage = 4;
+  const totalPages = Math.ceil(data.length / rowsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentData = data.slice(indexOfFirstRow, indexOfLastRow);
   useEffect(() => {
     // Function to make the Axios request
     setLoading(true);
@@ -87,7 +101,7 @@ const TableOne = () => {
           </div>
         )}
         {table.length > 0 &&
-          table?.map((t) => (
+          currentData?.map((t) => (
             <RowDashboardTable
               key={t.request_id}
               category={t.category}
@@ -98,6 +112,14 @@ const TableOne = () => {
             />
           ))}
         {/* <RowDashboardTable /> */}
+      </div>
+      <div className=" flex flex-row  justify-end">
+        {/* {on && <FormLayout toggle={() => handleOn()} />} */}
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );
