@@ -105,7 +105,7 @@ function RequestSingle({
         }   bg-opacity-[15%]   transition-all  2s `}
       >
         <div className=" rounded-md border  border-stroke  px-6   pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-          <div className="flex md:flex-row flex-col justify-between py-4  md:items-center px-4 pr-7">
+          <div className="flex lg:flex-row flex-col justify-between py-4  md:items-center px-4 pr-7">
             <div>
               <div className="flex flex-row  gap-3 items-center py-2 ">
                 <span className=" text-boxdark">{title}</span>
@@ -180,7 +180,7 @@ function RequestSingle({
               </div>
             </div> */}
             {status !== "Rejected" && (
-              <div className="flex flex-row  gap-6 items-center">
+              <div className="flex lg:flex-row flex-col gap-6 items-center">
                 <div className="flex flex-row gap-1  items-center">
                   <p className=" text-boxdark">
                     If the request is done Please confirm

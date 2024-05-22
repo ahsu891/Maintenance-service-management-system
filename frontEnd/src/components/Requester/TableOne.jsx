@@ -74,7 +74,7 @@ const TableOne = () => {
             </h5>
           </div>
           <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium uppercase xsm:text-base">
+            <h5 className=" hidden text-sm sm:block font-medium uppercase xsm:text-base">
               Category
             </h5>
           </div>
