@@ -3,6 +3,7 @@ import axios from "../../api/axios";
 import RowRequest from "./RowRequest";
 import Spiner from "../Spiner";
 import Pagination from "./Pagination";
+import SearchBarRequest from "./SearchBarRequest";
 const URL = "/request/getRequests";
 const URL_R = "/technicial/getTechnicials";
 const RequestTable = () => {
@@ -11,6 +12,7 @@ const RequestTable = () => {
   const [refresh, setRefresh] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [dataFilterd, setDataFilterd] = useState([]);
   const data = requests;
   const rowsPerPage = 5;
   const totalPages = Math.ceil(data.length / rowsPerPage);
@@ -29,7 +31,7 @@ const RequestTable = () => {
         // Make a GET request to the API endpoint
         const response = await axios.get(URL);
         setRequest([...response.data]);
-        // console.log(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching technicials:", error.message);
       } finally {
@@ -78,6 +80,10 @@ const RequestTable = () => {
         </div> */}
 
         {/* < */}
+        {requests.length > 0 && (
+          <SearchBarRequest list={requests} setFilterdData={setDataFilterd} />
+        )}
+
         {requests.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <div className="text-center">
@@ -114,7 +120,7 @@ const RequestTable = () => {
                 {/* Additional grid items can be added here */}
               </div>
             </div>
-            {currentData?.map((data, i) => (
+            {dataFilterd?.map((data, i) => (
               <RowRequest
                 i={i + 1}
                 block_id={data.block_id}

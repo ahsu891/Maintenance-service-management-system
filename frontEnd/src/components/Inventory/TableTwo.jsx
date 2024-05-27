@@ -8,6 +8,7 @@ import axios from "../../api/axios";
 import RowInventory from "./RowInventory";
 import S from "../Spiner";
 import Pagination from "../Admin/Pagination";
+import SearchBarInvenrory from "./SearchBarInvenrory";
 const URL_GI = "inventory/getInventory";
 const TableTwo = () => {
   const [data, setData] = useState([]);
@@ -15,6 +16,7 @@ const TableTwo = () => {
   const [fresh, setFresh] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [dataFilterd, setDataFilterd] = useState([]);
   const dataa = data;
   const rowsPerPage = 5;
   const totalPages = Math.ceil(dataa.length / rowsPerPage);
@@ -52,9 +54,15 @@ const TableTwo = () => {
     <div>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="py-6 px-4 md:px-6 xl:px-7.5">
-          <h4 className="text-xl font-semibold text-black dark:text-white">
-            List Item
-          </h4>
+          <div className=" flex flex-row  items-center  justify-between">
+            <h4 className="text-xl font-semibold text-black dark:text-white">
+              List Item
+            </h4>
+            <SearchBarInvenrory
+              list={currentData}
+              setFilterdData={setDataFilterd}
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-6 border-t border-stroke py-4.5 px-4 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
@@ -74,7 +82,7 @@ const TableTwo = () => {
             <p className="font-medium">Action</p>
           </div>
         </div>
-        {currentData.map((data) => (
+        {dataFilterd.map((data) => (
           <RowInventory
             key={data.id}
             id={data.id}

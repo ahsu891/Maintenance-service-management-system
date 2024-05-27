@@ -5,6 +5,7 @@ import FormPreventive from "./FormPreventive";
 import RequestSingle from "./RequestSingle";
 import Spiner from "../Spiner";
 import Pagination from "./Pagination";
+import SearchBarPreventive from "./SearchBarPreventive";
 const URL_R = "/prevent/getPrevent";
 const URL_RC = "/prevent/getPreventConf";
 function RequestsPrevent() {
@@ -16,6 +17,7 @@ function RequestsPrevent() {
   const [dataC, setDataC] = useState([]);
   const [add, setAdd] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [dataFilterd, setDataFilterd] = useState([]);
   const datar = data;
   const rowsPerPage = 5;
   const totalPages = Math.ceil(datar.length / rowsPerPage);
@@ -34,7 +36,7 @@ function RequestsPrevent() {
         // Make a GET request to the API endpoint
         const response = await axios.post(URL_R);
         setData([...response.data]);
-        // console.log(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching technicials:", error.message);
       } finally {
@@ -101,7 +103,9 @@ function RequestsPrevent() {
       </div>
       <div className="rounded-sm border border-stroke bg-white px-5  pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         {/* <SearchBar technicials={technicials} setfiltered={setfiltered} /> */}
-
+        {data.length > 0 && (
+          <SearchBarPreventive list={data} setFilterdData={setDataFilterd} />
+        )}
         {data.length === 0 ? (
           <div className="flex flex-row justify-center items-center rounded-md  px-4   pb-6 sm:px-7.5 xl:pb-1">
             <span className="py-2">No data to display.</span>
@@ -136,7 +140,7 @@ function RequestsPrevent() {
                 <p className="text-black dark:text-white">Action</p>
               </div>
             </div>
-            {currentData?.map((data, i) => (
+            {dataFilterd?.map((data, i) => (
               <RowRequestPrevent
                 i={i + 1}
                 id={data.id}

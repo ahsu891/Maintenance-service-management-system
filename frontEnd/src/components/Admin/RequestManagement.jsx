@@ -3,11 +3,13 @@ import axios from "../../api/axios";
 import RowAssign from "./RowAssign";
 import Spiner from "../Spiner";
 import Pagination from "./Pagination";
+import SearchBarRequestStatus from "./SearchBarRequestStatus";
 const URL_R = "/request/getRequestsAssign";
 function RequestManagement() {
   const [requests, setRequest] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [dataFilterd, DataFilterd] = useState([]);
   const data = requests;
   const rowsPerPage = 5;
   const totalPages = Math.ceil(data.length / rowsPerPage);
@@ -43,6 +45,13 @@ function RequestManagement() {
     <div>
       <div className="rounded-sm border border-stroke bg-white px-5  pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         {/* <SearchBar technicials={technicials} setfiltered={setfiltered} /> */}
+        {requests.length > 0 && (
+          <SearchBarRequestStatus
+            list={requests}
+            setFilterdData={DataFilterd}
+          />
+        )}
+
         {requests.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <div className="text-center">
@@ -99,7 +108,7 @@ function RequestManagement() {
                 />
               );
             })} */}
-                {currentData.map((data, i) => (
+                {dataFilterd.map((data, i) => (
                   <RowAssign
                     i={i + 1}
                     key={data.assignment_date}

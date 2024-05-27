@@ -6,6 +6,7 @@ import { dateFormating, secondsToHMS } from "../../api/helper";
 import { FiFilter } from "react-icons/fi";
 import Spiner from "../Spiner";
 import Pagination from "./Pagination";
+import SearchBarRport from "./SearchBarRport";
 const URL_Rep = "/report/getReport";
 const Url_p = "/report/converttoExcel";
 function RequestManagement() {
@@ -15,6 +16,7 @@ function RequestManagement() {
   const [endDate, setEndDate] = useState("");
   const [filteredData, setFilteredData] = useState(false);
   const [isLoading, setLoading] = useState(false);
+  const [dataFilterd, setDataFilterd] = useState([]);
   const handleFilter = () => {
     if (!startDate || !endDate) {
       return;
@@ -142,6 +144,7 @@ function RequestManagement() {
         </div>
         <ChangetoExcel className="self-end" filterDataa={filterDataa} />
       </div>
+
       {datae.length === 0 ? (
         <div className="flex flex-row justify-center items-center rounded-md  px-4   pb-6 sm:px-7.5 xl:pb-1">
           <span className="py-2">No data to display.</span>
@@ -149,6 +152,12 @@ function RequestManagement() {
       ) : (
         <div className="rounded-sm border border-stroke bg-white px-5  pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           {/* <SearchBar technicials={technicials} setfiltered={setfiltered} /> */}
+          {datae.length > 0 && (
+            <SearchBarRport
+              list={currentData}
+              setFilterdData={setDataFilterd}
+            />
+          )}
           <div className="max-w-full overflow-x-auto">
             <table className="w-full table-auto">
               <thead>
@@ -190,7 +199,7 @@ function RequestManagement() {
               );
             })} */}
 
-                {currentData?.map((data, i) => (
+                {dataFilterd?.map((data, i) => (
                   <RowReport
                     i={i + 1}
                     key={data.request_id}

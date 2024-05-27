@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from "react";
-function SearchBar({ setfiltered, technicials }) {
+function SearchBar({ setFilterdData, list }) {
   const [input, setinput] = useState("");
   //   console.log(input);
   useEffect(() => {
-    const filtered = technicials.filter((data) =>
-      `${data.first_name} ${data.last_name} ${data.phone}`
+    const filtered = list.filter((data) =>
+      `${data.category} ${data.priority} ${data.title} ${data.block_id}`
         .toLowerCase()
         .includes(input.toLowerCase())
     );
 
-    setfiltered((e) => filtered);
+    setFilterdData((e) => filtered);
   }, [input]);
   return (
     <div className="py-2 flex flex-row justify-end items-center">
       <div className="hidden sm:block">
         <form>
-          <div className="relative">
+          <div className="relative mx-2">
             <button className="absolute top-1/2 left-0 -translate-y-1/2">
               <svg
-                className="fill-body pl-0.5 hover:fill-primary dark:fill-bodydark dark:hover:fill-primary"
+                className="fill-primary pl-0.5 hover:fill-primary dark:fill-bodydark dark:hover:fill-primary"
                 width="20"
                 height="20"
                 viewBox="0 0 20 20"

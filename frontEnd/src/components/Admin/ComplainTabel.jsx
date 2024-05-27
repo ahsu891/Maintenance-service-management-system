@@ -4,12 +4,14 @@ import RowAssign from "./RowAssign";
 import RowComplain from "./RowComplain";
 import Spiner from "../Spiner";
 import Pagination from "./Pagination";
+import SearchBarComplain from "./SearchBarComplain";
 const URL_R = "/technicial/getTechicianName";
 function ComplainTabel() {
   const [requests, setRequest] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [freshh, setFresh] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [dataFilterd, setDataFilterd] = useState([]);
   const data = requests;
   const rowsPerPage = 5;
   const totalPages = Math.ceil(data.length / rowsPerPage);
@@ -46,6 +48,13 @@ function ComplainTabel() {
     <div>
       <div className="rounded-sm border border-stroke bg-white px-5  pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         {/* <SearchBar technicials={technicials} setfiltered={setfiltered} /> */}
+
+        {requests.length > 0 && (
+          <SearchBarComplain
+            list={currentData}
+            setFilterdData={setDataFilterd}
+          />
+        )}
         {requests.length === 0 ? (
           <div className="flex items-center justify-center h-full">
             <div className="text-center">
@@ -92,7 +101,7 @@ function ComplainTabel() {
                 />
               );
             })} */}
-                {currentData.map((data, i) => (
+                {dataFilterd.map((data, i) => (
                   <RowComplain
                     i={i + 1}
                     key={data.request_id}
