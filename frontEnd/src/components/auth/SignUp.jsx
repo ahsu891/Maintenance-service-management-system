@@ -27,7 +27,7 @@ const SignUp = () => {
 
   // errRef.current.focus();
   const [pos, setPos] = useState(
-    () => infrom.filter((data) => data.position === "Department")[0].data
+    () => infrom.filter((data) => data.position === "Department Head")[0]?.data
   );
   const navigate = useNavigate();
   function handlepos(e) {
@@ -306,7 +306,7 @@ const SignUp = () => {
                       onChange={handlepos}
                       className="relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     >
-                      {infrom.map((data, i) => (
+                      {infrom?.map((data, i) => (
                         <option key={i} value={data.position}>
                           {data.position}
                         </option>

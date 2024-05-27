@@ -1,8 +1,9 @@
 import { useRef, useState, useEffect } from "react";
 // import useAuth from "../hooks/useAuth";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-
+import { IoEyeOffOutline } from "react-icons/io5";
 // import axios from "../api/axios";
+import { IoEyeOutline } from "react-icons/io5";
 import useAuth from "../../hook/useAuth";
 import axios from "../../api/axios";
 const LOGIN_URL = "/auth/login";
@@ -20,7 +21,10 @@ const Login = () => {
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
-
+  const [showPwd, setShowPwd] = useState(false);
+  const toggleShowPwd = () => {
+    setShowPwd((prevShowPwd) => !prevShowPwd);
+  };
   useEffect(() => {
     userRef.current.focus();
   }, []);
@@ -276,14 +280,22 @@ const Login = () => {
                         onChange={(e) => setPwd(e.target.value)}
                         name="password"
                         id="password"
-                        type="password"
+                        // type="password"
+                        type={showPwd ? "text" : "password"}
                         required
                         placeholder="•••••••••••"
                         className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                       />
 
-                      <span className="absolute right-4 top-4">
-                        <svg
+                      <span className="absolute flex flex-row items-center gap-1 right-4 top-4">
+                        <span
+                          onClick={toggleShowPwd}
+                          className="text-2xl text-gray-1  "
+                        >
+                          {!showPwd ? <IoEyeOffOutline /> : <IoEyeOutline />}
+                        </span>
+                        {/* <svg
+                          // onClick={toggleShowPwd}
                           className="fill-current"
                           width="22"
                           height="22"
@@ -301,9 +313,14 @@ const Login = () => {
                               fill=""
                             />
                           </g>
-                        </svg>
+                        </svg> */}
                       </span>
                     </div>
+                    {/* <div className="my-2">
+                      <button type="button" onClick={toggleShowPwd}>
+                        {showPwd ? "Hide" : "Show"}
+                      </button>
+                    </div> */}
                     <p
                       ref={errRef}
                       className={errMsg ? "text-danger text-sm" : "hidden"}
