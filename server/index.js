@@ -60,7 +60,7 @@ const getUser = (user_id) => {
   return onlineUsers.find((user) => user.user_id === user_id);
 };
 io.on("connection", (socket) => {
-  console.log("User connected:", socket.id);
+  // console.log("User connected:", socket.id);
   socket.on("newUser", (user_id) => {
     addNewUser(user_id, socket.id);
   });

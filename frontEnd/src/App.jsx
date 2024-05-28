@@ -18,6 +18,8 @@ import DefaultLayoutHead from "./layout/DefaultLayoutHead";
 import DefaultLayoutSuper from "./layout/DefaultLayoutSuper";
 
 import TableThree from "./components/Admin/TableThree";
+import TableThreeReq from "./components/super/TableThree";
+
 import { Toaster } from "react-hot-toast";
 import FormLayout from "./components/Requester/FormLayout";
 import Requests from "./components/Admin/Requests";
@@ -148,6 +150,14 @@ function App() {
                     path="/inventory/request"
                     element={<InventoryRequest />}
                   /> */}
+                  <Route
+                    path="/super/Requestermanagement"
+                    element={<TableThreeReq />}
+                  />
+                  <Route
+                    path="/super/usermanagement"
+                    element={<TableThree />}
+                  />
                   {/* <Route path="/head/report" element={<Report />} />
                   <Route path="/head/status" element={<RequestManagement />} />
                   <Route path="/head/report/:id" element={<ReportPrint />} />

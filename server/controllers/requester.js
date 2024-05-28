@@ -114,3 +114,41 @@ export const getSingleRequester = (req, res) => {
     res.status(200).json(results);
   });
 };
+
+export const getTheRequester = (req, res) => {
+  // Execute the SQL query
+
+  const sqld = `SELECT user_id, CONCAT(first_name, ' ', last_name) AS full_name, job, phone
+  FROM users; `;
+
+  db.query(sqld, (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      throw new Error("Something went wrong");
+      // res.status(500).send("Internal Server Error");
+      // return;
+    }
+
+    // console.log(results);
+    // Return the query results as JSON
+    res.status(200).send(results);
+  });
+};
+export const deleteTheRequester = (req, res) => {
+  // Execute the SQL query
+  const { user_id } = req.body;
+  const sqld = `DELETE FROM users WHERE users.user_id = ? `;
+
+  db.query(sqld, [user_id], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      throw new Error("Something went wrong");
+      // res.status(500).send("Internal Server Error");
+      // return;
+    }
+
+    // console.log(results);
+    // Return the query results as JSON
+    res.status(200).send("Successfully Deleted");
+  });
+};
