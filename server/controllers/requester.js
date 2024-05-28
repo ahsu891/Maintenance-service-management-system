@@ -152,3 +152,23 @@ export const deleteTheRequester = (req, res) => {
     res.status(200).send("Successfully Deleted");
   });
 };
+export const dashboardSuper = (req, res) => {
+  // Execute the SQL query
+  const { user_id } = req.body;
+  const sqld = `SELECT 
+  (SELECT COUNT(*) FROM users) AS total_users,
+  (SELECT COUNT(*) FROM technicians) AS total_technicians; `;
+
+  db.query(sqld, [user_id], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      throw new Error("Something went wrong");
+      // res.status(500).send("Internal Server Error");
+      // return;
+    }
+
+    // console.log(results);
+    // Return the query results as JSON
+    res.status(200).send(results);
+  });
+};

@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  dashboardSuper,
   deleteTheRequester,
   getSingleRequester,
   getTheRequester,
@@ -14,6 +15,7 @@ router.post("/register", register);
 router.post("/getSingleInfo", getSingleRequester);
 router.get("/getRequester", getTheRequester);
 router.post("/deleteRequester", deleteTheRequester);
+router.get("/getDashboardSuper", dashboardSuper);
 
 // router.delete("/deleteTech/:technician_id", deleteTech);
 
