@@ -14,6 +14,7 @@ import DefaultLayout from "./layout/DefaultLayout";
 import DefaultLayoutReq from "./layout/DefaultLayoutReq";
 import DefaultLayoutTech from "./layout/DefaultLayoutTech";
 import DefaultLayoutInv from "./layout/DefaultLayoutInv";
+import DefaultLayoutHead from "./layout/DefaultLayoutHead";
 
 import TableThree from "./components/Admin/TableThree";
 import { Toaster } from "react-hot-toast";
@@ -43,6 +44,7 @@ const ROLES = {
   Technician: "Technician",
   Admin: "Admin",
   Inventory: "Inventory",
+  Head: "Head",
 };
 const Auth = withAuth(Layout);
 function App() {
@@ -117,6 +119,22 @@ function App() {
                     element={<InventoryRequest />}
                   />
                   <Route path="/inventory/settings" element={<Setting />} />
+                </Route>
+              </Route>
+
+              <Route element={<RequireAuth allowedRoles={ROLES.Head} />}>
+                <Route path="/head" element={<DefaultLayoutHead />}>
+                  <Route path="/head" index element={<About />} />
+                  {/* <Route path="/inventory/management" element={<Table />} /> */}
+                  {/* <Route
+                    path="/inventory/request"
+                    element={<InventoryRequest />}
+                  /> */}
+                  <Route path="/head/report" element={<Report />} />
+                  <Route path="/head/status" element={<RequestManagement />} />
+                  <Route path="/head/report/:id" element={<ReportPrint />} />
+                  <Route path="/head/complain" element={<ComplainAdmin />} />
+                  <Route path="/head/settings" element={<Setting />} />
                 </Route>
               </Route>
               {/* </Auth> */}

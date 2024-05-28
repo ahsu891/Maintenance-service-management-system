@@ -27,6 +27,8 @@ export const login = (req, res) => {
       SELECT technician_id AS id, role, first_name,last_name,username,  password FROM technicians
       UNION
       SELECT inventory_admin_id AS id, role,first_name,last_name, username,  password FROM inventory_admin
+      UNION
+      SELECT head_id AS id, role,first_name,last_name, username,  password FROM head
   ) AS combined_users
 
   WHERE username = ?;`,
@@ -148,6 +150,13 @@ export const saveEditChange = (req, res) => {
 
     query = sqlQueryUser;
   }
+
+  if (roles === "Head") {
+    const sqlQueryUser = `
+  UPDATE head SET first_name= "${fname}" ,username="${username}", last_name = '${lname}'${pass}, phone='${phone}', email='${email}' WHERE head_id = ?; `;
+
+    query = sqlQueryUser;
+  }
   // const sqlQueryUser = `
   // UPDATE users SET first_name= "${fname}" ,last_name = '${lname}' ,password='${password1}', job='${typej}', position='${typep}', phone='${phone}', email='${email}' WHERE user_id = ?; `;
 
@@ -185,6 +194,8 @@ export const getSettingEdit = (req, res) => {
     SELECT technician_id AS id, role, username, first_name, last_name, null as job, null as position, phone, email FROM technicians
     UNION
     SELECT inventory_admin_id  AS id, role, username, first_name, last_name, null as job, null as position, phone, email FROM inventory_admin
+    UNION
+    SELECT head_id  AS id, role, username, first_name, last_name, null as job, null as position, phone, email FROM head
 ) AS combined_users
 WHERE id=?;
   `;
@@ -217,6 +228,8 @@ export const forgetPassword = async (req, res) => {
     SELECT technician_id AS id, role, first_name,last_name,email,username FROM technicians
     UNION
     SELECT inventory_admin_id AS id, role,first_name,last_name,email, username FROM inventory_admin
+    UNION
+    SELECT head_id AS id, role,first_name,last_name,email, username FROM head
 ) AS combined_users
 
 WHERE email = ?
@@ -321,6 +334,8 @@ export const resetPassword = async (req, res) => {
     SELECT technician_id AS id, role, first_name,last_name,email,username FROM technicians
     UNION
     SELECT inventory_admin_id AS id, role,first_name,last_name,email, username FROM inventory_admin
+    UNION
+    SELECT head_id AS id, role,first_name,last_name,email, username FROM head
 ) AS combined_users
 
 WHERE id = ?
