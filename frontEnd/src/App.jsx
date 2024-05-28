@@ -15,6 +15,7 @@ import DefaultLayoutReq from "./layout/DefaultLayoutReq";
 import DefaultLayoutTech from "./layout/DefaultLayoutTech";
 import DefaultLayoutInv from "./layout/DefaultLayoutInv";
 import DefaultLayoutHead from "./layout/DefaultLayoutHead";
+import DefaultLayoutSuper from "./layout/DefaultLayoutSuper";
 
 import TableThree from "./components/Admin/TableThree";
 import { Toaster } from "react-hot-toast";
@@ -38,6 +39,7 @@ import Setting from "./components/Admin/Setting";
 import DashboardTech from "./components/Technician/DashboardTech";
 import ForgotPassword from "./components/FrogetPassword";
 import ResetPassword from "./components/ResetPassword";
+import DashboardSuper from "./components/super/DashboardSuper";
 // import MainTable from "./components/Admin/MainTable";
 const ROLES = {
   User: "Requester",
@@ -45,6 +47,7 @@ const ROLES = {
   Admin: "Admin",
   Inventory: "Inventory",
   Head: "Head",
+  Super: "Super",
 };
 const Auth = withAuth(Layout);
 function App() {
@@ -135,6 +138,21 @@ function App() {
                   <Route path="/head/report/:id" element={<ReportPrint />} />
                   <Route path="/head/complain" element={<ComplainAdmin />} />
                   <Route path="/head/settings" element={<Setting />} />
+                </Route>
+              </Route>
+              <Route element={<RequireAuth allowedRoles={ROLES.Super} />}>
+                <Route path="/super" element={<DefaultLayoutSuper />}>
+                  <Route path="/super" index element={<DashboardSuper />} />
+                  {/* <Route path="/inventory/management" element={<Table />} /> */}
+                  {/* <Route
+                    path="/inventory/request"
+                    element={<InventoryRequest />}
+                  /> */}
+                  {/* <Route path="/head/report" element={<Report />} />
+                  <Route path="/head/status" element={<RequestManagement />} />
+                  <Route path="/head/report/:id" element={<ReportPrint />} />
+                  <Route path="/head/complain" element={<ComplainAdmin />} /> */}
+                  <Route path="/super/settings" element={<Setting />} />
                 </Route>
               </Route>
               {/* </Auth> */}
