@@ -7,7 +7,7 @@ import SignUp from "./components/auth/SignUp";
 import Missing from "./components/Missing";
 import Unauthorized from "./components/auth/Unauthorized";
 import RequireAuth from "./components/auth/RequireAuth";
-import Home from "./components/Home";
+// import Home from "./components/Home";
 import About from "./components/Admin/About";
 import withAuth from "./components/auth/withAuth";
 import DefaultLayout from "./layout/DefaultLayout";
@@ -43,6 +43,13 @@ import ForgotPassword from "./components/FrogetPassword";
 import ResetPassword from "./components/ResetPassword";
 import DashboardSuper from "./components/super/DashboardSuper";
 // import MainTable from "./components/Admin/MainTable";
+////////////////
+import Home from "./pages/Home";
+import Door from "./pages/Door";
+import Nav from "./pages/Nav";
+import Light from "./pages/Light";
+import Footer from "./pages/Footer";
+import TestPage from "./pages/TestPage";
 const ROLES = {
   User: "Requester",
   Technician: "Technician",
@@ -60,6 +67,15 @@ function App() {
         <div id="45454545s"></div>
         <Routes>
           <Route>
+            <Route path="/" element={<Nav />}>
+              <Route index element={<TestPage />} />
+              {/* <Route index element={<HomePage />} /> */}
+              <Route path="maintenance" element={<Home />} />
+              <Route path="maintenance/door" element={<Door />} />
+              <Route path="maintenance/light" element={<Light />} />
+            </Route>
+
+            {/* ///////// */}
             <Route path="register" element={<SignUp />} />
             <Route path="login" index element={<Login />} />
             <Route path="unauthorized" element={<Unauthorized />} />
@@ -151,7 +167,7 @@ function App() {
                     element={<InventoryRequest />}
                   /> */}
                   <Route
-                    path="/super/Requestermanagement"
+                    path="/super/requestermanagement"
                     element={<TableThreeReq />}
                   />
                   <Route
