@@ -51,6 +51,7 @@ import Nav from "./pages/Nav";
 import Light from "./pages/Light";
 import Footer from "./pages/Footer";
 import TestPage from "./pages/TestPage";
+import Walloutlet from "./pages/Walloutlet";
 const ROLES = {
   User: "Requester",
   Technician: "Technician",
@@ -75,6 +76,7 @@ function App() {
               <Route path="maintenance" element={<Home />} />
               <Route path="maintenance/door" element={<Door />} />
               <Route path="maintenance/light" element={<Light />} />
+              <Route path="maintenance/out" element={<Walloutlet />} />
             </Route>
 
             {/* ///////// */}

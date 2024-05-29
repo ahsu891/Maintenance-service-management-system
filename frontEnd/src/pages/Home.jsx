@@ -37,7 +37,7 @@ export default function Home() {
         <Link to="light" className=" max-w-[200px]">
           <Cards img={"../images/lightbulb.webp"} name="Light Bulb Repair" />
         </Link>
-        <Link className=" max-w-[200px]">
+        <Link to="out" className=" max-w-[200px]">
           <Cards img={"../images/outlet.jpg"} name=" Wall Outlet " />
         </Link>
       </div>
