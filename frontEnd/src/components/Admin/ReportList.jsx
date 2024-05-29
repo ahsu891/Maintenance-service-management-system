@@ -199,7 +199,7 @@ function RequestManagement() {
               );
             })} */}
 
-                {dataFilterd?.map((data, i) => (
+                {currentData?.map((data, i) => (
                   <RowReport
                     i={i + 1}
                     key={data.request_id}
