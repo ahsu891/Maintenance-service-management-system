@@ -31,6 +31,8 @@ export const login = (req, res) => {
       SELECT head_id AS id, role,first_name,last_name, username,  password FROM head
       UNION
       SELECT super_id AS id, role,first_name,last_name, username,  password FROM super
+      UNION
+      SELECT vice_id AS id, role,first_name,last_name, username,  password FROM vice
   ) AS combined_users
 
   WHERE username = ?;`,
@@ -165,6 +167,12 @@ export const saveEditChange = (req, res) => {
 
     query = sqlQueryUser;
   }
+  if (roles === "Vice") {
+    const sqlQueryUser = `
+  UPDATE vice SET first_name= "${fname}" ,username="${username}", last_name = '${lname}'${pass}, phone='${phone}', email='${email}' WHERE vice_id = ?; `;
+
+    query = sqlQueryUser;
+  }
   // const sqlQueryUser = `
   // UPDATE users SET first_name= "${fname}" ,last_name = '${lname}' ,password='${password1}', job='${typej}', position='${typep}', phone='${phone}', email='${email}' WHERE user_id = ?; `;
 
@@ -206,6 +214,8 @@ export const getSettingEdit = (req, res) => {
     SELECT head_id  AS id, role, username, first_name, last_name, null as job, null as position, phone, email FROM head
     UNION
     SELECT super_id  AS id, role, username, first_name, last_name, null as job, null as position, phone, email FROM super
+    UNION
+    SELECT vice_id  AS id, role, username, first_name, last_name, null as job, null as position, phone, email FROM vice
 ) AS combined_users
 WHERE id=?;
   `;
@@ -242,6 +252,8 @@ export const forgetPassword = async (req, res) => {
     SELECT head_id AS id, role,first_name,last_name,email, username FROM head
     UNION
     SELECT super_id AS id, role,first_name,last_name,email, username FROM super
+    UNION
+    SELECT vice_id AS id, role,first_name,last_name,email, username FROM vice
 ) AS combined_users
 
 WHERE email = ?
@@ -350,6 +362,8 @@ export const resetPassword = async (req, res) => {
     SELECT head_id AS id, role,first_name,last_name,email, username FROM head
     UNION
     SELECT super_id AS id, role,first_name,last_name,email, username FROM super
+    UNION
+    SELECT vice_id AS id, role,first_name,last_name,email, username FROM vice
 ) AS combined_users
 
 WHERE id = ?
@@ -411,6 +425,11 @@ WHERE id = ?
       if (decoded.role === "Super") {
         const sqlQueryUser = `
         UPDATE super SET  password=? WHERE super_id = ?; `;
+        query = sqlQueryUser;
+      }
+      if (decoded.role === "Vice") {
+        const sqlQueryUser = `
+        UPDATE vice SET  password=? WHERE vice_id = ?; `;
         query = sqlQueryUser;
       }
 

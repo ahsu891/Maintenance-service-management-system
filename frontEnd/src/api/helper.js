@@ -81,6 +81,7 @@ export function checkCookie(name) {
   for (let i = 0; i < cookiesArray.length; i++) {
     const cookie = cookiesArray[i];
     const [cookieName, cookieValue] = cookie.split("=");
+    // console.log(cookieName);
     if (cookieName === name) {
       return true;
     }

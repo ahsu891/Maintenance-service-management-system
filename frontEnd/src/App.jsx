@@ -16,6 +16,7 @@ import DefaultLayoutTech from "./layout/DefaultLayoutTech";
 import DefaultLayoutInv from "./layout/DefaultLayoutInv";
 import DefaultLayoutHead from "./layout/DefaultLayoutHead";
 import DefaultLayoutSuper from "./layout/DefaultLayoutSuper";
+import DefaultLayoutVice from "./layout/DefaultLayoutVice";
 
 import TableThree from "./components/Admin/TableThree";
 import TableThreeReq from "./components/super/TableThree";
@@ -57,6 +58,7 @@ const ROLES = {
   Inventory: "Inventory",
   Head: "Head",
   Super: "Super",
+  Vice: "Vice",
 };
 const Auth = withAuth(Layout);
 function App() {
@@ -156,6 +158,22 @@ function App() {
                   <Route path="/head/report/:id" element={<ReportPrint />} />
                   <Route path="/head/complain" element={<ComplainAdmin />} />
                   <Route path="/head/settings" element={<Setting />} />
+                </Route>
+              </Route>
+
+              <Route element={<RequireAuth allowedRoles={ROLES.Vice} />}>
+                <Route path="/vice" element={<DefaultLayoutVice />}>
+                  <Route path="/vice" index element={<About />} />
+                  {/* <Route path="/inventory/management" element={<Table />} /> */}
+                  {/* <Route
+                    path="/inventory/request"
+                    element={<InventoryRequest />}
+                  /> */}
+                  <Route path="/vice/report" element={<Report />} />
+                  <Route path="/vice/status" element={<RequestManagement />} />
+                  <Route path="/vice/report/:id" element={<ReportPrint />} />
+                  <Route path="/vice/complain" element={<ComplainAdmin />} />
+                  <Route path="/vice/settings" element={<Setting />} />
                 </Route>
               </Route>
               <Route element={<RequireAuth allowedRoles={ROLES.Super} />}>
