@@ -205,9 +205,10 @@ function DescriptionListAss({
                 {block}
                 <span className=" text-primary">
                   {" "}
+                  {/* 7.555442, 37.885210 */}
                   <Link
                     target="_blank"
-                    to={`https://www.google.com/maps/dir/${blat},${blog}/${lat},${log}/@7.55439,37.8822889,697m/data=!3m2!1e3!4b1!4m2!4m1!3e2?entry=ttu`}
+                    to={`https://www.google.com/maps/dir/${7.555442},${37.88521}/${lat},${log}/@7.55439,37.8822889,697m/data=!3m2!1e3!4b1!4m2!4m1!3e2?entry=ttu`}
                   >
                     Go the map
                   </Link>

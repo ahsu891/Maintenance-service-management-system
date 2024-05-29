@@ -93,6 +93,7 @@ function FormPreventive({ setRefreshing, setAdd }) {
                   <input
                     type="date"
                     name="date"
+                    required
                     className="custom-input-date custom-input-date-1 w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   />
                 </div>
@@ -127,6 +128,8 @@ function FormPreventive({ setRefreshing, setAdd }) {
                   id="ssdd"
                   name="rep"
                   required
+                  min={2}
+                  max={5}
                   defaultValue={0}
                   placeholder=""
                   className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -144,6 +147,7 @@ function FormPreventive({ setRefreshing, setAdd }) {
                   id="sin"
                   name="sin"
                   required
+                  min={1}
                   defaultValue={0}
                   placeholder=""
                   className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -196,6 +200,8 @@ function FormPreventive({ setRefreshing, setAdd }) {
                   name="room"
                   defaultValue={0}
                   required
+                  min={1}
+                  max={200}
                   placeholder=""
                   className="w-full rounded border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                 />

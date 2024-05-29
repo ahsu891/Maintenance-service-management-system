@@ -142,7 +142,7 @@ function InventorySingleList({ title, status, setReff, request_id }) {
                         // disabled={status === "Completed" ? false : true}
                         className="bg-primary px-3 py-1 rounded-md text-white"
                       >
-                        Closed
+                        Conform
                       </button>
                     )}
                   </div>

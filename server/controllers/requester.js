@@ -172,3 +172,45 @@ export const dashboardSuper = (req, res) => {
     res.status(200).send(results);
   });
 };
+export const getstatus = (req, res) => {
+  // Execute the SQL query
+
+  const sqld = `SELECT status FROM control  WHERE id="1046031413"`;
+  db.query(sqld, (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      throw new Error("Something went wrong");
+      // res.status(500).send("Internal Server Error");
+      // return;
+    }
+
+    // console.log(results);
+    // Return the query results as JSON
+    res.status(200).send(results);
+  });
+};
+export const toggleStatus = (req, res) => {
+  // Execute the SQL query
+  const { status } = req.body;
+  let g;
+  if (status) {
+    g = 0;
+  }
+  if (!status) {
+    g = 1;
+  }
+  console.log(g);
+  const sqld = `UPDATE control SET status = ? WHERE control.id = '1046031413';`;
+  db.query(sqld, [g], (error, results) => {
+    if (error) {
+      console.error("Error executing the query:", error);
+      throw new Error("Something went wrong");
+      // res.status(500).send("Internal Server Error");
+      // return;
+    }
+
+    // console.log(results);
+    // Return the query results as JSON
+    res.status(200).send("Successfully Submmited");
+  });
+};

@@ -52,6 +52,7 @@ import Light from "./pages/Light";
 import Footer from "./pages/Footer";
 import TestPage from "./pages/TestPage";
 import Walloutlet from "./pages/Walloutlet";
+import Undo from "./components/super/Undo";
 const ROLES = {
   User: "Requester",
   Technician: "Technician",
@@ -190,6 +191,7 @@ function App() {
                     path="/super/requestermanagement"
                     element={<TableThreeReq />}
                   />
+                  <Route path="/super/undo" element={<Undo />} />
                   <Route
                     path="/super/usermanagement"
                     element={<TableThree />}
