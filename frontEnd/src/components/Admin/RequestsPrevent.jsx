@@ -93,6 +93,7 @@ function RequestsPrevent() {
           // setRefresh={setRefresh}
         />
       ))}
+
       <div className=" mt-3 mb-2 flex flex-row justify-end">
         <button
           onClick={() => setAdd((e) => !e)}
@@ -101,10 +102,18 @@ function RequestsPrevent() {
           {add ? "Cancel" : "+ Add"}
         </button>
       </div>
+      <div className="my-2 px-4">
+        {add && (
+          <FormPreventive setAdd={setAdd} setRefreshing={setRefreshing} />
+        )}
+      </div>
       <div className="rounded-sm border border-stroke bg-white px-5  pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         {/* <SearchBar technicials={technicials} setfiltered={setfiltered} /> */}
         {data.length > 0 && (
-          <SearchBarPreventive list={data} setFilterdData={setDataFilterd} />
+          <SearchBarPreventive
+            list={currentData}
+            setFilterdData={setDataFilterd}
+          />
         )}
         {data.length === 0 ? (
           <div className="flex flex-row justify-center items-center rounded-md  px-4   pb-6 sm:px-7.5 xl:pb-1">
@@ -185,11 +194,6 @@ function RequestsPrevent() {
           currentPage={currentPage}
           onPageChange={handlePageChange}
         />
-      </div>
-      <div className="my-2 px-4">
-        {add && (
-          <FormPreventive setAdd={setAdd} setRefreshing={setRefreshing} />
-        )}
       </div>
     </div>
   );
