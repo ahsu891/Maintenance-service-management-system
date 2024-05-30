@@ -75,8 +75,8 @@ function DescriptionListAss({
         // Log or use the coordinates as needed
         setLat(coordinates.latitude);
         setLog(coordinates.longitude);
-        console.log("Latitude:", coordinates.latitude);
-        console.log("Longitude:", coordinates.longitude);
+        // console.log("Latitude:", coordinates.latitude);
+        // console.log("Longitude:", coordinates.longitude);
       })
       .catch((error) => {
         // Handle errors
@@ -356,7 +356,7 @@ function DescriptionListAss({
               </div>
               <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm font-semibold text-graydark leading-6 text-gray-900">
-                  Time took
+                  Completion Time
                 </dt>
                 <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                   {/* <TechListPart /> */}
@@ -364,14 +364,15 @@ function DescriptionListAss({
                     <input
                       type="number"
                       name="h"
-                      defaultValue={0}
+                      min={0}
+                      max={10}
                       className="bg-gray-50 border  border-gray text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Hour"
                     />
                     <input
                       type="number"
                       name="m"
-                      defaultValue={0}
+                      min={0}
                       className="bg-gray-50 border  border-gray text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       placeholder="Minute"
                     />

@@ -241,7 +241,7 @@ function FormLayout({ setReff, setOn }) {
 
                 <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0 ">
                   <dt className="mb-2.5 block text-black dark:text-white ">
-                    Matrial List
+                    Material List
                   </dt>
                   <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     <div className="flex flex-row items-center">
@@ -273,7 +273,7 @@ function FormLayout({ setReff, setOn }) {
                             value={inputTwo}
                             onChange={(e) => setInputTwo(e.target.value)}
                             className="bg-gray-50 border  border-gray text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Add Matrial"
+                            placeholder="search Matrial"
                           />
                         </div>
                       </div>

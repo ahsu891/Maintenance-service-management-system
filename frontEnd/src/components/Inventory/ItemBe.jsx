@@ -39,6 +39,7 @@ function ItemBe({ allchecked, setAllChecked, id, name }) {
       >
         <IoMdArrowDropleft
           onClick={() => {
+            if (count === 0) return;
             setCount((e) => e - 1);
             setAllChecked(
               allchecked.map((item) => {
@@ -55,6 +56,9 @@ function ItemBe({ allchecked, setAllChecked, id, name }) {
         <span>{count}</span>{" "}
         <IoMdArrowDropright
           onClick={() => {
+            if (count === 10) {
+              return;
+            }
             setCount((e) => e + 1);
             setAllChecked(
               allchecked.map((item) => {

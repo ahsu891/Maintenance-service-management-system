@@ -5,7 +5,12 @@ import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import axios from "../../api/axios";
 const URL_R = "/requester/register";
-
+function validatePhoneNumber(phoneNumber) {
+  // Define a regex pattern for phone numbers that start with "09" and have exactly 10 digits
+  const pattern = /^09\d{8}$/;
+  // Test the input phone number against the pattern
+  return pattern.test(phoneNumber);
+}
 const infrom = [
   {
     position: "Department Head",
@@ -69,6 +74,7 @@ const SignUp = () => {
       setErrMsg("The PassWord and Re-password is not similar");
       return errRef.current.focus();
     }
+
     try {
       // Make an Axios request
       setLoading(true);
@@ -252,6 +258,8 @@ const SignUp = () => {
                         type="text"
                         required
                         name="fname"
+                        minLength={2}
+                        maxLength={20}
                         placeholder="Enter your first name"
                         className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                       />
@@ -265,6 +273,8 @@ const SignUp = () => {
                       <input
                         type="text"
                         required
+                        minLength={2}
+                        maxLength={20}
                         name="lname"
                         placeholder="Enter your last name"
                         className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -280,6 +290,7 @@ const SignUp = () => {
                       <input
                         type="text"
                         required
+                        minLength={6}
                         name="username"
                         placeholder="Enter your username"
                         className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -310,6 +321,8 @@ const SignUp = () => {
                         type="number"
                         required
                         name="phone"
+                        minLength={10}
+                        maxLength={10}
                         placeholder="Enter Your Phone"
                         className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                       />
@@ -397,8 +410,8 @@ const SignUp = () => {
                         type="password"
                         required
                         name="password"
-                        min={8}
-                        max={15}
+                        minLength={8}
+                        maxLength={12}
                         placeholder="Enter your password"
                         className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                       />
@@ -434,8 +447,8 @@ const SignUp = () => {
                       <input
                         type="password"
                         name="repassword"
-                        min={8}
-                        max={15}
+                        minLength={8}
+                        maxLength={12}
                         placeholder="Re-enter your password"
                         className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                       />

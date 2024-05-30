@@ -3,7 +3,7 @@ import axios from "../../api/axios";
 import TechList from "./TechList";
 import MatrialList from "./MatrialList";
 const Url_S = "/inventory/getSingleInventoryInfo";
-function DescriptionInventory({ id, title }) {
+function DescriptionInventory({ id, title, setOn }) {
   const [data, setData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +41,7 @@ function DescriptionInventory({ id, title }) {
               </div>
               <div className="px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                 <dt className="text-sm  font-semibold leading-6  text-graydark">
-                  Matrial List
+                  Material List
                 </dt>
                 <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                   <MatrialList list={data} />

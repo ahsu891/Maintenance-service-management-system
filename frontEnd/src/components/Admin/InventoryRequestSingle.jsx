@@ -111,6 +111,7 @@ function InventoryRequestSingle({
               <div>
                 <button
                   onClick={(e) => {
+                    if (on) setOn((e) => !e);
                     e.stopPropagation();
                     handleUpdate("Rejected");
                   }}
@@ -122,6 +123,7 @@ function InventoryRequestSingle({
               <div>
                 <button
                   onClick={(e) => {
+                    if (on) setOn((e) => !e);
                     e.stopPropagation();
                     handleUpdate("Accepted");
                   }}
@@ -135,7 +137,11 @@ function InventoryRequestSingle({
           </div>
         </div>
       </div>
-      <div>{on && <DescriptionInventory id={request_id} title={title} />}</div>
+      <div>
+        {on && (
+          <DescriptionInventory id={request_id} title={title} setOn={setOn} />
+        )}
+      </div>
     </div>
   );
 }

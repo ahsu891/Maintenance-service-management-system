@@ -238,6 +238,7 @@ WHERE id=?;
     res.status(200).send(results);
   });
 };
+
 export const forgetPassword = async (req, res) => {
   const { email } = req.body;
   const sql = `SELECT * FROM (

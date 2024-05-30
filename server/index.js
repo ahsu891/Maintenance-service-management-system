@@ -75,19 +75,19 @@ io.on("connection", (socket) => {
     const receiver = getUser(user_id);
     // console.log(receiver);
     // console.log(us);
-    db.query(
-      sqlQuery,
-      [id, user_id, type, title, new Date(), 0],
-      (error, results) => {
-        if (error) {
-          console.error("Error executing the query:", error);
+    // db.query(
+    //   sqlQuery,
+    //   [id, user_id, type, title, new Date(), 0],
+    //   (error, results) => {
+    //     if (error) {
+    //       console.error("Error executing the query:", error);
 
-          return;
-        }
+    //       return;
+    //     }
 
-        // Return the query results as JSON
-      }
-    );
+    //     // Return the query results as JSON
+    //   }
+    // );
     // console.log(id, user_id, type, title);
 
     io.emit("getNotification", {
@@ -135,8 +135,8 @@ io.on("connection", (socket) => {
 
   // Handle disconnections
   socket.on("disconnect", () => {
-    console.log("User disconnected:", socket.id);
-    removeUser(socket.id);
+    // console.log("User disconnected:", socket.id);
+    // removeUser(socket.id);
   });
 });
 
