@@ -17,7 +17,7 @@ const TableTwo = () => {
   const [isLoading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [dataFilterd, setDataFilterd] = useState([]);
-  const dataa = data;
+  const dataa = dataFilterd;
   const rowsPerPage = 5;
   const totalPages = Math.ceil(dataa.length / rowsPerPage);
 
@@ -58,10 +58,7 @@ const TableTwo = () => {
             <h4 className="text-xl font-semibold text-black dark:text-white">
               List Item
             </h4>
-            <SearchBarInvenrory
-              list={currentData}
-              setFilterdData={setDataFilterd}
-            />
+            <SearchBarInvenrory list={data} setFilterdData={setDataFilterd} />
           </div>
         </div>
 
@@ -82,7 +79,7 @@ const TableTwo = () => {
             <p className="font-medium">Action</p>
           </div>
         </div>
-        {dataFilterd.map((data) => (
+        {currentData.map((data) => (
           <RowInventory
             key={data.id}
             id={data.id}

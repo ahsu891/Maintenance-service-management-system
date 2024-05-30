@@ -40,13 +40,13 @@ export const addInventory = (req, res) => {
 
   // Define the SQL query to insert data into the database
   const query =
-    "INSERT INTO inventory (item_name, item_category, image, last_update, quantity) VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO inventory (id,item_name, item_category, image, last_update, quantity) VALUES (?, ?,?, ?, ?, ?)";
 
   // Execute the query
   try {
     db.query(
       query,
-      [iname, categories, newFilePath, last_update, quantity],
+      [uuidv4(), iname, categories, newFilePath, last_update, quantity],
       (err, result) => {
         if (err) {
           console.error(

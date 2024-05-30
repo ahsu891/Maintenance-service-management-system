@@ -13,7 +13,7 @@ const RequestTable = () => {
   const [isLoading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [dataFilterd, setDataFilterd] = useState([]);
-  const data = requests;
+  const data = dataFilterd;
   const rowsPerPage = 5;
   const totalPages = Math.ceil(data.length / rowsPerPage);
 
@@ -120,7 +120,7 @@ const RequestTable = () => {
                 {/* Additional grid items can be added here */}
               </div>
             </div>
-            {dataFilterd?.map((data, i) => (
+            {currentData?.map((data, i) => (
               <RowRequest
                 i={i + 1}
                 block_id={data.block_id}

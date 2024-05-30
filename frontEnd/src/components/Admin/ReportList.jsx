@@ -31,7 +31,7 @@ function RequestManagement() {
     setDatae(filtered);
   };
   const [currentPage, setCurrentPage] = useState(1);
-  const data = datae;
+  const data = dataFilterd;
   const rowsPerPage = 5;
   const totalPages = Math.ceil(data.length / rowsPerPage);
 
@@ -153,10 +153,7 @@ function RequestManagement() {
         <div className="rounded-sm border border-stroke bg-white px-5  pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
           {/* <SearchBar technicials={technicials} setfiltered={setfiltered} /> */}
           {datae.length > 0 && (
-            <SearchBarRport
-              list={currentData}
-              setFilterdData={setDataFilterd}
-            />
+            <SearchBarRport list={datae} setFilterdData={setDataFilterd} />
           )}
           <div className="max-w-full overflow-x-auto">
             <table className="w-full table-auto">

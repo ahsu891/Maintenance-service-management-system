@@ -37,6 +37,11 @@ function InventoryRequest() {
   }
   return (
     <div>
+      {data.length === 0 && (
+        <div className="flex flex-row items-center p-2 justify-center bg-white">
+          <span>No data yet!</span>
+        </div>
+      )}
       <div>
         {data?.map((data) => (
           <InventorySingleList
