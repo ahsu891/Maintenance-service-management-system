@@ -32,7 +32,7 @@ function RequestManagement() {
   };
   const [currentPage, setCurrentPage] = useState(1);
   const data = dataFilterd;
-  const rowsPerPage = 5;
+  const rowsPerPage = 10;
   const totalPages = Math.ceil(data.length / rowsPerPage);
 
   const handlePageChange = (page) => {

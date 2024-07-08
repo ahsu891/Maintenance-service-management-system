@@ -24,6 +24,7 @@ function FormLayout({ setReff, setOn }) {
       ?.toLowerCase()
       .includes(inputOne.toLowerCase())
   );
+  console.log(allcheckedMa);
   const filteredSec = Mat?.filter((data) =>
     `${data.item_name} `.toLowerCase().includes(inputTwo.toLowerCase())
   );
@@ -108,6 +109,7 @@ function FormLayout({ setReff, setOn }) {
           request_id: e.target.request?.value,
           materiald_id: allcheckedMa,
         });
+
         toast.success(response.data);
         setReff((e) => !e);
         setOn((e) => !e);

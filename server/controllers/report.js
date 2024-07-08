@@ -122,10 +122,11 @@ export const getSingleRep = (req, res) => {
           return;
         }
 
+        console.log(materialResults);
         responseObj.materialDetails = materialResults;
         // Return the combined results as JSON
 
-        console.log(responseObj);
+        // console.log(responseObj);
         res.status(200).json(responseObj);
       });
     });

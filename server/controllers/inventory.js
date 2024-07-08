@@ -210,7 +210,7 @@ export const getReq = (req, res) => {
 };
 export const makeReq = (req, res) => {
   const { materiald_id, request_id } = req.body;
-  // console.log(materiald_id, request_id);
+  console.log(materiald_id, request_id);
 
   // Check if the request_id exists in the maintenance_requests table
   const checkQuery = "SELECT * FROM maintenance_requests WHERE request_id = ?";

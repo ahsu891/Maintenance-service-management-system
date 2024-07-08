@@ -34,7 +34,7 @@ export default function Door() {
             setChoice(0);
           }}
         >
-          <Cards img={"../images/cylinder.jpg"} name="Key Body" />
+          <Cards img={"../images/cylinder.jpg"} name="Cylinder" />
         </div>
         <div
           onClick={() => {

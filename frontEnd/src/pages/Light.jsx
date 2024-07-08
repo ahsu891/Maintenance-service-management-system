@@ -27,7 +27,7 @@ export default function Light() {
             setChoice(2);
           }}
         >
-          <Cards img={"../images/lightbulb.webp"} name="Key Body" />
+          <Cards img={"../images/lightbulb.webp"} name="Flurecent light" />
         </div>
         <div
           onClick={() => {
@@ -36,7 +36,7 @@ export default function Light() {
             setChoice(3);
           }}
         >
-          <Cards img={"../images/fuse.jpg"} name="Key Body" />
+          <Cards img={"../images/fuse.jpg"} name="Starter" />
         </div>
       </div>
       <Guide open={open} onClose={() => setOpen(false)} choice={choice} />
