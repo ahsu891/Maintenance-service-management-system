@@ -1,0 +1,663 @@
+-- phpMyAdmin SQL Dump
+-- version 5.1.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jul 08, 2024 at 02:41 PM
+-- Server version: 10.4.24-MariaDB
+-- PHP Version: 8.1.4
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `msn`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `admin_id` varchar(200) NOT NULL,
+  `role` enum('Admin','Technician','Requester') NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`admin_id`, `role`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`) VALUES
+('12455445', 'Admin', 'ahmedl', '$2a$08$Nmo7NSz9Mo9AYuHKAurB1O5szn9Y4B28x9o7oEXTQEWFqBbI7bq0S', 'Ahmedt', 'Sufiyanhhjjh', 'ahsu891@gmail.com', '97075214430878');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `blocks`
+--
+
+CREATE TABLE `blocks` (
+  `blocks_id` int(11) NOT NULL,
+  `lat` float DEFAULT NULL,
+  `log` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `blocks`
+--
+
+INSERT INTO `blocks` (`blocks_id`, `lat`, `log`) VALUES
+(1, 7.55245, 37.8848),
+(2, 7.55518, 37.8849),
+(3, 7.55544, 37.8851),
+(4, 7.55369, 37.886);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `complain`
+--
+
+CREATE TABLE `complain` (
+  `id` varchar(200) NOT NULL,
+  `request_id` varchar(200) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `description` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `complain`
+--
+
+INSERT INTO `complain` (`id`, `request_id`, `created_at`, `description`) VALUES
+('1d7a615f-05b2-4319-af49-eb4dcba326c1', 'bc68c3f7-4c32-4071-b5e4-2695e89e994f', '2024-05-19 15:41:37', 'do dod od dod ');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `control`
+--
+
+CREATE TABLE `control` (
+  `id` varchar(200) NOT NULL,
+  `status` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `control`
+--
+
+INSERT INTO `control` (`id`, `status`) VALUES
+('1046031413', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `finished_requests`
+--
+
+CREATE TABLE `finished_requests` (
+  `finished_id` varchar(200) NOT NULL,
+  `request_id` varchar(200) NOT NULL,
+  `technician_id` varchar(200) NOT NULL,
+  `time_took` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `finished_requests`
+--
+
+INSERT INTO `finished_requests` (`finished_id`, `request_id`, `technician_id`, `time_took`) VALUES
+('002b0073-e916-47db-8a14-bd5802884628', 'bc68c3f7-4c32-4071-b5e4-2695e89e994f', '9195f07b-3d29-449a-8d31-4736f0cebee6', '-14400'),
+('06115686-2caf-41f2-9b49-0a7f6645b36a', '16eea61a-f3fd-4208-a4fb-610909154c3e', '9195f07b-3d29-449a-8d31-4736f0cebee6', '7200'),
+('116e1d73-390e-4237-8bc0-f07334954227', '4a8e81d3-f1dc-4c34-8ddd-959b2c742cc8', '9195f07b-3d29-449a-8d31-4736f0cebee6', '5040'),
+('19256497-52c3-4721-9b39-f075c970da66', '94cda3b2-de58-419b-9534-ae0c20067f0b', '9195f07b-3d29-449a-8d31-4736f0cebee6', '5400'),
+('2fb30aa0-9e40-4e42-9c4b-1d290d53eade', 'c5de856b-4a04-4fc7-b32d-a2cb5f784bcb', '9195f07b-3d29-449a-8d31-4736f0cebee6', '3600'),
+('32abc73f-e0d0-41f1-9142-b14768ecac33', '223adee5-4bb8-4aa9-b82c-37b76684c399', '9195f07b-3d29-449a-8d31-4736f0cebee6', '-18000'),
+('34fc26a1-2a75-4a3e-abec-9dadadd53a3e', '8d6afaa7-7a40-45aa-9170-941f98f00bc2', '9195f07b-3d29-449a-8d31-4736f0cebee6', '10920'),
+('37b81c96-76da-4925-9335-013abab1961b', '73455fde-5c84-4471-bd88-a8e07fc4d207', '9195f07b-3d29-449a-8d31-4736f0cebee6', '39600'),
+('40333d08-5eb6-4999-8267-2de1871fb759', '16eea61a-f3fd-4208-a4fb-610909154c3e', '9195f07b-3d29-449a-8d31-4736f0cebee6', '7200'),
+('4dc30af1-3c52-46d2-9817-9e79320537e4', '0ed7fd67-d7fd-4533-aee6-8be0cecfec23', '9195f07b-3d29-449a-8d31-4736f0cebee6', '10920'),
+('790c6df6-924a-44be-acfc-bdcf7fb7cb78', 'cb884c32-8d78-4183-8977-da9db66013c1', '9195f07b-3d29-449a-8d31-4736f0cebee6', '7200'),
+('8482ad16-adc3-433f-9112-e0e3ac35f10d', '8241accd-17e2-47d6-89a3-c0f9a5093617', '9195f07b-3d29-449a-8d31-4736f0cebee6', '5400'),
+('9bf10c4e-64ea-4c69-95e0-7c690bcbfb94', '9f5b42d3-59cc-4cc2-934e-7f94803de3ce', '9195f07b-3d29-449a-8d31-4736f0cebee6', '6240'),
+('9d939fd2-65ed-4915-9325-0c158497cdf1', '4ca6605b-8bd4-499c-a96a-cfef231ef2b9', '9195f07b-3d29-449a-8d31-4736f0cebee6', '3600'),
+('9d9e0b63-3d89-48fc-ac64-10d698cc90f5', 'b2b2b1e8-6b27-408b-8e86-25a5172a576e', '9195f07b-3d29-449a-8d31-4736f0cebee6', '3600'),
+('a0540c52-6523-47ad-8a5b-56d46fc3ec36', '6ebcde2d-0d79-4155-9c1b-c883d7252689', '9195f07b-3d29-449a-8d31-4736f0cebee6', '39600'),
+('a483a319-1e1e-4c7a-83e9-df0678fb74df', 'e986173d-e0f5-4ae8-9396-7ee44ddbc57d', '9195f07b-3d29-449a-8d31-4736f0cebee6', '0'),
+('be74ca74-aa97-477b-839b-4a9915eaa29e', '36432833-2aa1-4d9e-9869-4ac755ca79fd', '9195f07b-3d29-449a-8d31-4736f0cebee6', '14400'),
+('d084e3d9-e7f7-4107-869d-6cfd049fd22d', '8241accd-17e2-47d6-89a3-c0f9a5093617', '9195f07b-3d29-449a-8d31-4736f0cebee6', '5400');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `head`
+--
+
+CREATE TABLE `head` (
+  `head_id` varchar(200) NOT NULL,
+  `role` enum('Head') NOT NULL,
+  `username` varchar(200) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  `first_name` varchar(200) NOT NULL,
+  `last_name` varchar(200) NOT NULL,
+  `phone` varchar(200) NOT NULL,
+  `email` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `head`
+--
+
+INSERT INTO `head` (`head_id`, `role`, `username`, `password`, `first_name`, `last_name`, `phone`, `email`) VALUES
+('azswedcrfvgtbhnjkm,l', 'Head', 'head', '$2a$08$IdqEYgXSzR4v6Ts4jd8gnutd15BluGwv.nGHmj5AGtydRTEfjKYYm', 'tesemak', 'ylma', '0970752122', 'ahsu@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventory`
+--
+
+CREATE TABLE `inventory` (
+  `id` varchar(200) NOT NULL,
+  `item_name` varchar(255) NOT NULL,
+  `item_category` varchar(100) DEFAULT NULL,
+  `image` varchar(200) NOT NULL,
+  `last_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `inventory`
+--
+
+INSERT INTO `inventory` (`id`, `item_name`, `item_category`, `image`, `last_update`, `quantity`) VALUES
+('', 'keylock', 'General', 'image/03542469-db5a-40bb-a951-2772d66ad4a4.png', '2024-05-29 11:13:40', 0),
+('0326d95a-2b97-4704-bc7f-44024aec3d13', 'wall outlete', 'Electrical', 'image/aaa6bd0e-eb13-4fb7-80c3-2c5ffb74e36c.png', '2024-05-30 06:20:28', 16),
+('6376dd31-a072-4154-8ff4-a4cfec6e9905', 'key cylinder', 'General', 'image/1ebee420-e057-4aad-82c4-beb14ba5c101.png', '2024-05-30 06:18:33', 10),
+('b3425f05-c32d-4f02-afc4-c5a769e36228', 'key body', 'General', 'image/49d1072a-944c-4bfb-a75f-8400e634edd3.png', '2024-05-30 06:18:17', 11),
+('d57f646a-169f-4436-a770-2d2afbc5848c', 'pvc', 'Water', 'image/2add0660-cab6-4af7-b34b-49c38e905f2f.png', '2024-05-30 06:23:27', 13),
+('db927032-4056-40aa-8c53-bd4f9cc077ac', 'pipe', 'Water', 'image/c9c0d3a2-8189-4f4f-a2f5-6e0119d603b4.png', '2024-05-30 09:43:11', -8),
+('eea4f2d6-5d67-4685-804d-767a89b30d24', 'florecent', 'Electrical', 'image/a218438d-3eca-4440-a72e-451e733478c6.png', '2024-05-30 13:31:42', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inventory_admin`
+--
+
+CREATE TABLE `inventory_admin` (
+  `inventory_admin_id` varchar(250) NOT NULL,
+  `first_name` varchar(200) NOT NULL,
+  `last_name` varchar(200) NOT NULL,
+  `username` varchar(250) NOT NULL,
+  `password` varchar(250) NOT NULL,
+  `phone` varchar(250) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `role` enum('Inventory') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `inventory_admin`
+--
+
+INSERT INTO `inventory_admin` (`inventory_admin_id`, `first_name`, `last_name`, `username`, `password`, `phone`, `email`, `role`) VALUES
+('486543213216', 'adisa', 'hajii', 'abdisa', '$2a$08$RDBZWRKz.LDWvCGH3hpoB.FhrpO1uYVsyS9.sCMY66GC8F5uWucAW', '097075122', 'ahmed@gmail.com', 'Inventory');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `maintenance_requests`
+--
+
+CREATE TABLE `maintenance_requests` (
+  `request_id` varchar(200) NOT NULL,
+  `requester_id` varchar(200) DEFAULT NULL,
+  `request_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `completion_date` datetime DEFAULT NULL,
+  `status` enum('Pending','Assigned','In Progress','Completed','Cancelled','Rejected','Closed') DEFAULT 'Pending',
+  `title` varchar(10000) NOT NULL,
+  `room` int(200) NOT NULL,
+  `floor` int(200) NOT NULL,
+  `description` text DEFAULT NULL,
+  `image` varchar(80) DEFAULT NULL,
+  `priority` enum('Low','Medium','High') DEFAULT NULL,
+  `block_id` int(11) DEFAULT NULL,
+  `category` enum('Water','General','Electrical','Other') NOT NULL DEFAULT 'General'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `maintenance_requests`
+--
+
+INSERT INTO `maintenance_requests` (`request_id`, `requester_id`, `request_date`, `completion_date`, `status`, `title`, `room`, `floor`, `description`, `image`, `priority`, `block_id`, `category`) VALUES
+('06c0baaf-0c28-4898-92a3-84513e5cd865', NULL, '2024-05-16 06:03:11', NULL, 'Cancelled', ', ljl', 0, 0, '', NULL, 'Low', 1, 'General'),
+('0ed7fd67-d7fd-4533-aee6-8be0cecfec23', 'ebacd89a-832c-400b-8c8e-08be2fa15e90', '2024-05-14 19:45:45', '2024-05-15 11:41:57', 'Closed', 'i want to make some cool so make good ', 2, 2, 'make like other animation header', NULL, 'Low', 1, 'General'),
+('16eea61a-f3fd-4208-a4fb-610909154c3e', 'ebacd89a-832c-400b-8c8e-08be2fa15e90', '2024-05-15 17:04:24', '2024-05-19 16:52:43', 'Closed', ' i want to my socket and intenrnet port', 2, 2, '', NULL, 'Low', 1, 'General'),
+('223adee5-4bb8-4aa9-b82c-37b76684c399', NULL, '2024-05-12 19:49:00', '2024-05-13 10:57:50', 'Closed', ', ljl', 0, 0, '', NULL, 'Low', 1, 'General'),
+('34066cae-38f7-41bd-b104-2a420929aff3', NULL, '2024-05-12 19:49:00', '2024-05-14 22:47:37', 'Closed', ', ljl', 0, 0, '', NULL, 'Low', 1, 'General'),
+('36432833-2aa1-4d9e-9869-4ac755ca79fd', 'ebacd89a-832c-400b-8c8e-08be2fa15e90', '2024-05-30 07:13:34', '2024-05-30 12:38:12', 'Closed', 'my door has problem please come and fix please', 3, 2, 'please come fix it', NULL, 'Medium', 1, 'General'),
+('4a8e81d3-f1dc-4c34-8ddd-959b2c742cc8', 'ebacd89a-832c-400b-8c8e-08be2fa15e90', '2024-05-30 08:32:00', '2024-05-30 11:37:51', 'Closed', 'door is brooken', 1, 2, 'software engineering block', NULL, 'Low', 2, 'General'),
+('4ca6605b-8bd4-499c-a96a-cfef231ef2b9', NULL, '2024-05-13 06:13:03', '2024-05-16 10:20:24', 'Closed', ', ljl', 0, 0, '', NULL, 'Low', 1, 'General'),
+('6ebcde2d-0d79-4155-9c1b-c883d7252689', 'ebacd89a-832c-400b-8c8e-08be2fa15e90', '2024-05-12 20:11:43', '2024-05-14 21:04:31', 'Closed', ' i want to make some so your foor', 0, 0, 'nhbgfvdcs', NULL, 'Low', 1, 'General'),
+('73455fde-5c84-4471-bd88-a8e07fc4d207', NULL, '2024-05-12 19:47:05', '2024-05-16 10:20:27', 'Closed', ', ljl', 0, 0, '', NULL, 'Low', 1, 'General'),
+('7d58920e-edb7-4877-8a54-8d455e452ea3', 'ebacd89a-832c-400b-8c8e-08be2fa15e90', '2024-05-30 12:02:00', NULL, 'Pending', 'asldjfnhaksjdfnkajsd', 1, 1, '', NULL, 'Low', 1, 'General'),
+('8241accd-17e2-47d6-89a3-c0f9a5093617', '14320885-cdac-4d90-96dd-8a3f00983c0c', '2024-05-30 13:16:29', '2024-05-30 16:36:31', 'Closed', 'my socket is not working ', 2, 10, 'rftgvhbnjmk', NULL, 'Medium', 2, 'General'),
+('8d6afaa7-7a40-45aa-9170-941f98f00bc2', 'ebacd89a-832c-400b-8c8e-08be2fa15e90', '2024-05-17 19:01:27', '2024-05-19 15:37:15', 'Closed', 'ahmed sufi', 0, 0, '', NULL, 'Low', 1, 'General'),
+('940b50c3-20f2-45f1-93cd-3fd694efc71a', NULL, '2024-05-12 20:05:16', NULL, 'Cancelled', ', ljl', 0, 0, '', NULL, 'Low', 1, 'General'),
+('94cda3b2-de58-419b-9534-ae0c20067f0b', '911e0f03-bde6-49b3-a782-2bf8aa196f7c', '2024-05-29 10:54:09', '2024-05-29 14:17:07', 'Closed', 'door', 4, 2, ',kmjnhbgvfcd yummjmk mymy m iymiy', NULL, 'Medium', 3, 'General'),
+('9f5b42d3-59cc-4cc2-934e-7f94803de3ce', '57b6eb82-f580-4994-8ca4-1563d9e08d13', '2024-05-16 07:56:27', '2024-05-16 11:08:00', 'Closed', 'Table maintenance', 5, 1, 'My table failed while moving it around for office setup', NULL, 'High', 1, 'General'),
+('a450187e-cb30-4f71-9702-544fcaabdc13', NULL, '2024-05-14 11:30:25', NULL, 'Cancelled', ', ljl', 0, 0, '', NULL, 'Low', 1, 'General'),
+('b2b2b1e8-6b27-408b-8e86-25a5172a576e', 'ebacd89a-832c-400b-8c8e-08be2fa15e90', '2024-05-19 15:50:54', '2024-05-19 19:13:20', 'Closed', 'awawawawaw', 0, 0, 'fcgv', NULL, 'Low', 1, 'General'),
+('b98ad56d-537c-4e8d-bddd-acdde35a16f8', 'ebacd89a-832c-400b-8c8e-08be2fa15e90', '2024-05-14 11:32:32', NULL, 'Cancelled', 'make socket work pleas', 2, 2, ' iwant make the food', NULL, 'Low', 1, 'General'),
+('bc68c3f7-4c32-4071-b5e4-2695e89e994f', 'ebacd89a-832c-400b-8c8e-08be2fa15e90', '2024-05-19 15:38:07', '2024-05-19 18:41:38', 'Closed', 'pleas work please', 0, 0, 'ghfdngf', NULL, 'Low', 1, 'General'),
+('c5de856b-4a04-4fc7-b32d-a2cb5f784bcb', 'ebacd89a-832c-400b-8c8e-08be2fa15e90', '2024-05-30 11:47:56', '2024-05-30 15:12:52', 'Closed', 'my socket is not working please fix it', 3, 1, 'i need to the socket fo fix', NULL, 'Low', 2, 'General'),
+('cb884c32-8d78-4183-8977-da9db66013c1', 'ebacd89a-832c-400b-8c8e-08be2fa15e90', '2024-04-01 20:34:50', '2024-04-29 20:23:45', 'Closed', 'the light bulb is not work ', 2, 2, 'please can pleas came fix i need to change it has been for 4 days ', NULL, 'Low', 1, 'Electrical'),
+('d676d9f2-7975-4ac0-8a52-7aee88705935', NULL, '2024-05-12 19:41:15', NULL, 'Cancelled', ', ljl', 0, 0, '', NULL, 'Low', 1, 'General'),
+('d99ff37e-c74f-4ce4-98ff-098377ada3ab', NULL, '2024-05-12 19:07:13', NULL, 'Cancelled', 'some one or wljdf', 0, 0, '', NULL, 'Low', 1, 'General'),
+('e7acde10-ba98-4a64-a098-c127e474f4df', NULL, '2024-05-12 20:05:16', NULL, 'Cancelled', ', ljl', 0, 0, '', NULL, 'Low', 1, 'General'),
+('e986173d-e0f5-4ae8-9396-7ee44ddbc57d', 'ebacd89a-832c-400b-8c8e-08be2fa15e90', '2024-03-14 10:19:27', '2024-04-01 22:59:43', 'Closed', 'AHmed s', 2, 2, '', NULL, 'Low', 1, 'General'),
+('fb74ca3e-22c0-42a7-9738-dcd72d412921', NULL, '2024-05-12 19:36:03', NULL, 'Cancelled', ', ljl', 0, 0, '', NULL, 'Low', 1, 'General');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `maintenance_request_materials`
+--
+
+CREATE TABLE `maintenance_request_materials` (
+  `id` varchar(200) NOT NULL,
+  `material_id` varchar(200) NOT NULL,
+  `request_id` varchar(200) NOT NULL,
+  `quantity_used` int(11) NOT NULL,
+  `status` enum('Pending','Accepted','Rejected','Closed') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `maintenance_request_materials`
+--
+
+INSERT INTO `maintenance_request_materials` (`id`, `material_id`, `request_id`, `quantity_used`, `status`) VALUES
+('36b9352c-5b6c-4797-874a-48eaded1328d', 'db927032-4056-40aa-8c53-bd4f9cc077ac', '36432833-2aa1-4d9e-9869-4ac755ca79fd', 8, 'Closed'),
+('9b543774-a856-4061-b28d-1a7fc4d82e56', '', '94cda3b2-de58-419b-9534-ae0c20067f0b', 1, 'Closed'),
+('9f5da4ac-4081-461c-9302-1f78594d6ad2', 'db927032-4056-40aa-8c53-bd4f9cc077ac', '4a8e81d3-f1dc-4c34-8ddd-959b2c742cc8', 0, 'Closed'),
+('c6a861ec-8653-4499-85cb-b16a4bd6b7b1', '0326d95a-2b97-4704-bc7f-44024aec3d13', 'c5de856b-4a04-4fc7-b32d-a2cb5f784bcb', 0, 'Closed'),
+('c8e0c5f8-4113-4b64-853e-13790c618bd9', 'eea4f2d6-5d67-4685-804d-767a89b30d24', '8241accd-17e2-47d6-89a3-c0f9a5093617', 3, 'Closed'),
+('f764fc25-1f95-4a3b-acbf-adb6ad82c323', 'eea4f2d6-5d67-4685-804d-767a89b30d24', 'c5de856b-4a04-4fc7-b32d-a2cb5f784bcb', 0, 'Closed');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `preventive_maintenance`
+--
+
+CREATE TABLE `preventive_maintenance` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `repetition` int(11) DEFAULT NULL,
+  `floor` int(11) DEFAULT NULL,
+  `categories` varchar(200) NOT NULL,
+  `priority` varchar(200) NOT NULL,
+  `room` int(11) DEFAULT NULL,
+  `block_no` int(11) DEFAULT NULL,
+  `schedule_interval` int(11) DEFAULT NULL,
+  `interval_unit` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `preventive_maintenance`
+--
+
+INSERT INTO `preventive_maintenance` (`id`, `title`, `description`, `start_date`, `repetition`, `floor`, `categories`, `priority`, `room`, `block_no`, `schedule_interval`, `interval_unit`) VALUES
+(9532217, 'generate has to fix every one month', '', '2024-05-24', 2, 2, 'General', 'Low', 1, 1, -1, 'weeks'),
+(90781613, '/lfnkdja', '', '2024-05-23', 3, 0, 'General', 'Low', 1, 1, 24, 'days');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reject_message`
+--
+
+CREATE TABLE `reject_message` (
+  `id` varchar(200) NOT NULL,
+  `message` varchar(200) NOT NULL,
+  `request_id` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `reject_message`
+--
+
+INSERT INTO `reject_message` (`id`, `message`, `request_id`) VALUES
+('25359fbd-7aba-4a07-a6e8-93db85b9764f', '', 'a450187e-cb30-4f71-9702-544fcaabdc13'),
+('32e776b8-b0ea-46d7-b370-fe6f0fa4676f', 'sorry we can\'t afford it', 'fb74ca3e-22c0-42a7-9738-dcd72d412921'),
+('64da17d4-769e-4d6d-a86e-0842ccdfd321', 'lujyht', '940b50c3-20f2-45f1-93cd-3fd694efc71a'),
+('8fb54c40-10f8-46eb-b527-f7132361afd8', 'sorry out system is bussy', 'd99ff37e-c74f-4ce4-98ff-098377ada3ab'),
+('a6051b9b-3856-40ea-b504-91fdf7b5f2f7', '', 'd676d9f2-7975-4ac0-8a52-7aee88705935'),
+('b16b373a-4a69-4bf4-9d83-eed19fc208ec', 'please the name of the other company so that this name do that anem ', '06c0baaf-0c28-4898-92a3-84513e5cd865'),
+('c27ab417-93e3-4d81-b663-fcdaff575ba6', ' iwant to do it notw', '940b50c3-20f2-45f1-93cd-3fd694efc71a'),
+('c48c0800-0182-4c6f-b14b-1b8d03b90c6c', ' i want to make sone pri', 'e7acde10-ba98-4a64-a098-c127e474f4df'),
+('eaba6518-aebb-45c8-b40e-50780a92a21e', ';lkjhgfd', 'b98ad56d-537c-4e8d-bddd-acdde35a16f8');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `super`
+--
+
+CREATE TABLE `super` (
+  `super_id` varchar(200) NOT NULL,
+  `role` enum('Super') NOT NULL,
+  `username` varchar(200) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  `first_name` varchar(200) NOT NULL,
+  `last_name` varchar(200) NOT NULL,
+  `phone` varchar(200) NOT NULL,
+  `email` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `super`
+--
+
+INSERT INTO `super` (`super_id`, `role`, `username`, `password`, `first_name`, `last_name`, `phone`, `email`) VALUES
+(',csxcgtfrvyhuijok,', 'Super', 'super', '$2a$08$IdqEYgXSzR4v6Ts4jd8gnutd15BluGwv.nGHmj5AGtydRTEfjKYYm', 'super', 'manl', '0970752122', 'ahsu@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `technicians`
+--
+
+CREATE TABLE `technicians` (
+  `technician_id` varchar(200) NOT NULL,
+  `role` enum('Admin','Technician','Requester') NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `specialization` varchar(255) DEFAULT NULL,
+  `available` varchar(80) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `technicians`
+--
+
+INSERT INTO `technicians` (`technician_id`, `role`, `username`, `password`, `first_name`, `last_name`, `email`, `phone`, `specialization`, `available`) VALUES
+('07934345-91e8-407f-9021-d8c094714a6c', 'Technician', 'fise', '$2a$08$bS.hMLE6bJiUs8wYXb9GyOgd5mpdTm2tv6L03WG2Y3uXybV./GNWS', 'fse', 'fise', 'saccasdcsac@gmail', '0970752122', 'Electrical', 'active'),
+('0b7b4337-bbbd-4fd5-ac0b-3bf6053563e0', 'Technician', 'amir', '$2a$08$wgnU7GBD5cV/F18.8SkLAuny.GeEhy1Zgk1jIfg.Qg72pos/You4O', 'amir', 'amir', 'ahmedsufiyan809@gmail.com', '0911021983', 'General', 'active'),
+('5eecbb94-aadf-44e0-8174-37ddd023af09', 'Technician', 'hanan', '$2a$08$k2BXE70EQKl1HeSra1ddSu0pDZ7Mhn2qJ1YS00s9t0kQ94mwXeo9.', 'hanan', 'hanan', 'ahmed@gmail.com', '6970752121', 'Water', 'active'),
+('79dc0cf0-60ec-4e0b-acc0-e755af6572b1', 'Technician', 'jeotech', '$2a$08$M938cRIVsw7sKZn/9ddSS.BuBpfAqqSqQilXtzNgg5jaltnjNV2Ta', 'joe', 'dabo', 'ahmedsufiyan809@gmail.com', '921225839', 'Water', 'active'),
+('9195f07b-3d29-449a-8d31-4736f0cebee6', 'Technician', 'alazar', '$2a$08$RDBZWRKz.LDWvCGH3hpoB.FhrpO1uYVsyS9.sCMY66GC8F5uWucAW', 'alazar', 'alazarr', 'ahsu891@gmail.com', '09707521227', 'General', 'active'),
+('ac6b921a-578b-4eb8-abda-61e02c2c1586', 'Technician', 'ldetu', '$2a$08$dKK3Z/FfbC5dBrmrexQ.y.cdP2A1T7WPVuwTS9pgG9B.tmQjM1kSG', 'ldetu', 'tesema', 'ahmedsufiyan809@gmail.com', '0911021983', 'Electrical', 'active');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `technicians_assigned`
+--
+
+CREATE TABLE `technicians_assigned` (
+  `assignment_id` varchar(200) NOT NULL,
+  `request_id` varchar(200) DEFAULT NULL,
+  `technician_id` varchar(200) DEFAULT NULL,
+  `assignment_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` varchar(200) NOT NULL,
+  `role` enum('Admin','Technician','Requester') NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `job` varchar(255) DEFAULT NULL,
+  `position` varchar(200) NOT NULL,
+  `phone` varchar(20) DEFAULT NULL,
+  `email` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `role`, `username`, `password`, `first_name`, `last_name`, `job`, `position`, `phone`, `email`) VALUES
+('14320885-cdac-4d90-96dd-8a3f00983c0c', 'Requester', 'ahsusu', '$2a$08$2baZCzZSaUOlU.CkE7N.lOIJMNSNgyC3tecMgGDzRgAc0RKggJki2', 'ab', 'ab', 'Department Head', 'Software Engineering', '970752119', 'ahsu891@gmail.com'),
+('374de2b1-6862-4b4a-9991-da2dbd674ea0', 'Requester', 'addd', '$2a$08$tWZXVye3E59eGEHWC3QimOaJvMKPyLtRnoZ/Mm9MQnT5mztS5XapW', 'Cdscads', 'dsacdsc', 'Department', 'Software Engineering', '654486464', ''),
+('3e420d16-d96d-43ee-98e9-00528c0da8d7', 'Requester', 'dfyghnj', '$2a$08$CMSz7R5X6J8jiM64TkYMYOtpOcZX6E9H6J3Dei.x6HAxOzhbToGnG', 'dfgbhunjmk', 'dtcfvgbhnj', 'Department', 'Software Engineering', '98297477', ''),
+('5012280c-69c6-4a0c-b3ad-0a193c05ea44', 'Requester', 'hbhbhbhb', '$2a$08$sGGwDGZnnsE6Xl./d/f3d.TQKSzHtDIfsFiQgYR.lZTp6S4QeL676', 'dfgbth', 'ghbybvgh', 'Din', 'Engineering College', '51632', ''),
+('57b6eb82-f580-4994-8ca4-1563d9e08d13', 'Requester', 'Wondimagegn', '$2a$08$X/NzCz7FhN7m7PfsQe0oZu6nIcob/WDZCTUm/CO40oAVB6U4yD21G', 'Wondimagegn', 'Leta', 'Department', 'Software Engineering', '0913374294', ''),
+('72c743b6-ad9b-41d3-838e-423855525349', 'Requester', 'dodod', '$2a$08$N1N8vg7/HCxX.cFuKaGMLeNlycFkfpioPcdIAznyIo6Z4I7U5yb7.', 'abebe', 'meme', 'Department', 'Software Engineering', '970752115', 'ahmed@gmail.com'),
+('8b71f785-af54-4d79-81da-26f0ccb22c63', 'Requester', 'dcfvgb n', '$2a$08$xe2/G5GgbnZpsWzEd0tCiOl2vQZ2.WLhlCQd0/YRKUzn5eSnukUy.', 'xcf vbn', 'xdfcgvbh jnm', 'Department Head', 'Software Engineering', '98887', 'oiudbh@sdkjbc'),
+('911e0f03-bde6-49b3-a782-2bf8aa196f7c', 'Requester', 'han', '$2a$08$NDI6RNEeNWu0TUdWqvEe2.x2GOTf5lBgcKh3ov4KIUKWWlOiN3bXK', 'hanan', 'tilahun', 'Department Head', 'Software Engineering', '09704234488', 'hanantilahun888@gmail.com'),
+('98536c38-66ff-40eb-9b9a-a33acbd2961d', 'Requester', 'mesay', '$2a$08$RqzNuCI6ewMKHmzbmzNbaO25ay7J883eZtYzeDlq1gEtgm2qzEEhO', 'mesay', 'mesay', 'Din', 'Natural Science College', '970752119', ''),
+('c326656e-eef7-4fd7-96b5-1affe0f80fd0', 'Requester', 'alula1', '$2a$08$dgQjs7rN7GKU2yX/y0GBAeKoa0Uzmf2a/LW8X/sjQFLhWWC6exVYS', 'alula', 'saz', 'Department Head', 'Software Engineering', '91158887', 'ahmedsufiyan809@gmail.com'),
+('e472d54f-a86b-498f-88b1-37aa30c1a22e', 'Requester', 'Wondimagegn', '$2a$08$hwt3DQwdqGKtrDGtpOlshOS5dycbIY67dTnkOhFAe18Jfxuz4Dfsi', 'Wondimagegn', 'Leta', 'Department', 'Software Engineering', '0913374294', 'wondimagegnleta@gmail.com'),
+('ebacd89a-832c-400b-8c8e-08be2fa15e90', 'Requester', 'wende', '$2a$08$IdqEYgXSzR4v6Ts4jd8gnutd15BluGwv.nGHmj5AGtydRTEfjKYYm', 'wende', 'wende', 'Department', 'Geomatices', '9445878597', 'ahsu891@gmail.com'),
+('null', 'Requester', 'preventive', '$2a$08$CMSz7R5X6J8jiM64TkYMYOtpOcZX6E9H6J3Dei.x6HAxOzhbToGnG', 'Preventive', 'maitenance', 'Maintenace Team leader', 'ahmed', '98297477', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vice`
+--
+
+CREATE TABLE `vice` (
+  `vice_id` varchar(200) NOT NULL,
+  `role` enum('Vice') NOT NULL,
+  `username` varchar(200) NOT NULL,
+  `password` varchar(200) NOT NULL,
+  `first_name` varchar(200) NOT NULL,
+  `last_name` varchar(200) NOT NULL,
+  `phone` varchar(200) NOT NULL,
+  `email` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `vice`
+--
+
+INSERT INTO `vice` (`vice_id`, `role`, `username`, `password`, `first_name`, `last_name`, `phone`, `email`) VALUES
+('azsgfvbhjnk', 'Vice', 'vice', '$2a$08$IdqEYgXSzR4v6Ts4jd8gnutd15BluGwv.nGHmj5AGtydRTEfjKYYm', 'vice', 'prisdant', '091108655', 'ahmedsufiyan809@gmail.com\r\n');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`admin_id`);
+
+--
+-- Indexes for table `blocks`
+--
+ALTER TABLE `blocks`
+  ADD PRIMARY KEY (`blocks_id`);
+
+--
+-- Indexes for table `complain`
+--
+ALTER TABLE `complain`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `request_id` (`request_id`);
+
+--
+-- Indexes for table `control`
+--
+ALTER TABLE `control`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `finished_requests`
+--
+ALTER TABLE `finished_requests`
+  ADD PRIMARY KEY (`finished_id`),
+  ADD KEY `request_id` (`request_id`),
+  ADD KEY `technician_id` (`technician_id`);
+
+--
+-- Indexes for table `head`
+--
+ALTER TABLE `head`
+  ADD PRIMARY KEY (`head_id`);
+
+--
+-- Indexes for table `inventory`
+--
+ALTER TABLE `inventory`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `item_name` (`item_name`);
+
+--
+-- Indexes for table `inventory_admin`
+--
+ALTER TABLE `inventory_admin`
+  ADD PRIMARY KEY (`inventory_admin_id`);
+
+--
+-- Indexes for table `maintenance_requests`
+--
+ALTER TABLE `maintenance_requests`
+  ADD PRIMARY KEY (`request_id`),
+  ADD KEY `blocks_id` (`block_id`),
+  ADD KEY `requester_id` (`requester_id`);
+
+--
+-- Indexes for table `maintenance_request_materials`
+--
+ALTER TABLE `maintenance_request_materials`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `request_id` (`request_id`),
+  ADD KEY `material_id` (`material_id`);
+
+--
+-- Indexes for table `preventive_maintenance`
+--
+ALTER TABLE `preventive_maintenance`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `reject_message`
+--
+ALTER TABLE `reject_message`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `request_id` (`request_id`);
+
+--
+-- Indexes for table `super`
+--
+ALTER TABLE `super`
+  ADD PRIMARY KEY (`super_id`);
+
+--
+-- Indexes for table `technicians`
+--
+ALTER TABLE `technicians`
+  ADD PRIMARY KEY (`technician_id`);
+
+--
+-- Indexes for table `technicians_assigned`
+--
+ALTER TABLE `technicians_assigned`
+  ADD PRIMARY KEY (`assignment_id`),
+  ADD KEY `technician_id` (`technician_id`),
+  ADD KEY `request_id` (`request_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- Indexes for table `vice`
+--
+ALTER TABLE `vice`
+  ADD PRIMARY KEY (`vice_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `preventive_maintenance`
+--
+ALTER TABLE `preventive_maintenance`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90781614;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `complain`
+--
+ALTER TABLE `complain`
+  ADD CONSTRAINT `complain_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES `maintenance_requests` (`request_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `finished_requests`
+--
+ALTER TABLE `finished_requests`
+  ADD CONSTRAINT `finished_requests_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES `maintenance_requests` (`request_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `finished_requests_ibfk_2` FOREIGN KEY (`technician_id`) REFERENCES `technicians` (`technician_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `maintenance_requests`
+--
+ALTER TABLE `maintenance_requests`
+  ADD CONSTRAINT `maintenance_requests_ibfk_2` FOREIGN KEY (`block_id`) REFERENCES `blocks` (`blocks_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `maintenance_requests_ibfk_3` FOREIGN KEY (`requester_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `maintenance_request_materials`
+--
+ALTER TABLE `maintenance_request_materials`
+  ADD CONSTRAINT `maintenance_request_materials_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES `maintenance_requests` (`request_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `maintenance_request_materials_ibfk_2` FOREIGN KEY (`material_id`) REFERENCES `inventory` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `reject_message`
+--
+ALTER TABLE `reject_message`
+  ADD CONSTRAINT `reject_message_ibfk_1` FOREIGN KEY (`request_id`) REFERENCES `maintenance_requests` (`request_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `technicians_assigned`
+--
+ALTER TABLE `technicians_assigned`
+  ADD CONSTRAINT `technicians_assigned_ibfk_1` FOREIGN KEY (`technician_id`) REFERENCES `technicians` (`technician_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `technicians_assigned_ibfk_2` FOREIGN KEY (`request_id`) REFERENCES `maintenance_requests` (`request_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
